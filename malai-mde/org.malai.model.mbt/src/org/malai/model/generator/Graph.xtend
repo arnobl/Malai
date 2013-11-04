@@ -13,7 +13,7 @@ import org.malai.interaction.TerminalState
 import org.malai.interaction.AbortingState
 
 class Graph{
-	public GraphNode rootNode
+	public GraphNode rootNode = new GraphNode()
 }
 
 class GraphNode
@@ -23,6 +23,10 @@ class GraphNode
 
 	List<InteractionTransition> initialTransitions
 	List<InteractionTransition> terminalTransitions
+	
+	new() {
+		childrenNode = new ArrayList
+	}
 		
 	/* 
 	 * Convert an Interaction to a FlowGraph.

@@ -7,6 +7,7 @@ import org.malai.instrument.Link
 import java.util.Hashtable
 
 import static extension org.malai.model.aspect.LinkAspect.*
+import java.util.ArrayList
 
 /*
  * Represents the runtime state
@@ -29,6 +30,11 @@ class Context
 	//Root used to attach futur nodes of the context
 	public GraphNode attachNode
 	
+	new() {
+		resolvedActions = new ArrayList
+		activatedInstr = new ArrayList
+		linksCounters = new Hashtable
+	}
 	
 	/*
 	 * Setup the context

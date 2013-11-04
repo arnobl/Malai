@@ -33,6 +33,12 @@ class Generator
 	
 	//Help to "attach" context to each other
 	public var GraphNode currentNode
+	
+	new(){
+		allInstruments = new ArrayList
+		contexts = new ArrayList
+		graphTable = new Hashtable
+	}
 
 	/*
 	 * Entry point
@@ -58,11 +64,11 @@ class Generator
 			var stop = false
 			while(!stop){
 				currentLink = currentContext.nextLink()
-				if(currentLink == void) {
+				if(currentLink == null) {
 					stop = true
 					}
 				else{	
-					if(currentContext.attachNode == Void) {
+					if(currentContext.attachNode == null) {
 						//Init graph
 						currentContext.attachNode = new GraphNode()
 						currentContext.attachNode.relatedLink = currentLink
@@ -95,7 +101,7 @@ class Generator
 		
 		allInstruments.addAll(instr)
 		var result = new Context()
-		result.initialize(allInstruments.filter[e | e.initiallyActivated] as List, new ArrayList<Action>())
+		result.initialize(allInstruments.filter[e | e.initiallyActivated].toList , new ArrayList<Action>())
 		return result
 	}
 	
@@ -104,8 +110,6 @@ class Generator
 	 * into a cache
 	 */
 	def void cache4Links(List<Instrument> instr) {
-	
-		graphTable = new Hashtable<Link,Graph>()
 		
 		instr.forEach[i |
 			i.links.forEach[l |
