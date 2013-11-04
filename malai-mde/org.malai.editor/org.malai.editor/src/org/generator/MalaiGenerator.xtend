@@ -3,15 +3,10 @@
  */
 package org.generator
 
-import org.eclipse.emf.ecore.resource.Resource
-import org.eclipse.xtext.generator.IGenerator
-import org.eclipse.xtext.generator.IFileSystemAccess
-import java.io.File
 import org.eclipse.emf.common.util.URI
-import java.util.Collections
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
 import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.xtext.generator.IFileSystemAccess
+import org.eclipse.xtext.generator.IGenerator
 
 //import com.google.inject.Injector
 
@@ -23,44 +18,11 @@ import org.eclipse.emf.ecore.resource.Resource
 class MalaiGenerator implements IGenerator {
 	
 	override void doGenerate(Resource resource, IFileSystemAccess fsa) {
+	var URI srcURI = resource.URI
+		var tgtURI = URI::createPlatformResourceURI(srcURI.toPlatformString(false).replaceAll("\\.malai","\\.xmi"),false);
 		
-//		 var resourceSet = new ResourceSetImpl();
-//		 resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
-//    	 "*", new XMIResourceFactoryImpl());
-//    	 var fileURI = URI::createFileURI(new File("file.xmi").getAbsolutePath());
-//    	 var resource2 = resourceSet.createResource(fileURI);
-//    	 resource2.getContents().add(resource.contents.get(0))
-//    	 resource2.save(Collections::EMPTY_MAP);
-//    	 print(resource2.toString)
-		
-//		fsa.generateFile('greetings.txt', 'People to greet: ' + 
-//			resource.allContents
-//				.filter(typeof(Greeting))
-//				.map[name]
-//				.join(', '))
-//var resFactory = new XMIResourceFactoryImpl();
-
-//		var xmiResource = resourceSet.createResource(URI.createURI("test.xmi"));
-//		var injector = new MalaiStandaloneSetup().createInjectorAndDoEMFRegistration();
-//		var c = XtextResourceSet.class;
-//		var resourceSet = injector.getInstance(c);
-//		
-//		URI uri = URI.createURI("personXMI.CM");
-//		// Resource xtextResource = resourceSet.createResource(uri);
-//		Resource xtextResource = resourceSet.getResource(uri, true);
-//		
-//		EcoreUtil.resolveAll(xtextResource);
-//		
-//		Resource xmiResource = resourceSet.createResource(URI.createURI("test.xmi"));
-//		xmiResource.getContents().add(xtextResource.getContents().get(0));
-//		try {
-//			xmiResource.save(null);
-//		} catch (IOException e) {
-//			e.printStackTr
-
-//var fileURI = URI::createFileURI(new File("mylibrary.xmi").getAbsolutePath());
-//var resourceTarget = resource.getResourceSet().createResource(fileURI);
-//resourceTarget.getContents().add(resource.getContents().get(0))
-//resourceTarget.save(Collections::EMPTY_MAP)
+		var xmiResource = resource.resourceSet.createResource(tgtURI)
+		xmiResource.getContents().add(resource.getContents().get(0))
+		xmiResource.save(null)
 	}
 }
