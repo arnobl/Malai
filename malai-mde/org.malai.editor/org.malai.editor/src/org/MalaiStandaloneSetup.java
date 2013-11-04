@@ -3,6 +3,15 @@
 */
 package org;
 
+import java.io.IOException;
+
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.xtext.resource.XtextResourceSet;
+
+import com.google.inject.Injector;
+
 /**
  * Initialization support for running Xtext languages 
  * without equinox extension registry
@@ -12,5 +21,27 @@ public class MalaiStandaloneSetup extends MalaiStandaloneSetupGenerated{
 	public static void doSetup() {
 		new MalaiStandaloneSetup().createInjectorAndDoEMFRegistration();
 	}
+	
+	public static void textToXmi(URI inputURI, URI outputURI){
+		Injector injector = new MalaiStandaloneSetup().createInjectorAndDoEMFRegistration();
+		XtextResourceSet resourceSet = injector.getInstance(XtextResourceSet.class);
+		
+		Resource xtextResource = resourceSet.getResource(inputURI, true);
+		EcoreUtil.resolveAll(xtextResource);
+		
+		Resource xmiResource = resourceSet.createResource(outputURI);
+		xmiResource.getContents().add(xtextResource.getContents().get(0));
+		try{
+			xmiResource.save(null);
+		}
+		catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public static void main(String[] args) {
+		MalaiStandaloneSetup.textToXmi(URI.createURI("test.malai"), URI.createURI("test2.xmi"));
+	}
 }
+
 
