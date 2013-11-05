@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry including="**/*.java" kind="src" output="target/classes" path="xtend-gen">
-		<attributes>
-			<attribute name="optional" value="true"/>
-			<attribute name="maven.pomderived" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry including="**/*.java" kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="output" path="target/classes"/>
+  <classpathentry kind="src" path="xtend-gen"/>
+  <classpathentry kind="src" path="src" excluding="**/*.java|**/*.java"/>
+  <classpathentry kind="output" path="target/classes"/>
+  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+  <classpathentry kind="var" path="M2_REPO/org/eclipse/xtend/org.eclipse.xtend.lib/2.4.3/org.eclipse.xtend.lib-2.4.3.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/eclipse/xtext/org.eclipse.xtext.xbase.lib/2.4.3/org.eclipse.xtext.xbase.lib-2.4.3.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/google/guava/guava/15.0-rc1/guava-15.0-rc1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/fr/inria/diverse/fr.inria.diverse.k3.core/3.0-SNAPSHOT/fr.inria.diverse.k3.core-3.0-SNAPSHOT.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/malai/warpper/org.malai.warpper/0.0.1-SNAPSHOT/org.malai.warpper-0.0.1-SNAPSHOT.jar"/>
+  <classpathentry kind="var" path="M2_REPO/choco/choco-solver/2.1.5/choco-solver-2.1.5.jar"/>
+  <classpathentry kind="var" path="M2_REPO/choco/choco-kernel/2.1.5/choco-kernel-2.1.5.jar" sourcepath="M2_REPO/choco/choco-kernel/2.1.5/choco-kernel-2.1.5-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/dk/brics/automaton/1.11-2/automaton-1.11-2.jar"/>
+  <classpathentry kind="var" path="M2_REPO/jgrapht/jgrapht/0.8.1/jgrapht-0.8.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/gnu/trove/2.1.0/trove-2.1.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/choco/choco-kernel/2.1.5/choco-kernel-2.1.5-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/choco/choco-cp/2.1.5/choco-cp-2.1.5.jar" sourcepath="M2_REPO/choco/choco-cp/2.1.5/choco-cp-2.1.5-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/choco/choco-cp/2.1.5/choco-cp-2.1.5-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/malai/model/org.malai.model/0.0.1-SNAPSHOT/org.malai.model-0.0.1-SNAPSHOT.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/eclipse/emf/org.eclipse.emf.ecore.xmi/2.8.0-v20120911-0500/org.eclipse.emf.ecore.xmi-2.8.0-v20120911-0500.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/eclipse/emf/org.eclipse.emf.ecore/2.8.0-v20120911-0500/org.eclipse.emf.ecore-2.8.0-v20120911-0500.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/eclipse/emf/org.eclipse.emf.common/2.8.0-v20120911-0500/org.eclipse.emf.common-2.8.0-v20120911-0500.jar"/>
 </classpath>
