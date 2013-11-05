@@ -8,6 +8,10 @@
 
    <extension point="org.eclipse.emf.ecore.generated_package">
       <package
+            uri="http://fr.inria.triskell.IAFlowGraph/1_0_0//fr/inria/IAFlowGraph"
+            class="fr.inria.IAFlowGraph.IAFlowGraphPackage"
+            genModel="src/main/metamodel/IAFlowGraph.genmodel"/>
+      <package
             uri="http://org.malai/event/1_0_0//org/malai/event"
             class="org.malai.event.EventPackage"
             genModel="src/main/metamodel/event.genmodel"/>
