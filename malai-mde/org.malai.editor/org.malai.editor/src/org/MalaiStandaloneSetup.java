@@ -39,6 +39,16 @@ public class MalaiStandaloneSetup extends MalaiStandaloneSetupGenerated{
 		}
 	}
 	
+	public static Resource load(URI inputURI){
+		Injector injector = new MalaiStandaloneSetup().createInjectorAndDoEMFRegistration();
+		XtextResourceSet resourceSet = injector.getInstance(XtextResourceSet.class);
+		
+		Resource xtextResource = resourceSet.getResource(inputURI, true);
+		EcoreUtil.resolveAll(xtextResource);
+		
+		return xtextResource;
+	}
+	
 	public static void main(String[] args) {
 		MalaiStandaloneSetup.textToXmi(URI.createURI("test.malai"), URI.createURI("test2.xmi"));
 	}
