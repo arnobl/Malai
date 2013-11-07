@@ -25,15 +25,14 @@ class Parser{
 		//Get the solutions
 		var result = new ArrayList<String>()
 		
-		var Object res
+		var String res
 		
 		var stop = false
 		while(!stop){
-//			res = org.malai.wrapper.ChocoWrapper.getCurrentSolution()
-//			result.add(res)
-//			
-//			res = org.malai.wrapper.ChocoWrapper.getNextSolution()
-//			stop = not res.asType(Boolean)
+			res = org.malai.wrapper.ChocoWrapper.getCurrentSolution()
+			result.add(res)
+			
+			stop = !org.malai.wrapper.ChocoWrapper.getNextSolution()
 		}
 		
 		return result
@@ -51,12 +50,12 @@ class Parser{
 		
 		var int endParse
 		
-		if(condition.charAt(begin).equals("(")) {
+		if(condition.charAt(begin).toString.equals('(')) {
 			endParse = parseParentheses(condition,begin)
 		}
 		else {
-			if(condition.charAt(begin).equals("!")) {
-				if(condition.charAt(begin+1).equals("(")){
+			if(condition.charAt(begin).toString.equals('!')) {
+				if(condition.charAt(begin+1).toString.equals('(')){
 					endParse = parseParentheses(condition,begin+1)
 				}
 				else{
@@ -68,7 +67,7 @@ class Parser{
 			else {
 				endParse = parseVar(condition,begin)
 				org.malai.wrapper.ChocoWrapper.pushVariable(condition.substring(begin,endParse+1))
-//					stdio.writeln(condition.substring(begin,endParse+1))
+					println(condition.substring(begin,endParse+1))
 			}
 		}
 		
@@ -78,16 +77,16 @@ class Parser{
 		else{
 			var int next = ignoreWhitespace(condition,endParse+1) 
 			
-			if(condition.charAt(next).equals(")")) {
+			if(condition.charAt(next).toString.equals(')')) {
 					result = next - 1
 			}
 			else{
-				if (condition.charAt(next).equals("|") && condition.charAt(next+1).equals("|")){
+				if (condition.charAt(next).toString.equals('|') && condition.charAt(next+1).toString.equals('|')){
 					result = parse(condition,next + 2)	
 					org.malai.wrapper.ChocoWrapper.pushOR()
 				}
 				else{
-					if (condition.charAt(next).equals("&") && condition.charAt(next+1).equals("&"))	{
+					if (condition.charAt(next).toString.equals('&') && condition.charAt(next+1).toString.equals('&'))	{
 						result = parse(condition,next + 2)
 						org.malai.wrapper.ChocoWrapper.pushAND()
 					}	
@@ -109,7 +108,7 @@ class Parser{
 	
 		var int endParse
 		
-		if(condition.charAt(position).equals("(")) {
+		if(condition.charAt(position).toString.equals('(')) {
 //					stdio.writeln("[")
 				var int next = ignoreWhitespace(condition,position+1)
 				endParse = parse(condition,next)
@@ -117,7 +116,7 @@ class Parser{
 		
 		var int next = ignoreWhitespace(condition,endParse+1)
 		
-		if(condition.charAt(next).equals(")")) {
+		if(condition.charAt(next).toString.equals(')')) {
 //				stdio.writeln("]")
 			result = next
 		}	
@@ -144,19 +143,19 @@ class Parser{
 				result = i - 1
 			}
 			else{
-				if( condition.charAt(i).equals("|") 
-				|| condition.charAt(i).equals("&") 
-				|| condition.charAt(i).equals(" ")
-				|| condition.charAt(i).equals(")")){
+				if( condition.charAt(i).toString.equals('|') 
+				|| condition.charAt(i).toString.equals('&') 
+				|| condition.charAt(i).toString.equals(' ')
+				|| condition.charAt(i).toString.equals(')')){
 					stop = true
 					result = i - 1
 				}
 				else{
-					if(condition.charAt(i).equals("(")) {
+					if(condition.charAt(i).toString.equals('(')) {
 						stop = true
 						if (i+1<condition.length) {
 							var int next = ignoreWhitespace(condition,i+1)
-							if (condition.charAt(next).equals( ")")) {
+							if (condition.charAt(next).toString.equals( ')')) {
 								result = next
 							}
 						}
@@ -181,7 +180,7 @@ class Parser{
 		var int i = position
 		while(!(stop || i >= condition.length() - 1)){
 			i = i + 1
-			if (!condition.charAt(i).equals(" ")) {
+			if (!condition.charAt(i).toString.equals(' ')) {
 				stop = true
 				result = i
 			}
@@ -196,7 +195,7 @@ class Parser{
 	def int ignoreWhitespace(String condition, int position) {
 		var int result = position
 		if (position < condition.length) {
-			if (condition.charAt(position).equals(" ")){
+			if (condition.charAt(position).toString.equals(' ')){
 				result = parseWhitespace(condition,position)
 			}
 		}
