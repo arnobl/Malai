@@ -67,7 +67,7 @@ class Parser{
 			else {
 				endParse = parseVar(condition,begin)
 				org.malai.wrapper.ChocoWrapper.pushVariable(condition.substring(begin,endParse+1))
-					println(condition.substring(begin,endParse+1))
+//					println(condition.substring(begin,endParse+1))
 			}
 		}
 		
