@@ -9,6 +9,7 @@ import org.malai.interaction.AbortingState
 import org.malai.instrument.Link
 
 import static extension org.malai.model.aspect.InteractionAspect.*
+import static extension org.malai.model.aspect.TransitionAspect.*
 
 
 /**
@@ -89,10 +90,10 @@ class IAFlowGraphPart{
 				}
 				
 				if(index == path.size-1){
-					if(elem instanceof TerminalState ){
+					if(elem.outputState instanceof TerminalState ){
 						terminalTransitions.add(currentTransition)
 					}
-					if(elem instanceof AbortingState ) {
+					if(elem.outputState instanceof AbortingState ) {
 						abortingTransitions.add(currentTransition)
 					}
 				}
@@ -107,10 +108,20 @@ class IAFlowGraphPart{
 		val StringBuffer res = new StringBuffer()
 		res.append("digraph OutputGraph {\n")
 		allTransitions.forEach[tr | 
-			res.append(tr.hashCode+"[label=\""+tr.concreteTransition.name+"\"] \n")
+			res.append(tr.hashCode+final2String(tr)+"[label=\""+condition2String(tr.concreteTransition)+tr.concreteTransition.name+"\"] \n")
 			tr.outgoingTransitions.forEach[out | res.append(tr.hashCode+"->"+out.hashCode+"\n")]
 		]
 		res.append("}")
 		return res.toString
+	}
+	
+	def String condition2String(Transition t){
+		if(t.conditionSolution != null) return t.conditionSolution+"\\n"
+		return ""
+	}
+	
+	def String final2String(InteractionTransition t){
+		if(t.action!= null && t.action.actionProduced == true) return "[shape=box]"
+		return ""
 	}
 }
