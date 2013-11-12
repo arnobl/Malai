@@ -10,7 +10,8 @@ import org.malai.instrument.Link
 
 import static extension org.malai.model.aspect.InteractionAspect.*
 import static extension org.malai.model.aspect.TransitionAspect.*
-
+import org.malai.instrument.Instrument
+import org.malai.action.Action
 
 /**
  * Conversion of a Link to an IAFlowGraph
@@ -32,7 +33,7 @@ class IAFlowGraphPart{
 		abortingTransitions = new ArrayList<InteractionTransition>()
 		allPaths = new ArrayList<List<InteractionTransition>>()
 		
-		var List<List<Transition>> paths = link.interaction.visit(new Context()) //need context parameter, but useless here
+		var List<List<Transition>> paths = link.interaction.visit(new Context(new ArrayList<Instrument>, new ArrayList<Action> )) //need context parameter, but useless here
 		paths.forEach[ p | addPathInGraph(p,link)]
 	}
 	
@@ -104,7 +105,7 @@ class IAFlowGraphPart{
 	/**
 	 * Representation of the Interaction-Action flow graph in the DOT format
 	 */
-	def String print(){
+	override String toString(){
 		val StringBuffer res = new StringBuffer()
 		res.append("digraph OutputGraph {\n")
 		allTransitions.forEach[tr | 

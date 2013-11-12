@@ -6,8 +6,11 @@ import org.malai.instrument.Instrument
 import org.malai.instrument.Link
 import java.util.ArrayList
 import org.malai.action.Action
+import org.malai.model.generator.graph.GraphNode
+import org.malai.model.generator.graph.Graph
 
 import static extension org.malai.model.aspect.LinkAspect.*
+
 
 /*
  * Store all created context and for each select the next link to be visited
@@ -29,7 +32,7 @@ class Generator
 	 * Hashtable to store computed Graph from a Link
 	 * Avoid to generate Graph each time of Link.visit()
 	 */
-	var Hashtable<Link,Graph> graphTable
+	var Hashtable<Link,IAFlowGraphPart> graphTable
 	
 	//Help to "attach" context to each other
 	public var GraphNode currentNode
@@ -58,37 +61,35 @@ class Generator
 		var Context currentContext
 		while (!contexts.isEmpty){
 			currentContext = contexts.head
-			println(currentContext.toString)
-		
-			var Link currentLink
-			var stop = false
-			while(!stop){
-				currentLink = currentContext.nextLink()
-				if(currentLink == null) {
-					stop = true
-					}
-				else{	
-					if(currentContext.attachNode == null) {
-						//Init graph
-						currentContext.attachNode = new GraphNode()
-						currentContext.attachNode.relatedLink = currentLink
-						result.rootNode = currentContext.attachNode
-						}
-					else{
-						//Update graph
-						currentNode = currentContext.attachNode
-						var GraphNode nextNode = new GraphNode()
-						nextNode.relatedLink = currentLink
-						currentNode.childrenNode.add(nextNode)
-						currentNode = nextNode		
-					}
+			
+			//Root node
+			if(currentContext.attachNode == null) {
+				currentContext.attachNode = result.createNode()
+				result.rootNode = currentContext.attachNode
+				var Link currentLink
+				if((currentLink = currentContext.nextLink()) != null){
+					currentContext.attachNode.relatedLink = currentLink
 					currentLink.visit(currentContext, this)
 				}
 			}
 			
+			currentNode = currentContext.attachNode 
+
+			var Link currentLink
+			while((currentLink = currentContext.nextLink()) != null){
+				//Update graph
+				var GraphNode nextNode = result.createNode()
+				nextNode.relatedLink = currentLink
+				currentNode.addChildren(nextNode)
+				currentLink.visit(currentContext, this)
+				
+				currentNode = nextNode
+			}
+			
 			contexts.remove(currentContext)
 		}
-		
+		result.save("test.dot")
+		println("DONE")
 		return result
 	}
 	
@@ -100,12 +101,11 @@ class Generator
 		cache4Links(instr)
 		
 		allInstruments.addAll(instr)
-		var result = new Context()
-		result.initialize(allInstruments.filter[e | e.initiallyActivated].toList , new ArrayList<Action>())
+		var result = new Context(allInstruments.filter[e | e.initiallyActivated].toList , new ArrayList<Action>())
 		return result
 	}
 	
-	/*
+	/**
 	 * Convert all Links of all Instruments to graph and store them 
 	 * into a cache
 	 */
@@ -113,9 +113,8 @@ class Generator
 		
 		instr.forEach[i |
 			i.links.forEach[l |
-				var Graph gr = new Graph
-				gr.rootNode.convertLink(l)
-				graphTable.put(l,gr)
+				var graphPart = new IAFlowGraphPart(l)
+				graphTable.put(l,graphPart)
 			]
 		]
 	
