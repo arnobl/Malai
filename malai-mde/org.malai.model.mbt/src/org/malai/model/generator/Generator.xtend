@@ -17,10 +17,12 @@ import static extension org.malai.model.aspect.LinkAspect.*
  */
 class Generator
 {
-	//Instruments from the system
+	/**
+	 * Instruments from the system
+	 */
 	var List<Instrument> allInstruments
 	
-	/* 
+	/** 
 	 * Contexts created by visited Links
 	 *
 	 * Each interaction adds solved action/ activated instrument
@@ -28,7 +30,7 @@ class Generator
 	 */
 	var List<Context> contexts
 	
-	/*
+	/**
 	 * Hashtable to store computed Graph from a Link
 	 * Avoid to generate Graph each time of Link.visit()
 	 */
@@ -37,13 +39,20 @@ class Generator
 	//Help to "attach" context to each other
 	public var GraphNode currentNode
 	
-	new(){
+	new(List<Instrument> instr){
+		
 		allInstruments = new ArrayList
 		contexts = new ArrayList
 		graphTable = new Hashtable
+		
+		cache4Links(instr)
+		
+		allInstruments.addAll(instr)
+		var Context newContext = new Context(allInstruments.filter[e | e.initiallyActivated].toList , new ArrayList<Action>())
+		addContext(newContext)	
 	}
 
-	/*
+	/**
 	 * Entry point
 	 * 
 	 * Creates the initial context and visits it, which will creates new contexts
@@ -51,13 +60,10 @@ class Generator
 	 *
 	 * Return the Event Flow Graph corresponding to the possible executions
 	 */
-	def Graph run(List<Instrument> instr){
+	def Graph run(){
 	
 		var result = new Graph
-	
-		var Context newContext = initialize(instr)
-		addContext(newContext)
-		
+
 		var Context currentContext
 		while (!contexts.isEmpty){
 			currentContext = contexts.head
@@ -90,18 +96,6 @@ class Generator
 		}
 		result.save("test.dot")
 		println("DONE")
-		return result
-	}
-	
-	/*
-	 * Retrieve instruments from the system
-	 */
-	def Context initialize( List<Instrument> instr) {
-	
-		cache4Links(instr)
-		
-		allInstruments.addAll(instr)
-		var result = new Context(allInstruments.filter[e | e.initiallyActivated].toList , new ArrayList<Action>())
 		return result
 	}
 	

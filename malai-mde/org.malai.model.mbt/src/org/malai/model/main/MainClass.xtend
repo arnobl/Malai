@@ -1,16 +1,15 @@
 package org.malai.model.main
 
-import org.eclipse.emf.ecore.resource.ResourceSet
-import org.eclipse.emf.ecore.resource.Resource
-import java.util.List
-import org.malai.instrument.Instrument
 import java.util.ArrayList
-import org.malai.model.generator.Generator
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
-import org.eclipse.emf.ecore.EPackage
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
+import java.util.List
 import org.eclipse.emf.common.util.URI
+import org.eclipse.emf.ecore.EPackage
+import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
+import org.malai.instrument.Instrument
 import org.malai.instrument.InstrumentPackage
+import org.malai.model.generator.Generator
 
 class MainClass
 {
@@ -25,15 +24,8 @@ class MainClass
 	
 	def void visitModel(List<Instrument> allInst) {
 		
-		var Generator gen  = new Generator()
-		gen.run(allInst)
-		
-		//var myCondition : String := "  (var1==var5)   &&(!var2 ||  (var3( )&& var4) )   "
-		/*var myCondition : String := "(var1 && !var2) || (!var1 && var2)"
-		var parser : org::malai::conditionSolver::Parser := org::malai::conditionSolver::Parser.new
-		var sols : Collection<String> := parser.getSolutions(myCondition)
-		sols.each{e | stdio.writeln(e)}*/
-		
+		var Generator gen  = new Generator(allInst)
+		gen.run()		
 	}
 	
 	def List<Instrument> loadModel(String path){

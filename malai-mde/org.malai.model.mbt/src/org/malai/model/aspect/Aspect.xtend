@@ -1,6 +1,7 @@
 package org.malai.model.aspect
 
 import fr.inria.triskell.k3.Aspect
+import fr.inria.triskell.k3.OverrideAspectMethod
 import java.util.ArrayList
 import java.util.List
 import org.malai.action.Action
@@ -17,19 +18,14 @@ import org.malai.model.generator.Context
 import org.malai.model.generator.Generator
 
 import static extension org.malai.model.aspect.ActionAspect.*
-import static extension org.malai.model.aspect.InteractionAspect.*
+import static extension org.malai.model.aspect.LinkAspect.*
 import static extension org.malai.model.aspect.StateAspect.*
 import static extension org.malai.model.aspect.TransitionAspect.*
-import static extension org.malai.model.aspect.LinkAspect.*
-import fr.inria.triskell.k3.ReplaceAspectMethod
-import fr.inria.triskell.k3.OverrideAspectMethod
-import com.sun.xml.internal.ws.transport.http.DeploymentDescriptorParser.AdapterFactory
 
 @Aspect(className=typeof(Instrument))
 class InstrumentAspect {
 
 	def void visit(Context context, Generator generator) {
-//		println("Hello from INSTRUMENT "+_self)
 		_self.links.forEach[elem | elem.visit(context, generator)]
 	}
 }
@@ -37,7 +33,7 @@ class InstrumentAspect {
 @Aspect(className=typeof(Link))
 class LinkAspect{
 	
-	/*
+	/**
 	 * Retrieve the number of visits in this Context
 	 */
 	def int getVisitCounter(Context context) {
@@ -48,7 +44,7 @@ class LinkAspect{
 		return visitCounter
 	}
 	
-	/*
+	/**
 	 * Increment the number of visits in this Context
 	 */
 	def void incrVisitCounter(Context context ) {
@@ -72,29 +68,6 @@ class LinkAspect{
 				_self.action.visit(newContext)
 			}
 		]
-		
-//		println("Hello from LINK "+_self)
-//		
-//		var List<List<Transition>>  paths = _self.interaction.visit(context)
-//		
-//		paths.forEach[path, index |
-//				var Context newContext
-//				if (index == 0) {
-//					newContext = context
-//					}
-//				else{
-//					newContext = context.copy()
-//					newContext.attachNode = generator.currentNode
-//					generator.addContext(newContext)
-//				}
-//				
-//				if (path.size > 0) {
-//					var Transition t = path.last
-//					if (t.outputState instanceof TerminalState) {
-//						_self.action.visit(newContext) //Update context
-//					}
-//				}
-//			]
 	}
 }
 
@@ -102,13 +75,11 @@ class LinkAspect{
 @Aspect(className=typeof(Interaction))
 class InteractionAspect{
 
-	/*
+	/**
 	 * Visits all paths and return paths to TerminalState & AbortingState
 	 */
 	def List<List<Transition>>  visit(Context context) {
 
-//		println("Hello from INTERACTION "+_self.class.name)
-		
 		_self.states.forEach[s | s.nbVisits = 0]
 		
 		if(_self.initState != null) {
@@ -126,8 +97,12 @@ class StateAspect{
 
 	var int nbVisits
 	
-	//Config: change this value to change the number of allowed loops
-	def int nbMaxVisits() {return 3}
+	/**
+	 * Config: Number of allowed loops
+	 */
+	def int nbMaxVisits() {
+		return 3
+	}
 
 	/**
 	 * Return all paths to finals states from this State
@@ -148,7 +123,6 @@ class StateAspect{
 		}
 		
 		if(_self.nbVisits < _self.nbMaxVisits) {
-//			println("Hello from STATE "+_self.name)	
 			_self.nbVisits = _self.nbVisits + 1		
 			_self.outputTransitions.forEach[elem | 
 					visitedTransition.add(elem)
@@ -196,10 +170,6 @@ class TerminalStateAspect extends StateAspect{
 	 */
 	@OverrideAspectMethod
 	def List<List<Transition>> visit(Context context, List<Transition> visitedTransition) {
-//		println("Hello from TERMINAL_STATE "+_self.name)
-		
-//		var res = visitedTransition.join("[",">","]",[e|e.name]).concat(" : "+ _self.name)
-//		println(res)
 		
 		var result = new ArrayList<List<Transition>>
 		val List<Transition> clonedPath = new ArrayList<Transition>()
@@ -217,10 +187,6 @@ class AbortingStateAspect extends StateAspect{
 	 */
 	@OverrideAspectMethod
 	def List<List<Transition>> visit(Context context, List<Transition> visitedTransition) {
-//		println("Hello from ABORTING_STATE "+_self.name)
-		
-//		var res = visitedTransition.join("[",">","]",[e|e.name]).concat(" : "+ _self.name)
-//		println(res.toString)
 		
 		var result = new ArrayList<List<Transition>>()
 		val List<Transition> clonedPath = new ArrayList<Transition>()
@@ -237,12 +203,6 @@ class TransitionAspect{
 	var String conditionSolution
 
 	def List<List<Transition>> visit(Context context, List<Transition> visitedTransition) {
-//		println("Hello from TRANSITION "+_self.name)
-		
-//		if(_self.conditionSolution != null) {
-//			println("{"+_self.conditionSolution+"}")
-//		}
-		
 		return _self.outputState.visit(context,visitedTransition)
 	}
 	
@@ -280,6 +240,5 @@ class ActionAspect{
 		toRemove.forEach[cancelled | context.resolvedActions.remove(cancelled)]
 		
 		context.addSolvedAvtion(_self)
-//		println("Hello from ACTION "+_self.class.name)
 	}
 }

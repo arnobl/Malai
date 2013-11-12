@@ -5,7 +5,7 @@ import java.util.ArrayList
 
 class Parser{
 
-	/*
+	/**
 	 * Entry point
 	 *
 	 * Return the list of the solutions for the given expression.
@@ -38,8 +38,9 @@ class Parser{
 		return result
 	}
 
-	/*
+	/**
 	 * Return the end position of the current condition that may be then end of the string or a char just before a ')'
+	 * 
 	 * @position is the begin character offset of the current condition
 	 */
 	def int parse(String condition, int position) {
@@ -67,7 +68,6 @@ class Parser{
 			else {
 				endParse = parseVar(condition,begin)
 				org.malai.wrapper.ChocoWrapper.pushVariable(condition.substring(begin,endParse+1))
-//					println(condition.substring(begin,endParse+1))
 			}
 		}
 		
@@ -96,7 +96,7 @@ class Parser{
 		return result
 	}	
 	
-	/*
+	/**
 	 * Search the close parenthese and return his position in @condition.
 	 *
 	 * @condition is the parsed string
@@ -109,7 +109,6 @@ class Parser{
 		var int endParse
 		
 		if(condition.charAt(position).toString.equals('(')) {
-//					stdio.writeln("[")
 				var int next = ignoreWhitespace(condition,position+1)
 				endParse = parse(condition,next)
 		}
@@ -117,14 +116,13 @@ class Parser{
 		var int next = ignoreWhitespace(condition,endParse+1)
 		
 		if(condition.charAt(next).toString.equals(')')) {
-//				stdio.writeln("]")
 			result = next
 		}	
 		
 		return result
 	}
 	
-	/*
+	/**
 	 * Search the last character of the variable and return his position in @condition.
 	 *
 	 * @condition is the parsed string
@@ -166,7 +164,7 @@ class Parser{
 		return result
 	}
 	
-	/*
+	/**
 	 * Search the position in @condition of the last consecutive occurrence 
 	 * of a space character, from @position
 	 *
@@ -189,7 +187,7 @@ class Parser{
 		return result
 	}
 	
-	/*
+	/**
 	 * Return the position of the next no space character 
 	 */
 	def int ignoreWhitespace(String condition, int position) {
