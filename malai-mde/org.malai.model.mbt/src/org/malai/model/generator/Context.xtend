@@ -5,11 +5,12 @@ import java.util.List
 import org.malai.instrument.Instrument
 import org.malai.instrument.Link
 import java.util.Hashtable
+import java.util.ArrayList
+import org.malai.model.generator.graph.GraphNode
 
 import static extension org.malai.model.aspect.LinkAspect.*
-import java.util.ArrayList
 
-/*
+/**
  * Represents the runtime state
  */
 class Context
@@ -30,29 +31,22 @@ class Context
 	//Root used to attach futur nodes of the context
 	public GraphNode attachNode
 	
-	new() {
-		resolvedActions = new ArrayList
-		activatedInstr = new ArrayList
-		linksCounters = new Hashtable
-	}
-	
-	/*
-	 * Setup the context
-	 */
-	def void initialize(List<Instrument> activInstr, List<Action> resAction ) {
+	new(List<Instrument> activInstr, List<Action> resAction ) {
 		MAXVISITS = 3
+		resolvedActions = new ArrayList<Action>()
 		resolvedActions.addAll(resAction)
+		activatedInstr = new ArrayList<Instrument>()
 		activatedInstr.addAll(activInstr)
 		linksCounters = new Hashtable<Link,Integer>
 	}
 	
-	/*
+	/**
 	 * Select the next Link to be visited from 
 	 * all instruments activated
 	 * 
 	 * Strategy :
 	 * Get the less visited link (and visitable)
-	 * If none return void
+	 * If none return null
 	 */
 	def Link nextLink() {	
 
@@ -63,40 +57,40 @@ class Context
 		return activatedInstr.map[instr| instr.links].flatten.filter(visitableMask).reduce(findMinLink)
 	}
 	
-	/*
+	/**
 	 * Add an executed action in the current context
 	 */
 	def void addSolvedAvtion(Action act) {
 		resolvedActions.add(act)
 	}
 	
-	/*
+	/**
 	 * Add a usable instrument 
 	 */
 	def void activateInstrument(Instrument instr) {
 		activatedInstr.add(instr)
 	}		
 
-	/*
+	/**
 	 * Remove an instrument
 	 */ 
 	def inactivateInstrument(Instrument instr) {
 		activatedInstr.remove(instr)
 	}
 	
-	/*
-	 * Return true if all dependencies of the link are resolved
+	/**
+	 * Return true if all dependencies of the link are resolved in this context
 	 */
 	def boolean isVisitable(Link link) {
 		return link.action.dependencies.forall[dep | resolvedActions.contains(dep.srcAction)]
 	}
 	
-	/*
+	/**
 	 * Clone the current instance of Context
 	 */
 	def Context copy(){
-		var result = new Context()
-		result.initialize(this.activatedInstr, this.resolvedActions)
+		val result = new Context(this.activatedInstr, this.resolvedActions)
+		linksCounters.keySet.forEach[key | result.linksCounters.put(key,linksCounters.get(key))]
 		return result
 	}
 	
