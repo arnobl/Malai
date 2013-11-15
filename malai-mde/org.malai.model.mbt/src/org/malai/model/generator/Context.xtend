@@ -32,7 +32,7 @@ class Context
 	public GraphNode attachNode
 	
 	new(List<Instrument> activInstr, List<Action> resAction ) {
-		MAXVISITS = 3
+		MAXVISITS = 1
 		resolvedActions = new ArrayList<Action>()
 		resolvedActions.addAll(resAction)
 		activatedInstr = new ArrayList<Instrument>()
@@ -55,6 +55,14 @@ class Context
 		
 		//Get all links, keep just visitables and select the less visited
 		return activatedInstr.map[instr| instr.links].flatten.filter(visitableMask).reduce(findMinLink)
+	}
+	
+	/**
+	 * Get all visitable links from all activated instruments
+	 */
+	def List<Link> getVisitableLink(){
+		val visitableMask = [Link link | isVisitable(link) && link.getVisitCounter(this) < MAXVISITS]
+		return activatedInstr.map[instr| instr.links].flatten.filter(visitableMask).toList
 	}
 	
 	/**
@@ -98,8 +106,8 @@ class Context
 		val res = new StringBuffer()
 	
 		res.append("-----------------------------------------\n")
-		activatedInstr.forEach[ i | res.append("{"+ i.class.name +"}\n")]
-		resolvedActions.forEach[a | res.append("["+ a.class.name +"]\n")]
+		activatedInstr.forEach[ i | res.append("{"+ i.name +"}\n")]
+		resolvedActions.forEach[a | res.append("["+ a.name +"]\n")]
 		res.append("-----------------------------------------\n")
 		
 		return res.toString()

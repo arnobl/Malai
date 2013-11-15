@@ -20,7 +20,7 @@ class Generator
 	/**
 	 * Instruments from the system
 	 */
-	var List<Instrument> allInstruments
+	public var List<Instrument> allInstruments
 	
 	/** 
 	 * Contexts created by visited Links
@@ -58,7 +58,7 @@ class Generator
 	 * Creates the initial context and visits it, which will creates new contexts
 	 * Then do the same for created contexts
 	 *
-	 * Return the Event Flow Graph corresponding to the possible executions
+	 * Return the Link Flow Graph corresponding to the possible executions
 	 */
 	def Graph run(){
 	
@@ -94,8 +94,54 @@ class Generator
 			
 			contexts.remove(currentContext)
 		}
-		result.save("test.dot")
 		println("DONE")
+		return result
+	}
+	
+	/**
+	 * Visit all possible Links. (exponential)
+	 */
+	def Graph run2(){
+		val result = new Graph
+		//Init root node
+		contexts.head.attachNode = result.createNode()
+		result.rootNode = contexts.head.attachNode
+		currentNode = result.rootNode
+		
+		//Then visit links
+		while (!contexts.isEmpty){
+			val currentContext = contexts.head
+			currentNode = currentContext.attachNode
+	
+			while(!currentContext.visitableLink.empty){
+				//Visit all links, the first one will become the new current node
+				var int i = currentContext.visitableLink.size - 1
+				while(i >= 0){
+					var Link currentLink = currentContext.visitableLink.get(i)
+					
+					//Update graph
+					var GraphNode nextNode = result.createNode()
+					nextNode.relatedLink = currentLink
+					currentNode.addChildren(nextNode)
+						
+					if(i == 0){ //Stay in the current context
+						currentLink.visit(currentContext, this)
+						currentNode = nextNode
+					}
+					else{ //Create a new context
+						var newContext = currentContext.copy()
+						newContext.attachNode = nextNode
+						addContext(newContext)
+						
+						currentLink.visit(newContext, this)
+					}
+					i = i - 1
+				}				
+			}
+			contexts.remove(currentContext)
+		}
+		
+		println("DONE (Tree with "+ result.numberOfLeafs + " leafs)")
 		return result
 	}
 	
@@ -109,6 +155,7 @@ class Generator
 			i.links.forEach[l |
 				var graphPart = new IAFlowGraphPart(l)
 				graphTable.put(l,graphPart)
+				println(graphPart)
 			]
 		]
 	

@@ -26,6 +26,10 @@ class Graph{
 		return n
 	}
 	
+	def int numberOfLeafs(){
+		return nodes.filter[node | node.isLeaf].size
+	}
+	
 	override String toString(){
 		val StringBuffer res = new StringBuffer
 		res.append("digraph OutputGraph {\n")
@@ -43,7 +47,7 @@ class Graph{
 			output.close();
 		}
 		catch(Exception e){
-			
+			println(e)
 		}
 	}
 }
@@ -61,9 +65,14 @@ class GraphNode
 		childrenNode.add(child)
 	}
 	
+	def boolean isLeaf(){
+		return childrenNode.size == 0
+	}
+	
 	override String toString(){
 		val StringBuffer res = new StringBuffer
-		res.append(this.hashCode+"[label=\""+relatedLink.interaction.name+"\\n"+relatedLink.action.name+"\"]\n")
+		if(relatedLink == null) res.append(this.hashCode+"[label=\"Root node\"]\n")
+		else res.append(this.hashCode+"[label=\""+relatedLink.interaction.name+"\\n"+relatedLink.action.name+"\"]\n")
 		childrenNode.forEach[child | res.append(this.hashCode+"->"+child.hashCode+"\n")]
 		return res.toString
 	}

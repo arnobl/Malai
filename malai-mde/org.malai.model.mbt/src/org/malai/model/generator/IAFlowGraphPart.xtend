@@ -109,7 +109,7 @@ class IAFlowGraphPart{
 		val StringBuffer res = new StringBuffer()
 		res.append("digraph OutputGraph {\n")
 		allTransitions.forEach[tr | 
-			res.append(tr.hashCode+final2String(tr)+"[label=\""+condition2String(tr.concreteTransition)+tr.concreteTransition.name+"\"] \n")
+			res.append(tr.hashCode+final2String(tr)+"[label=\""+condition2String(tr.concreteTransition)+tr.concreteTransition.event.name+"\"] \n")
 			tr.outgoingTransitions.forEach[out | res.append(tr.hashCode+"->"+out.hashCode+"\n")]
 		]
 		res.append("}")

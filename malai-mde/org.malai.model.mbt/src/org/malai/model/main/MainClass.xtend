@@ -10,6 +10,7 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
 import org.malai.instrument.Instrument
 import org.malai.instrument.InstrumentPackage
 import org.malai.model.generator.Generator
+import org.malai.model.generator.graph.Graph
 
 class MainClass
 {
@@ -22,10 +23,10 @@ class MainClass
 		visitModel(loadModel(m_uri))
 	}
 	
-	def void visitModel(List<Instrument> allInst) {
+	def Graph visitModel(List<Instrument> allInst) {
 		
 		var Generator gen  = new Generator(allInst)
-		gen.run()		
+		return gen.run2()		
 	}
 	
 	def List<Instrument> loadModel(String path){

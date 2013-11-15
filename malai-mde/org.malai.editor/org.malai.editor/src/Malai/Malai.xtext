@@ -32,7 +32,7 @@ State returns interaction::State:
 Instrument returns instrument::Instrument:
 	{instrument::Instrument}
 	(initiallyActivated?='initiallyActivated')?
-	'Instrument'
+	'Instrument' name=EString
 	'{'
 		('description' description=EString)?
 		('author' author=EString)?
@@ -48,7 +48,7 @@ Instrument returns instrument::Instrument:
 
 
 Action returns action::Action:
-	undoable?='undoable'
+	(undoable?='undoable')?
 	(modifyInstrument?='modifyInstrument')?
 	'Action' name=EString
 	'{'
@@ -60,7 +60,22 @@ Action returns action::Action:
 		'clazz' clazz=EClass
 		('dependencies' '{' dependencies+=ActionDependency ( "," dependencies+=ActionDependency)* '}' )?
 	'}';
-
+	
+//ActionInstrument returns action::ActionInstrument:
+//	undoable?='undoable'
+//	(modifyInstrument?='modifyInstrument')?
+//	'Action' name=EString
+//	'{'
+//		'instruments' instruments+=[instrument::Instrument|EString] ( "," instruments+=[instrument::Instrument|EString])*
+//		('execute' execute=EString)?
+//		('canDo' canDo=EString)?
+//		('undo' undo=EString)?
+//		('redo' redo=EString)?
+//		('cancelledBy' '(' cancelledBy+=[action::Action|EString] ( "," cancelledBy+=[action::Action|EString])* ')' )?
+//		'clazz' clazz=EClass
+//		('dependencies' '{' dependencies+=ActionDependency ( "," dependencies+=ActionDependency)* '}' )?
+//	'}'
+//;
 
 Event returns event::Event:
 	'Event'

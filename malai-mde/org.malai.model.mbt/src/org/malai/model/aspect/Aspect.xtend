@@ -62,10 +62,10 @@ class LinkAspect{
 		_self.interaction.states.forEach[state|
 			
 			if(state instanceof TerminalState){
-				var newContext = context.copy()
-				newContext.attachNode = generator.currentNode
-				generator.addContext(newContext)
-				_self.action.visit(newContext)
+//				var newContext = context.copy()
+//				newContext.attachNode = generator.currentNode
+//				generator.addContext(newContext)
+				_self.action.visit(context, generator)
 			}
 		]
 	}
@@ -229,7 +229,7 @@ class ActionAspect{
 	/**
 	 * Update the context
 	 */
-	def void visit(Context context) {
+	def void visit(Context context, Generator generator) {
 		//This action may cancel resolved actions
 		val ArrayList toRemove = new ArrayList() 
 		context.resolvedActions.forEach[action | 
@@ -238,6 +238,18 @@ class ActionAspect{
 			}
 		]
 		toRemove.forEach[cancelled | context.resolvedActions.remove(cancelled)]
+		
+		//This action may unactivate instrument
+		if(_self.name.startsWith("Deactivate_")){
+			val tgtInstr = _self.name.replaceFirst("Deactivate_","")
+			val List<Instrument> instrToRemove = context.activatedInstr.filter[i | i.name.equals(tgtInstr)].toList
+			context.activatedInstr.removeAll(instrToRemove)
+		}
+		else if(_self.name.startsWith("Activate_")){ //Or activate
+			val tgtInstr = _self.name.replaceFirst("Activate_","")
+			val List<Instrument> instrToAdd = generator.allInstruments.filter[i | i.name.equals(tgtInstr)].toList
+			context.activatedInstr.addAll(instrToAdd.filter[i|!context.activatedInstr.contains(i)])
+		}
 		
 		context.addSolvedAvtion(_self)
 	}

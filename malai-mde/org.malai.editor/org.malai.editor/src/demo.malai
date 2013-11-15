@@ -1,0 +1,93 @@
+interactiveSystem{
+	instruments{
+		initiallyActivated Instrument "OutputSelector" {
+			links{
+				executeOnUpdate Link {
+					interaction "Drag n Drop" 
+					action setOutput
+				}
+			}
+		},
+		initiallyActivated Instrument "Activator" {
+			links{
+				executeOnUpdate Link {
+					interaction "Click button"
+					action Activate_OutputSelector
+				},
+				executeOnUpdate Link {
+					interaction "Click button"
+					action Deactivate_OutputSelector
+				}
+			}
+		}
+	}
+	
+	interactions{
+		activated Interaction "Drag n Drop"{
+			initState DnD_Init
+			states{
+				InitState "DnD_Init"
+					["Initial state"]
+					"press" (MousePressed) : DnD_Init => DnD_Pressed
+				StandardState "DnD_Pressed"
+					["Pressed state"]
+					"move" (MouseMoved) : DnD_Pressed => DnD_PressedAndMoved,
+					"release" (MouseReleased) : DnD_Pressed => DnD_Cancel
+				StandardState "DnD_PressedAndMoved"
+					["Moved state"]
+					"move" (MouseReleased) : DnD_PressedAndMoved => DnD_Done,
+					"move" (MouseMoved) : DnD_PressedAndMoved => DnD_PressedAndMoved,
+					"move" (KeyPressed) : DnD_PressedAndMoved => DnD_Cancel {condition "key=ESC || key=DEL"}
+				AbortingState "DnD_Cancel"
+					["Aborting state"]
+				TerminalState "DnD_Done"
+					["Final state"]
+			}
+			clazz EClass "DnDInteraction" {}
+		},
+		activated Interaction "Click button"{
+			initState Click_Init
+			states{
+				InitState "Click_Init"
+					"press" (MousePressed) : Click_Init => Click_Pressed
+				StandardState "Click_Pressed"
+					"release" (MouseReleased) : Click_Pressed => Click_Done
+				TerminalState "Click_Done"
+			}
+			clazz EClass "ClicInteraction" {}
+		}
+	}
+	
+	actions{
+		Action "setOutput"{
+			clazz EClass "SetOutputClass" {}
+		},
+		modifyInstrument Action "Activate_OutputSelector"{
+			clazz EClass "OpenOutput" {}
+		},
+		modifyInstrument Action "Deactivate_OutputSelector"{
+			clazz EClass "CloseOutput" {}
+		}
+	}
+	
+	events{
+		Event {
+			clazz EClass "MousePressed" {}
+		},
+		Event {
+			clazz EClass "MouseReleased" {}
+		},
+		Event {
+			clazz EClass "MouseMoved" {}
+		},
+		Event {
+			clazz EClass "KeyPressed" {}
+		}
+	}
+	
+	widgets{
+		Button "activatorButton",
+		Slider "outputSlider"
+	}
+	
+}
