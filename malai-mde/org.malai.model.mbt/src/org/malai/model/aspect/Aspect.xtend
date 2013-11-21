@@ -53,7 +53,7 @@ class LinkAspect{
 	}
 
 	/**
-	 * Visits the link and creates contexts for each possibles interactions
+	 * Visits the link. Do Action for each Terminal state
 	 */
 	def void visit(Context context, Generator generator) {
 	
@@ -62,9 +62,6 @@ class LinkAspect{
 		_self.interaction.states.forEach[state|
 			
 			if(state instanceof TerminalState){
-//				var newContext = context.copy()
-//				newContext.attachNode = generator.currentNode
-//				generator.addContext(newContext)
 				_self.action.visit(context, generator)
 			}
 		]
@@ -124,14 +121,15 @@ class StateAspect{
 		
 		if(_self.nbVisits < _self.nbMaxVisits) {
 			_self.nbVisits = _self.nbVisits + 1		
-			_self.outputTransitions.forEach[elem | 
+			_self.outputTransitions.forEach[elem |
 					visitedTransition.add(elem)
 					var List<List<Transition>> paths
 					paths = elem.visit(context,visitedTransition)
 					result.addAll(paths.filter[e | e.size() > 0])
 					visitedTransition.remove(elem)
 				]
-		}		
+		}	
+		
 		return result		
 	}
 	
@@ -241,13 +239,13 @@ class ActionAspect{
 		
 		//This action may unactivate instrument
 		if(_self.name.startsWith("Deactivate_")){
-			val tgtInstr = _self.name.replaceFirst("Deactivate_","")
-			val List<Instrument> instrToRemove = context.activatedInstr.filter[i | i.name.equals(tgtInstr)].toList
+			val tgtInstrList = _self.name.replaceFirst("Deactivate_","").split("_");
+			val List<Instrument> instrToRemove = tgtInstrList.map[tgtInstr | context.activatedInstr.findFirst[i | i.name.equals(tgtInstr)]]
 			context.activatedInstr.removeAll(instrToRemove)
 		}
 		else if(_self.name.startsWith("Activate_")){ //Or activate
-			val tgtInstr = _self.name.replaceFirst("Activate_","")
-			val List<Instrument> instrToAdd = generator.allInstruments.filter[i | i.name.equals(tgtInstr)].toList
+			val tgtInstrList = _self.name.replaceFirst("Activate_","").split("_");
+			val List<Instrument> instrToAdd = tgtInstrList.map[tgtInstr | generator.allInstruments.findFirst[i | i.name.equals(tgtInstr)]]
 			context.activatedInstr.addAll(instrToAdd.filter[i|!context.activatedInstr.contains(i)])
 		}
 		
