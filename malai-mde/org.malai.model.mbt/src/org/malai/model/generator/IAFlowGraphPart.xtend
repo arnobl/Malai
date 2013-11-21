@@ -12,6 +12,8 @@ import static extension org.malai.model.aspect.InteractionAspect.*
 import static extension org.malai.model.aspect.TransitionAspect.*
 import org.malai.instrument.Instrument
 import org.malai.action.Action
+import java.util.HashSet
+import java.util.Collection
 
 /**
  * Conversion of a Link to an IAFlowGraph
@@ -24,13 +26,20 @@ class IAFlowGraphPart{
 	public List<List<InteractionTransition>> allPaths //Paths from root to final/aborting states
 	
 	public List<InteractionTransition> allTransitions
-	public List<InteractionTransition> terminalTransitions
-	public List<InteractionTransition> abortingTransitions
+	public Collection<InteractionTransition> terminalTransitions
+	public Collection<InteractionTransition> abortingTransitions
+	
+	new(){
+		allTransitions = new ArrayList<InteractionTransition>()
+		terminalTransitions = new HashSet<InteractionTransition>()
+		abortingTransitions = new HashSet<InteractionTransition>()
+		allPaths = new ArrayList<List<InteractionTransition>>()
+	}
 	
 	new(Link link){
 		allTransitions = new ArrayList<InteractionTransition>()
-		terminalTransitions = new ArrayList<InteractionTransition>()
-		abortingTransitions = new ArrayList<InteractionTransition>()
+		terminalTransitions = new HashSet<InteractionTransition>()
+		abortingTransitions = new HashSet<InteractionTransition>()
 		allPaths = new ArrayList<List<InteractionTransition>>()
 		
 		var List<List<Transition>> paths = link.interaction.visit(new Context(new ArrayList<Instrument>, new ArrayList<Action> )) //need context parameter, but useless here
@@ -113,6 +122,18 @@ class IAFlowGraphPart{
 			tr.outgoingTransitions.forEach[out | res.append(tr.hashCode+"->"+out.hashCode+"\n")]
 		]
 		res.append("}")
+		return res.toString
+	}
+	
+	/**
+	 * @contentHashCode HashCode of the containing node 
+	 */
+	def String node2Graph(int contentHashCode){
+		val StringBuffer res = new StringBuffer()
+		allTransitions.forEach[tr | 
+			res.append(contentHashCode+""+tr.hashCode+final2String(tr)+"[label=\""+condition2String(tr.concreteTransition)+tr.concreteTransition.event.name+"\"] \n")
+			tr.outgoingTransitions.forEach[out | res.append(contentHashCode+""+tr.hashCode+"->"+contentHashCode+""+out.hashCode+"\n")]
+		]
 		return res.toString
 	}
 	

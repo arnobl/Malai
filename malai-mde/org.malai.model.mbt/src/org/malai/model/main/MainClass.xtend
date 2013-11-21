@@ -26,7 +26,7 @@ class MainClass
 	def Graph visitModel(List<Instrument> allInst) {
 		
 		var Generator gen  = new Generator(allInst)
-		return gen.run2()		
+		return gen.run()		
 	}
 	
 	def List<Instrument> loadModel(String path){
