@@ -13,7 +13,7 @@ class Graph{
 	
 	public GraphNode rootNode
 	
-	package List<GraphNode> nodes
+	public List<GraphNode> nodes
 	
 	new(){
 		nodes = new ArrayList<GraphNode>()
@@ -50,12 +50,48 @@ class Graph{
 			println(e)
 		}
 	}
+	
+	/**
+	 * Return the list of paths to final states (nodes without output transition)
+	 */
+	static def List<List<GraphNode>> getAllPath(GraphNode node){
+		val List<List<GraphNode>> result = new ArrayList
+		
+		node.childrenNode.forEach[child | 
+				var childPath = getAllPath(child)
+				childPath.forEach[list | 
+					list.add(0,node)
+					result.add(list)
+			]
+		]
+		
+		if(result.empty){
+			var one = new ArrayList
+			one.add(node)
+			result.add(one)
+		}
+		
+		return result
+	}
+	
+	/**
+	 * Print paths to final states (nodes without output transition)
+	 */
+	static def void printPaths(GraphNode node){
+		var paths = getAllPath(node)
+		paths.forEach[path  | 
+			println(path.join(" > ")[nodeLink | 
+				if(nodeLink.relatedLink == null) "RootNode"
+				else nodeLink.relatedLink.interaction.name
+			])
+		]
+	}
 }
 
 class GraphNode
 {
 	public Link relatedLink
-	private List<GraphNode> childrenNode
+	public List<GraphNode> childrenNode
 	
 	package new() {
 		childrenNode = new ArrayList
@@ -71,7 +107,7 @@ class GraphNode
 	
 	override String toString(){
 		val StringBuffer res = new StringBuffer
-		if(relatedLink == null) res.append(this.hashCode+"[label=\"Root node\"]\n")
+		if(relatedLink == null) res.append(this.hashCode+"[label=\"RootNode\"]\n")
 		else res.append(this.hashCode+"[label=\""+relatedLink.interaction.name+"\\n"+relatedLink.action.name+"\"]\n")
 		childrenNode.forEach[child | res.append(this.hashCode+"->"+child.hashCode+"\n")]
 		return res.toString
