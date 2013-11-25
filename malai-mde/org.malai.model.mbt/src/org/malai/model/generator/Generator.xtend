@@ -121,6 +121,7 @@ class Generator
 			i.links.forEach[l |
 				if(!graphTable.containsKey(l)){
 					var graphPart = new IAFlowGraphPart(l)
+					graphPart.reduce
 					graphTable.put(l,graphPart)
 				}
 			]
