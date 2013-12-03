@@ -174,7 +174,7 @@ class IAFlowGraphPart{
 		//Get new paths
 		val List<List<InteractionTransition>> newAllPaths = new ArrayList
 		allPaths.forEach[path |
-			var newPath = path.map[tr | partition.getEquivalenceClass(tr)].toSet.map[clazz | clazz.elements.get(0) ].toList
+			var newPath = path.map[tr | partition.getEquivalenceClass(tr).elements.get(0)].toList
 			newAllPaths.add(newPath)
 		]
 		
