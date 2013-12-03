@@ -11,6 +11,7 @@ import org.malai.instrument.Instrument
 import org.malai.instrument.InstrumentPackage
 import org.malai.model.generator.Generator
 import org.malai.model.generator.graph.Graph
+import fr.inria.IAFlowGraph.InteractionTransition
 
 class MainClass
 {
@@ -23,7 +24,7 @@ class MainClass
 		visitModel(loadModel(m_uri))
 	}
 	
-	def Graph visitModel(List<Instrument> allInst) {
+	def List<List<InteractionTransition>> visitModel(List<Instrument> allInst) {
 		
 		var Generator gen  = new Generator(allInst)
 		return gen.run()		

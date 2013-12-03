@@ -57,10 +57,12 @@ class Generator
 
 	/**
 	 * Entry point
+	 * Generate possibles execution paths from the Instruments passed to the generator.
+	 * The result is a list of tests cases, which are list of transitions
 	 * 
-	 * Visit all possible Links. (exponential)
+	 * (exponential)
 	 */
-	def Graph run(){
+	def List<List<InteractionTransition>> run(){
 		val result = new Graph
 		//Init root node
 		contexts.head.attachNode = result.createNode()
@@ -105,10 +107,11 @@ class Generator
 		writeFile("demo/dot/","level2.dot",this.toString(result))
 		writeFile("demo/","script.sh","for i in `find \\`pwd\\` -type f | grep .dot$`\ndo\n	dot $i -Tsvg -O\ndone")
 		
-		Graph.printPaths(result.rootNode)
+		//Graph.printPaths(result.rootNode)
+		printPaths(result.rootNode)
 		
 		println("DONE (Tree with "+ result.numberOfLeafs + " leafs)")
-		return result
+		return getAllPaths(result)
 	}
 	
 	/**
@@ -153,6 +156,77 @@ class Generator
 		catch(Exception e){
 			println(e)
 		}
+	}
+	
+	/**
+	 * Convert a path from the graph of Links to paths of Transitions
+	 */
+	def List<List<InteractionTransition>> convert(List<GraphNode> path){
+		var List<List<InteractionTransition>> result = new ArrayList
+		
+		val List<List<InteractionTransition>> processingPaths = new ArrayList
+		val List<List<InteractionTransition>> abortingPaths = new ArrayList
+		
+		path.forEach[node |
+			if(node.relatedLink != null){
+				var graph = graphTable.get(node.relatedLink)
+				var allPaths = graph.allPaths
+				
+				val List<List<InteractionTransition>> toAdd = new ArrayList
+				if(processingPaths.empty){
+					allPaths.forEach[p |
+						var newPath = new ArrayList
+						newPath.addAll(p)
+						if(!newPath.last?.action.actionProduced){
+							abortingPaths.add(newPath)
+						}
+						else{
+							processingPaths.add(newPath)
+						}
+					]
+				}
+				else{
+					allPaths.forEach[tail | 
+						processingPaths.forEach[before | 
+							var newPath = new ArrayList
+							newPath.addAll(before)
+							newPath.addAll(tail)
+							if(!newPath.last?.action.actionProduced){
+								abortingPaths.add(newPath)
+							}
+							else{
+								toAdd.add(newPath)
+							}
+						]
+					]
+					processingPaths.addAll(toAdd)
+				}
+			}
+		]
+		
+		result.addAll(abortingPaths)
+		result.addAll(processingPaths)
+		
+		return result
+	}
+	
+	def List<List<InteractionTransition>> getAllPaths(Graph graph){
+		val List<List<InteractionTransition>> result = new ArrayList
+		var paths = Graph.getAllPath(graph.rootNode)
+		paths.forEach[p |
+			result.addAll(convert(p))
+		]
+		return result
+	}
+	
+	def printPaths(GraphNode root){
+		var paths = Graph.getAllPath(root)
+		paths.forEach[p |
+			println("-----------------------------------------")
+			convert(p).forEach[pa |
+				println(pa.join("[",">","]",[tr|tr.concreteTransition.event.name]))
+			]
+		]
 	}
 	
 	def toString(Graph graph){
