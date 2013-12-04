@@ -3,51 +3,48 @@ package org.malai.model.mbt.api;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.malai.interaction.Transition;
-
 /**
  * This class manages the mapping between Transitions from the model and Widgets
  * from the UI
  */
 public class Mapper {
 	
-	Map<Transition,TestedWidget> registeredWidgets;
+	Map<String,TestedWidget> registeredWidgets;
 	
 	public Mapper() {
-		registeredWidgets = new HashMap<Transition, TestedWidget>();
+		registeredWidgets = new HashMap<String, TestedWidget>();
 	}
 	
 	/**
-	 * Register an association of a transition and a testable widget
+	 * Register a testable widget
 	 * 
-	 * @param ID A transition from the InteractiveSystem model
 	 * @param widget A testable widget from the UI
 	 * @throws Exception A transition can be associated with only one testable widget
 	 */
-	public void register(Transition ID, TestedWidget widget) throws Exception{
-		if(registeredWidgets.get(ID) != null) throw new Exception("Registration error: "+ID+" is already registered");
-		registeredWidgets.put(ID, widget);
+	public void register(TestedWidget widget) throws Exception{
+		if(registeredWidgets.get(widget.getID()) != null) throw new Exception("Registration error: "+widget.getID()+" is already registered");
+		registeredWidgets.put(widget.getID(), widget);
 	}
 	
 	/**
-	 * Remove the association of this transition from the registry
+	 * Remove this testable widget from the registry
 	 * 
-	 * @param ID A transition from the InteractiveSystem model
-	 * @throws Exception The transition have to be registered before 
+	 * @param ID Identifier of a testable widget
+	 * @throws Exception The widget have to be registered before 
 	 */
-	public void unregister(Transition ID) throws Exception{
+	public void unregister(String ID) throws Exception{
 		if(registeredWidgets.get(ID) == null) throw new Exception("Unregistration error: "+ID+" is not yet registered");
 		registeredWidgets.remove(ID);
 	}
 	
 	/**
-	 * Find the testable widget associated with the transition in the registry
+	 * Find the testable widget associated in the registry
 	 * 
-	 * @param ID A transition from the InteractiveSystem model
+	 * @param ID Identifier of a testable widget
 	 * @return A testable widget
 	 * @throws Exception The association transition-widget have to be registered
 	 */
-	public TestedWidget findWidget(Transition ID) throws Exception{
+	public TestedWidget findWidget(String ID) throws Exception{
 		TestedWidget result = registeredWidgets.get(ID);
 		if(result == null) throw new Exception("Find error: "+ID+" is not registered");
 		return result;
