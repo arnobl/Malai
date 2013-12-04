@@ -8,7 +8,7 @@ import java.util.List;
 public interface TestedUI {
 	
 	/**
-	 * Get testable widgets of this UI
+	 * Get available testable widgets of this UI
 	 */
 	public List<TestedWidget> getWidgets();
 }

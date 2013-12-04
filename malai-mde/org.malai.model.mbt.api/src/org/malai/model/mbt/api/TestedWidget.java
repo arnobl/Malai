@@ -10,6 +10,12 @@ import org.malai.event.Event;
 public interface TestedWidget {
 	
 	/**
+	 * Get the identifier of the widget used in the registering process
+	 * @return
+	 */
+	public String getID();
+	
+	/**
 	 * Ask the widget for possibles concretes values for a given Event
 	 * in its current state
 	 * 

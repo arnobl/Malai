@@ -7,19 +7,25 @@ import java.util.ArrayList
 import java.util.Hashtable
 import java.util.List
 import org.malai.action.Action
-import org.malai.instrument.Instrument
 import org.malai.instrument.Link
 import org.malai.model.generator.graph.Graph
 import org.malai.model.generator.graph.GraphNode
 
 import static extension org.malai.model.aspect.LinkAspect.*
 import fr.inria.IAFlowGraph.InteractionTransition
+import org.malai.interactiveSystem.interactiveSystem
+import org.malai.instrument.Instrument
 
 /*
  * Store all created context and for each select the next link to be visited
  */
 class Generator
 {
+	/**
+	 * The interactive system model
+	 */
+	var interactiveSystem interactiveSystem
+	
 	/**
 	 * Instruments from the system
 	 */
@@ -42,16 +48,17 @@ class Generator
 	//Help to "attach" context to each other
 	public var GraphNode currentNode
 	
-	new(List<Instrument> instr){
+	new(interactiveSystem systemModel){
+
+		allInstruments = systemModel.instruments
 		
-		allInstruments = new ArrayList
+		interactiveSystem = systemModel		
 		contexts = new ArrayList
 		graphTable = new Hashtable
 		
-		cache4Links(instr)
+		cache4Links()
 		
-		allInstruments.addAll(instr)
-		var Context newContext = new Context(allInstruments.filter[e | e.initiallyActivated].toList , new ArrayList<Action>())
+		var Context newContext = new Context(interactiveSystem.instruments.filter[e | e.initiallyActivated].toList , new ArrayList<Action>())
 		addContext(newContext)	
 	}
 
@@ -118,13 +125,18 @@ class Generator
 	 * Convert all Links of all Instruments to graph and store them 
 	 * into a cache
 	 */
-	def void cache4Links(List<Instrument> instr) {
+	def void cache4Links() {
 		
-		instr.forEach[i |
+		interactiveSystem.instruments.forEach[i |
 			i.links.forEach[l |
 				if(!graphTable.containsKey(l)){
 					var graphPart = new IAFlowGraphPart(l)
 					graphPart.reduce
+					val mapping = interactiveSystem.mapping.findFirst[map | map.link == l]
+					graphPart.allTransitions.forEach[tr |
+						var bind = mapping.binds.findFirst[bind | bind.transition.name == tr.concreteTransition.name]
+						tr.getRelatedWidgetIDs.addAll(bind.widgetIDs)
+					]
 					graphTable.put(l,graphPart)
 				}
 			]

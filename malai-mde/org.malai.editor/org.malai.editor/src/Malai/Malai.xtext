@@ -18,7 +18,19 @@ interactiveSystem returns interactiveSystem:
 		('actions' '{' actions+=Action ( "," actions+=Action)* '}' )?
 		('events' '{' events+=Event ( "," events+=Event)* '}' )?
 		('widgets' '{' widgets+=Widget ( "," widgets+=Widget)* '}' )?
+		('mapping' '{'(mapping+=LinkWidgetMapping)* '}')?
 	'}';
+
+LinkWidgetMapping returns LinkWidgetMapping:
+	{LinkWidgetMapping}
+	link=[instrument::Link|EString] ':'
+	binds+=TransitionWidgetBinding (',' binds+=TransitionWidgetBinding)*
+;
+
+TransitionWidgetBinding returns TransitionWidgetBinding:
+	{TransitionWidgetBinding}
+	transition=[interaction::Transition|EString] '[' widgetIDs+=EString (',' widgetIDs+=EString)* ']'
+;
 
 
 Widget returns widget::Widget:
@@ -86,7 +98,7 @@ Event returns event::Event:
 
 Link returns instrument::Link:
 	executeOnUpdate?='executeOnUpdate'
-	'Link'
+	'Link' name=EString
 	'{'
 		('description' description=EString)?
 		('interimFeedback' interimFeedback=EString)?
