@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="ASCII"?>
+<org_malai_interactiveSystem:interactiveSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:org_malai_interaction="http://org.malai.interaction/1_0_0//org/malai/interaction" xmlns:org_malai_interactiveSystem="http://org.malai.interactiveSystem/1_0_0//org/malai/interactiveSystem" xmlns:org_malai_widget="http://org.malai.widget/1_0_0//org/malai/widget">
+  <instruments initiallyActivated="true">
+    <links interaction="//@interactions.1" action="//@actions.4" executeOnUpdate="true"/>
+  </instruments>
+  <instruments initiallyActivated="true">
+    <links interaction="//@interactions.0" action="//@actions.0" executeOnUpdate="true"/>
+    <links interaction="//@interactions.0" action="//@actions.1" executeOnUpdate="true"/>
+    <links interaction="//@interactions.0" action="//@actions.2" executeOnUpdate="true"/>
+  </instruments>
+  <instruments initiallyActivated="true">
+    <links interaction="//@interactions.0" action="//@actions.3" executeOnUpdate="true"/>
+  </instruments>
+  <interactions initState="//@interactions.0/@states.0" activated="true" name="Drag n Drop">
+    <states xsi:type="org_malai_interaction:InitState" name="DnD_Init" description="Initial state">
+      <outputTransitions inputState="//@interactions.0/@states.0" outputState="//@interactions.0/@states.1" event="//@events.0" name="press"/>
+    </states>
+    <states xsi:type="org_malai_interaction:StandardState" name="DnD_Pressed" description="Pressed state">
+      <outputTransitions inputState="//@interactions.0/@states.1" outputState="//@interactions.0/@states.2" event="//@events.2" name="move"/>
+      <outputTransitions inputState="//@interactions.0/@states.1" outputState="//@interactions.0/@states.3" event="//@events.1" name="release"/>
+    </states>
+    <states xsi:type="org_malai_interaction:StandardState" name="DnD_PressedAndMoved" description="Moved state">
+      <outputTransitions inputState="//@interactions.0/@states.2" outputState="//@interactions.0/@states.4" event="//@events.2" name="move"/>
+      <outputTransitions inputState="//@interactions.0/@states.2" outputState="//@interactions.0/@states.2" event="//@events.1" name="move"/>
+      <outputTransitions inputState="//@interactions.0/@states.2" outputState="//@interactions.0/@states.3" event="//@events.3" name="move"/>
+    </states>
+    <states xsi:type="org_malai_interaction:AbortingState" name="DnD_Cancel" description="Aborting state"/>
+    <states xsi:type="org_malai_interaction:TerminalState" name="DnD_Done" description="Final state"/>
+    <clazz name="DnDInteraction"/>
+  </interactions>
+  <interactions initState="//@interactions.1/@states.0" activated="true" name="Clic">
+    <states xsi:type="org_malai_interaction:InitState" name="Clic_Init">
+      <outputTransitions inputState="//@interactions.1/@states.0" outputState="//@interactions.1/@states.1" event="//@events.0" name="press"/>
+    </states>
+    <states xsi:type="org_malai_interaction:StandardState" name="Clic_Pressed">
+      <outputTransitions inputState="//@interactions.1/@states.1" outputState="//@interactions.1/@states.2" event="//@events.1" name="release"/>
+    </states>
+    <states xsi:type="org_malai_interaction:TerminalState" name="Clic_Done"/>
+    <clazz name="ClicInteraction"/>
+  </interactions>
+  <actions undoable="true" name="MoveShapes">
+    <clazz name="MoveShapesAction"/>
+  </actions>
+  <actions undoable="true" name="RotateShapes">
+    <clazz name="RotateShapesAction"/>
+  </actions>
+  <actions undoable="true" name="ResizeShapes">
+    <clazz name="ResizeShapesAction"/>
+  </actions>
+  <actions undoable="true" name="AddShapes">
+    <clazz name="AddShapesAction"/>
+  </actions>
+  <actions undoable="true" name="SelectInstrument">
+    <clazz name="SelectInstrumentAction"/>
+  </actions>
+  <events>
+    <clazz name="MousePressed"/>
+  </events>
+  <events>
+    <clazz name="MouseReleased"/>
+  </events>
+  <events>
+    <clazz name="MouseMoved"/>
+  </events>
+  <events>
+    <clazz name="KeyPressed"/>
+  </events>
+  <widgets xsi:type="org_malai_widget:Button" name="handB"/>
+  <widgets xsi:type="org_malai_widget:Button" name="penB"/>
+</org_malai_interactiveSystem:interactiveSystem>

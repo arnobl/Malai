@@ -1,0 +1,27 @@
+digraph OutputGraph {
+828911691[label="Root node"]
+828911691->859319189
+828911691->750083448
+828911691->923502646
+859319189[label="Click button\nDeactivate_OutputSelector"]
+859319189->1444654453
+750083448[label="Click button\nActivate_OutputSelector"]
+750083448->857278589
+750083448->813457600
+923502646[label="Drag n Drop\nsetOutput"]
+923502646->900986398
+923502646->971196189
+900986398[label="Click button\nDeactivate_OutputSelector"]
+900986398->2018631323
+971196189[label="Click button\nActivate_OutputSelector"]
+971196189->1189990355
+1189990355[label="Click button\nDeactivate_OutputSelector"]
+1444654453[label="Click button\nActivate_OutputSelector"]
+1444654453->652691974
+652691974[label="Drag n Drop\nsetOutput"]
+857278589[label="Click button\nDeactivate_OutputSelector"]
+813457600[label="Drag n Drop\nsetOutput"]
+813457600->447538142
+447538142[label="Click button\nDeactivate_OutputSelector"]
+2018631323[label="Click button\nActivate_OutputSelector"]
+}

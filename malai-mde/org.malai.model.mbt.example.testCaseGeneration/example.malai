@@ -1,0 +1,106 @@
+interactiveSystem{
+	instruments{
+		initiallyActivated Instrument{ //EditingSelector
+			links{
+				executeOnUpdate Link{
+					interaction Clic
+					action SelectInstrument
+				}
+			}
+		},
+		initiallyActivated Instrument{ //Hand
+			links{
+				executeOnUpdate Link{
+					interaction "Drag n Drop"
+					action MoveShapes
+				},
+				executeOnUpdate Link{
+					interaction "Drag n Drop"
+					action RotateShapes
+				},
+				executeOnUpdate Link{
+					interaction "Drag n Drop"
+					action ResizeShapes
+				}
+			}
+		},
+		initiallyActivated Instrument{ //Pencil
+			links{
+				executeOnUpdate Link{
+					interaction "Drag n Drop"
+					action AddShapes
+				}
+			}
+		}
+	}
+	interactions{
+		activated Interaction "Drag n Drop"{
+			initState DnD_Init
+			states{
+				InitState "DnD_Init"
+					["Initial state"]
+					"press" (MousePressed) : DnD_Init => DnD_Pressed
+				StandardState "DnD_Pressed"
+					["Pressed state"]
+					"move" (MouseMoved) : DnD_Pressed => DnD_PressedAndMoved,
+					"release" (MouseReleased) : DnD_Pressed => DnD_Cancel
+				StandardState "DnD_PressedAndMoved"
+					["Moved state"]
+					"move" (MouseMoved) : DnD_PressedAndMoved => DnD_PressedAndMoved,
+					"release" (MouseReleased) : DnD_PressedAndMoved => DnD_Done,
+					"key" (KeyPressed) : DnD_PressedAndMoved => DnD_Cancel {condition "(ESC&&!DEL) || (DEL&&!ESC)"}
+				AbortingState "DnD_Cancel"
+					["Aborting state"]
+				TerminalState "DnD_Done"
+					["Final state"]
+			}
+			clazz EClass "DnDInteraction" {}
+		},
+		activated Interaction "Clic"{
+			initState Clic_Init
+			states{
+				InitState "Clic_Init"
+					"press" (MousePressed) : Clic_Init => Clic_Pressed
+				StandardState "Clic_Pressed"
+					"release" (MouseReleased) : Clic_Pressed => Clic_Done
+				TerminalState "Clic_Done"
+			}
+			clazz EClass "ClicInteraction" {}
+		}
+	}
+	actions{
+		undoable Action "MoveShapes"{
+			clazz EClass "MoveShapesAction" {}
+		},
+		undoable Action "RotateShapes"{
+			clazz EClass "RotateShapesAction" {}
+		},
+		undoable Action "ResizeShapes"{
+			clazz EClass "ResizeShapesAction" {}
+		},
+		undoable Action "AddShapes"{
+			clazz EClass "AddShapesAction" {}
+		},
+		undoable Action "SelectInstrument"{
+			clazz EClass "SelectInstrumentAction" {}
+		}
+	}
+	events{
+		Event {
+			clazz EClass "MousePressed" {}
+		},
+		Event {
+			clazz EClass "MouseReleased" {}
+		},
+		Event {
+			clazz EClass "MouseMoved" {}
+		},
+		Event {
+			clazz EClass "KeyPressed" {}
+		}
+	}
+	widgets{
+		Button "handB",
+		Button "penB"
+	}
+}

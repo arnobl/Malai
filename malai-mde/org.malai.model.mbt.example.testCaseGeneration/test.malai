@@ -1,0 +1,42 @@
+interactiveSystem{
+	instruments{
+		initiallyActivated Instrument{
+			subscribedWidgets (aButton)	
+			links{
+				executeOnUpdate Link{
+					interaction DoubleClic
+					action OpenAction
+				}
+			}
+		}
+	}
+	interactions{
+		activated Interaction "DoubleClic"{
+			initState State0
+			states{
+				InitState "State0"
+					["Zero clic"]
+					"first clic" (ClicEventClass) : State0 => State1
+				StandardState "State1"
+					["One clic"]
+					"second clic" (ClicEventClass) : State1 => State2
+				TerminalState "State2"
+					["Two clics"]
+			}
+			clazz EClass "noname" {}
+		}
+	}
+	actions{
+		undoable Action "OpenAction"{
+			clazz EClass "ActionClass" {}
+		}
+	}
+	events{
+		Event {
+			clazz EClass "ClicEventClass" {}
+		}
+	}
+	widgets{
+		Button "aButton"
+	}
+}

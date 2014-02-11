@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: TestGen
+Bundle-SymbolicName: org.malai.model.mbt.example.testCaseGeneration
+Bundle-Version: 1.0.0.qualifier
+Export-Package: .
+Require-Bundle: org.eclipse.emf.common;bundle-version="2.9.1",
+ org.eclipse.emf.ecore;bundle-version="2.9.1"
