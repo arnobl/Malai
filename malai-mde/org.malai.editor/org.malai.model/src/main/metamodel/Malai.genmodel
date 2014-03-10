@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.malai.model/src/main/java" editDirectory="/org.malai.model.edit/src"
+    modelPluginID="org.malai.model" modelName="Malai" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="7.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>Malai.ecore</foreignModel>
+  <genPackages prefix="Malai" basePackage="fr.inria.diverse" disposableProviderFactory="true"
+      ecorePackage="Malai.ecore#/">
+    <genClasses ecoreClass="Malai.ecore#//Instrument">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Malai.ecore#//Instrument/links"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Malai.ecore#//Instrument/clazz"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Malai.ecore#//Instrument/helpers"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Malai.ecore#//Instrument/description"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Malai.ecore#//Instrument/author"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Malai.ecore#//Instrument/version"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Malai.ecore#//Instrument/dateCreation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Malai.ecore#//Instrument/interimFeedback"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Malai.ecore#//Instrument/initiallyActivated"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Malai.ecore#//Instrument/providedWidgets"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Malai.ecore#//Instrument/subscribedWidgets"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Malai.ecore#//Instrument/name"/>
+    </genClasses>
+    <genClasses ecoreClass="Malai.ecore#//Link">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Malai.ecore#//Link/interaction"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Malai.ecore#//Link/action"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Malai.ecore#//Link/description"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Malai.ecore#//Link/interimFeedback"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Malai.ecore#//Link/isConditionRespected"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Malai.ecore#//Link/updateAction"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Malai.ecore#//Link/executeOnUpdate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Malai.ecore#//Link/initialiseAction"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Malai.ecore#//Link/clazz"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Malai.ecore#//Link/instrument"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Malai.ecore#//Link/name"/>
+    </genClasses>
+    <genClasses ecoreClass="Malai.ecore#//Interaction">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Malai.ecore#//Interaction/description"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Malai.ecore#//Interaction/author"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Malai.ecore#//Interaction/dateCreation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Malai.ecore#//Interaction/version"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Malai.ecore#//Interaction/initState"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Malai.ecore#//Interaction/states"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Malai.ecore#//Interaction/currentState"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Malai.ecore#//Interaction/activated"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Malai.ecore#//Interaction/clazz"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Malai.ecore#//Interaction/helpers"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Malai.ecore#//Interaction/name"/>
+      <genOperations ecoreOperation="Malai.ecore#//Interaction/onStarting"/>
+      <genOperations ecoreOperation="Malai.ecore#//Interaction/onUpdating"/>
+      <genOperations ecoreOperation="Malai.ecore#//Interaction/onStopping"/>
+      <genOperations ecoreOperation="Malai.ecore#//Interaction/onAborting"/>
+      <genOperations ecoreOperation="Malai.ecore#//Interaction/isRunning"/>
+      <genOperations ecoreOperation="Malai.ecore#//Interaction/reinit"/>
+      <genOperations ecoreOperation="Malai.ecore#//Interaction/executeTransition">
+        <genParameters ecoreParameter="Malai.ecore#//Interaction/executeTransition/t"/>
+      </genOperations>
+      <genOperations ecoreOperation="Malai.ecore#//Interaction/getLastHIDUsed"/>
+    </genClasses>
+    <genClasses ecoreClass="Malai.ecore#//Transition">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Malai.ecore#//Transition/inputState"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Malai.ecore#//Transition/outputState"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Malai.ecore#//Transition/description"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Malai.ecore#//Transition/event"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Malai.ecore#//Transition/condition"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Malai.ecore#//Transition/actions"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Malai.ecore#//Transition/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Malai.ecore#//Transition/hid"/>
+      <genOperations ecoreOperation="Malai.ecore#//Transition/action"/>
+      <genOperations ecoreOperation="Malai.ecore#//Transition/isGuardRespected"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="Malai.ecore#//State">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Malai.ecore#//State/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Malai.ecore#//State/description"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Malai.ecore#//State/outputTransitions"/>
+    </genClasses>
+    <genClasses ecoreClass="Malai.ecore#//AbortingState"/>
+    <genClasses ecoreClass="Malai.ecore#//TerminalState"/>
+    <genClasses ecoreClass="Malai.ecore#//StandardState"/>
+    <genClasses ecoreClass="Malai.ecore#//InitState"/>
+    <genClasses ecoreClass="Malai.ecore#//Action">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Malai.ecore#//Action/clazz"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Malai.ecore#//Action/dependencies"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Malai.ecore#//Action/undoable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Malai.ecore#//Action/execute"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Malai.ecore#//Action/canDo"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Malai.ecore#//Action/undo"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Malai.ecore#//Action/redo"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Malai.ecore#//Action/cancelledBy"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Malai.ecore#//Action/modifyInstrument"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Malai.ecore#//Action/name"/>
+    </genClasses>
+    <genClasses ecoreClass="Malai.ecore#//ActionDependency">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Malai.ecore#//ActionDependency/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Malai.ecore#//ActionDependency/srcAction"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Malai.ecore#//ActionDependency/tgtActions"/>
+    </genClasses>
+    <genClasses ecoreClass="Malai.ecore#//Event">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Malai.ecore#//Event/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Malai.ecore#//Event/clazz"/>
+    </genClasses>
+    <genClasses ecoreClass="Malai.ecore#//EventModel">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Malai.ecore#//EventModel/events"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Malai.ecore#//EventModel/helpers"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="Malai.ecore#//Widget">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Malai.ecore#//Widget/parent"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Malai.ecore#//Widget/name"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="Malai.ecore#//ContainerWidget">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Malai.ecore#//ContainerWidget/elements"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="Malai.ecore#//ListWidget"/>
+    <genClasses image="false" ecoreClass="Malai.ecore#//ButtonWidget"/>
+    <genClasses image="false" ecoreClass="Malai.ecore#//TextWidget">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Malai.ecore#//TextWidget/text"/>
+    </genClasses>
+    <genClasses ecoreClass="Malai.ecore#//Tree"/>
+    <genClasses ecoreClass="Malai.ecore#//Slider"/>
+    <genClasses ecoreClass="Malai.ecore#//ProgressBar"/>
+    <genClasses ecoreClass="Malai.ecore#//Table"/>
+    <genClasses ecoreClass="Malai.ecore#//Label"/>
+    <genClasses ecoreClass="Malai.ecore#//TextArea"/>
+    <genClasses ecoreClass="Malai.ecore#//TextField"/>
+    <genClasses ecoreClass="Malai.ecore#//Spinner"/>
+    <genClasses ecoreClass="Malai.ecore#//MultiLineList"/>
+    <genClasses ecoreClass="Malai.ecore#//SingleLineList"/>
+    <genClasses ecoreClass="Malai.ecore#//Panel"/>
+    <genClasses ecoreClass="Malai.ecore#//Window"/>
+    <genClasses ecoreClass="Malai.ecore#//DialogueBox"/>
+    <genClasses ecoreClass="Malai.ecore#//SplitPane"/>
+    <genClasses ecoreClass="Malai.ecore#//TabbedPanel"/>
+    <genClasses ecoreClass="Malai.ecore#//Button"/>
+    <genClasses ecoreClass="Malai.ecore#//ToggleButton"/>
+    <genClasses ecoreClass="Malai.ecore#//Menu"/>
+    <genClasses ecoreClass="Malai.ecore#//CheckBox"/>
+    <genClasses ecoreClass="Malai.ecore#//RadioButton"/>
+    <genClasses ecoreClass="Malai.ecore#//ToggleMenu"/>
+    <genClasses ecoreClass="Malai.ecore#//RadioMenu"/>
+  </genPackages>
+</genmodel:GenModel>
