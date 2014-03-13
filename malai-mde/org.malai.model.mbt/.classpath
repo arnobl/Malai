@@ -5,10 +5,10 @@
   <classpathentry kind="output" path="target/classes"/>
   <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
   <classpathentry kind="var" path="M2_REPO/org/eclipse/xtend/org.eclipse.xtend.lib/2.4.3/org.eclipse.xtend.lib-2.4.3.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/eclipse/xtext/org.eclipse.xtext.xbase.lib/2.4.3/org.eclipse.xtext.xbase.lib-2.4.3.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/eclipse/xtext/org.eclipse.xtext.xbase.lib/2.4.3/org.eclipse.xtext.xbase.lib-2.4.3.jar" sourcepath="M2_REPO/org/eclipse/xtext/org.eclipse.xtext.xbase.lib/2.4.3/org.eclipse.xtext.xbase.lib-2.4.3-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/google/guava/guava/15.0-rc1/guava-15.0-rc1.jar"/>
   <classpathentry kind="var" path="M2_REPO/fr/inria/diverse/fr.inria.diverse.k3.core/3.0-SNAPSHOT/fr.inria.diverse.k3.core-3.0-SNAPSHOT.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/malai/warpper/org.malai.warpper/0.0.1-SNAPSHOT/org.malai.warpper-0.0.1-SNAPSHOT.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/malai/wrapper/org.malai.wrapper/0.0.1-SNAPSHOT/org.malai.wrapper-0.0.1-SNAPSHOT.jar"/>
   <classpathentry kind="var" path="M2_REPO/choco/choco-solver/2.1.5/choco-solver-2.1.5.jar"/>
   <classpathentry kind="var" path="M2_REPO/choco/choco-kernel/2.1.5/choco-kernel-2.1.5.jar" sourcepath="M2_REPO/choco/choco-kernel/2.1.5/choco-kernel-2.1.5-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/dk/brics/automaton/1.11-2/automaton-1.11-2.jar"/>
