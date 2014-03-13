@@ -4,7 +4,7 @@ import org.eclipse.emf.mwe.utils.*
 import org.eclipse.xtext.generator.*
 import org.eclipse.xtext.ui.generator.*
 
-var grammarURI = "classpath:/Malai/Malai.xtext"
+var grammarURI = "platform:/resource/org.malai.editor/src/Malai/Malai.xtext"
 var fileExtensions = "malai"
 var projectName = "org.malai.editor"
 var runtimeProject = "../${projectName}"
@@ -16,36 +16,15 @@ Workflow {
 		platformUri = "${runtimeProject}/.."
 		
 		//load EMF ECORE	
-//		uriMap = {
-//            from = "platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore"
-//            to = "platform:/resource/org.eclipse.emf.ecore/model/Ecore.ecore"
-//        }
-		
-//		uriMap = { from = "platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.genmodel"
-//           		   to = "platform:/resource/org.eclipse.emf.codegen.ecore/model/GenModel.genmodel"
-//       	}
         uriMap = {
           from = "platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel"
            to = "platform:/resource/org.eclipse.emf.ecore/model/Ecore.genmodel"
         }
         registerGeneratedEPackage = "org.eclipse.emf.ecore.EcorePackage"
-//        registerGeneratedEPackage = "org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage"
-        registerGenModelFile = "platform:/resource/org.eclipse.emf.ecore/model/Ecore.genmodel"	
-//		registerGenModelFile = "platform:/resource/org.eclipse.emf.codegen.ecore/model/GenModel.genmodel"
 		
-		
-		registerGeneratedEPackage = "org.malai.interactiveSystem.InteractiveSystemPackage"
-//		registerGeneratedEPackage = "org.malai.instrument.InstrumentPackage"
-//		registerGeneratedEPackage = "org.malai.interaction.InteractionPackage"
-//		registerGeneratedEPackage = "org.malai.action.ActionPackage"
-//		registerGeneratedEPackage = "org.malai.event.EventPackage"
-//		registerGeneratedEPackage = "org.malai.widget.WidgetPackage"
+		registerGeneratedEPackage = "fr.inria.diverse.interactiveSystem.InteractiveSystemPackage"
 		registerGenModelFile = "platform:/resource/org.malai.model/src/main/metamodel/interactiveSystem.genmodel"
-//		registerGenModelFile = "platform:/resource/org.malai.model/src/main/metamodel/instrument.genmodel"
-//		registerGenModelFile = "platform:/resource/org.malai.model/src/main/metamodel/interaction.genmodel"
-//		registerGenModelFile = "platform:/resource/org.malai.model/src/main/metamodel/action.genmodel"
-//		registerGenModelFile = "platform:/resource/org.malai.model/src/main/metamodel/event.genmodel"
-//		registerGenModelFile = "platform:/resource/org.malai.model/src/main/metamodel/widget.genmodel"
+
 	}
 
 	component = DirectoryCleaner {

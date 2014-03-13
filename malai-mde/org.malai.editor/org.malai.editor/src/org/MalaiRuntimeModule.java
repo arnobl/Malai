@@ -3,7 +3,7 @@
  */
 package org;
 
-import org.malai.interactiveSystem.*;
+import fr.inria.diverse.interactiveSystem.InteractiveSystemPackage;
 
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
