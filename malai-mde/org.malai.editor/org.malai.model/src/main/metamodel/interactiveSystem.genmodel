@@ -5,29 +5,23 @@
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="7.0" copyrightFields="false"
     usedGenPackages="Malai.genmodel#//malai" operationReflection="true" importOrganizing="true">
   <foreignModel>interactiveSystem.ecore</foreignModel>
-  <genPackages prefix="Org" disposableProviderFactory="true" ecorePackage="interactiveSystem.ecore#/">
-    <nestedGenPackages prefix="Malai" disposableProviderFactory="true" ecorePackage="interactiveSystem.ecore#//malai">
-      <nestedGenPackages prefix="InteractiveSystem" disposableProviderFactory="true"
-          ecorePackage="interactiveSystem.ecore#//malai/interactiveSystem">
-        <genClasses ecoreClass="interactiveSystem.ecore#//malai/interactiveSystem/interactiveSystem">
-          <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference interactiveSystem.ecore#//malai/interactiveSystem/interactiveSystem/instruments"/>
-          <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference interactiveSystem.ecore#//malai/interactiveSystem/interactiveSystem/interactions"/>
-          <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference interactiveSystem.ecore#//malai/interactiveSystem/interactiveSystem/actions"/>
-          <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference interactiveSystem.ecore#//malai/interactiveSystem/interactiveSystem/events"/>
-          <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference interactiveSystem.ecore#//malai/interactiveSystem/interactiveSystem/widgets"/>
-          <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference interactiveSystem.ecore#//malai/interactiveSystem/interactiveSystem/mapping"/>
-        </genClasses>
-        <genClasses ecoreClass="interactiveSystem.ecore#//malai/interactiveSystem/LinkWidgetMapping">
-          <genFeatures notify="false" createChild="false" propertySortChoices="true"
-              ecoreFeature="ecore:EReference interactiveSystem.ecore#//malai/interactiveSystem/LinkWidgetMapping/link"/>
-          <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference interactiveSystem.ecore#//malai/interactiveSystem/LinkWidgetMapping/binds"/>
-        </genClasses>
-        <genClasses ecoreClass="interactiveSystem.ecore#//malai/interactiveSystem/TransitionWidgetBinding">
-          <genFeatures notify="false" createChild="false" propertySortChoices="true"
-              ecoreFeature="ecore:EReference interactiveSystem.ecore#//malai/interactiveSystem/TransitionWidgetBinding/transition"/>
-          <genFeatures createChild="false" ecoreFeature="ecore:EAttribute interactiveSystem.ecore#//malai/interactiveSystem/TransitionWidgetBinding/widgetIDs"/>
-        </genClasses>
-      </nestedGenPackages>
-    </nestedGenPackages>
+  <genPackages prefix="InteractiveSystem" basePackage="fr.inria.diverse" disposableProviderFactory="true"
+      ecorePackage="interactiveSystem.ecore#/">
+    <genClasses ecoreClass="interactiveSystem.ecore#//interactiveSystem">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference interactiveSystem.ecore#//interactiveSystem/instruments"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference interactiveSystem.ecore#//interactiveSystem/interactions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference interactiveSystem.ecore#//interactiveSystem/actions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference interactiveSystem.ecore#//interactiveSystem/events"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference interactiveSystem.ecore#//interactiveSystem/widgets"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference interactiveSystem.ecore#//interactiveSystem/mapping"/>
+    </genClasses>
+    <genClasses ecoreClass="interactiveSystem.ecore#//LinkWidgetMapping">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference interactiveSystem.ecore#//LinkWidgetMapping/link"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference interactiveSystem.ecore#//LinkWidgetMapping/binds"/>
+    </genClasses>
+    <genClasses ecoreClass="interactiveSystem.ecore#//TransitionWidgetBinding">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference interactiveSystem.ecore#//TransitionWidgetBinding/transition"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute interactiveSystem.ecore#//TransitionWidgetBinding/widgetIDs"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>
