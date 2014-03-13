@@ -7,30 +7,27 @@
 <plugin>
 
    <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated Malai -->
       <package
-            uri="http://fr.inria.triskell.IAFlowGraph/1_0_0//fr/inria/IAFlowGraph"
-            class="fr.inria.IAFlowGraph.IAFlowGraphPackage"
+            uri="fr.inria.diverse.malai"
+            class="fr.inria.diverse.malai.MalaiPackage"
+            genModel="src/main/metamodel/Malai.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated interactiveSystem -->
+      <package
+            uri="fr.inria.diverse.interactiveSystem"
+            class="fr.inria.diverse.interactiveSystem.InteractiveSystemPackage"
+            genModel="src/main/metamodel/interactiveSystem.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated IAFlowGraph -->
+      <package
+            uri="fr.inria.diverse.iaflowgraph"
+            class="fr.inria.diverse.IAFlowGraph.IAFlowGraphPackage"
             genModel="src/main/metamodel/IAFlowGraph.genmodel"/>
-      <package
-            uri="http://org.malai/event/1_0_0//org/malai/event"
-            class="org.malai.event.EventPackage"
-            genModel="src/main/metamodel/event.genmodel"/>
-      <package
-            uri="http://org.malai/interaction/1_0_0//org/malai/interaction"
-            class="org.malai.interaction.InteractionPackage"
-            genModel="src/main/metamodel/interaction.genmodel"/>
-      <package
-            uri="http://org.malai/action/1_0_0//org/malai/action"
-            class="org.malai.action.ActionPackage"
-            genModel="src/main/metamodel/action.genmodel"/>
-      <package
-            uri="http://org.malai/instrument/1_0_0//org/malai/instrument"
-            class="org.malai.instrument.InstrumentPackage"
-            genModel="src/main/metamodel/instrument.genmodel"/>
-      <package
-            uri="http://org.malai/widget/1_0_0//org/malai/widget"
-            class="org.malai.widget.WidgetPackage"
-            genModel="src/main/metamodel/widget.genmodel"/>
    </extension>
 
 </plugin>
