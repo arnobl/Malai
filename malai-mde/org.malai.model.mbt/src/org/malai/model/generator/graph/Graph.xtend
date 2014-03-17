@@ -2,10 +2,9 @@ package org.malai.model.generator.graph
 
 import java.util.ArrayList
 import java.util.List
-import org.malai.instrument.Link
+import fr.inria.diverse.malai.*
 import java.io.FileWriter
 import java.io.BufferedWriter
-import fr.inria.IAFlowGraph.InteractionTransition
 
 /**
  * Structure to store links between Interaction-Action flow graph

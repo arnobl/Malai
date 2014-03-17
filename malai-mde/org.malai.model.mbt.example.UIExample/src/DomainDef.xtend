@@ -1,3 +1,5 @@
+import org.malai.model.mbt.api.DomainValue
+
 class IntRange implements DomainValue{
 	
 	override pickup() {

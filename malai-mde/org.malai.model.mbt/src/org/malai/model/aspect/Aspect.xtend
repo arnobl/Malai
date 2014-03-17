@@ -4,15 +4,6 @@ import fr.inria.triskell.k3.Aspect
 import fr.inria.triskell.k3.OverrideAspectMethod
 import java.util.ArrayList
 import java.util.List
-import org.malai.action.Action
-import org.malai.instrument.Instrument
-import org.malai.instrument.Link
-import org.malai.interaction.AbortingState
-import org.malai.interaction.Interaction
-import org.malai.interaction.InteractionFactory
-import org.malai.interaction.State
-import org.malai.interaction.TerminalState
-import org.malai.interaction.Transition
 import org.malai.model.conditionSolver.Parser
 import org.malai.model.generator.Context
 import org.malai.model.generator.Generator
@@ -21,6 +12,15 @@ import static extension org.malai.model.aspect.ActionAspect.*
 import static extension org.malai.model.aspect.LinkAspect.*
 import static extension org.malai.model.aspect.StateAspect.*
 import static extension org.malai.model.aspect.TransitionAspect.*
+import fr.inria.diverse.malai.Instrument
+import fr.inria.diverse.malai.TerminalState
+import fr.inria.diverse.malai.Transition
+import fr.inria.diverse.malai.State
+import fr.inria.diverse.malai.AbortingState
+import fr.inria.diverse.malai.MalaiFactory
+import fr.inria.diverse.malai.Action
+import fr.inria.diverse.malai.Interaction
+import fr.inria.diverse.malai.Link
 
 @Aspect(className=typeof(Instrument))
 class InstrumentAspect {
@@ -206,7 +206,7 @@ class TransitionAspect{
 	
 	//Dummy clone
 	def Transition copy() {
-		var result = InteractionFactory.eINSTANCE.createTransition();
+		var result = MalaiFactory.eINSTANCE.createTransition();
 		result.inputState = _self.inputState
 		result.outputState = _self.outputState
 		result.description = _self.description

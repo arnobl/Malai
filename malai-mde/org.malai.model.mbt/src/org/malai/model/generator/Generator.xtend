@@ -6,15 +6,13 @@ import java.io.FileWriter
 import java.util.ArrayList
 import java.util.Hashtable
 import java.util.List
-import org.malai.action.Action
-import org.malai.instrument.Link
+import fr.inria.diverse.malai.*
 import org.malai.model.generator.graph.Graph
 import org.malai.model.generator.graph.GraphNode
 
 import static extension org.malai.model.aspect.LinkAspect.*
-import fr.inria.IAFlowGraph.InteractionTransition
-import org.malai.interactiveSystem.interactiveSystem
-import org.malai.instrument.Instrument
+import fr.inria.diverse.interactiveSystem.interactiveSystem
+import fr.inria.diverse.IAFlowGraph.InteractionTransition
 
 /*
  * Store all created context and for each select the next link to be visited
@@ -132,11 +130,15 @@ class Generator
 				if(!graphTable.containsKey(l)){
 					var graphPart = new IAFlowGraphPart(l)
 					graphPart.reduce
+					
 					val mapping = interactiveSystem.mapping.findFirst[map | map.link == l]
-					graphPart.allTransitions.forEach[tr |
-						var bind = mapping.binds.findFirst[bind | bind.transition.name == tr.concreteTransition.name]
-						tr.getRelatedWidgetIDs.addAll(bind.widgetIDs)
-					]
+					if(mapping != null){
+						graphPart.allTransitions.forEach[tr |
+							var bind = mapping.binds.findFirst[bind | bind.transition.name == tr.concreteTransition.name]
+							tr.getRelatedWidgetIDs.addAll(bind.widgetIDs)
+						]
+					}
+					
 					graphTable.put(l,graphPart)
 				}
 			]

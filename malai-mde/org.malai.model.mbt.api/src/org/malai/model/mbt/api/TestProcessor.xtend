@@ -2,8 +2,8 @@ package org.malai.model.mbt.api;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.malai.interactiveSystem.interactiveSystem;
-import fr.inria.IAFlowGraph.InteractionTransition;
+import fr.inria.diverse.interactiveSystem.interactiveSystem
+import fr.inria.diverse.IAFlowGraph.InteractionTransition
 import java.util.Map
 import java.util.HashMap
 

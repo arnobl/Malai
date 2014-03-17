@@ -1,21 +1,16 @@
 package org.malai.model.generator 
 import java.util.List
 import java.util.ArrayList
-import fr.inria.IAFlowGraph.IAFlowGraphFactory
-import fr.inria.IAFlowGraph.InteractionTransition
-import org.malai.interaction.Transition
-import org.malai.interaction.TerminalState
-import org.malai.interaction.AbortingState
-import org.malai.instrument.Link
+import fr.inria.diverse.malai.*
 
 import static extension org.malai.model.aspect.InteractionAspect.*
 import static extension org.malai.model.aspect.TransitionAspect.*
-import org.malai.instrument.Instrument
-import org.malai.action.Action
 import java.util.HashSet
 import java.util.Collection
 import java.util.HashMap
 import java.util.Set
+import fr.inria.diverse.IAFlowGraph.InteractionTransition
+import fr.inria.diverse.IAFlowGraph.IAFlowGraphFactory
 
 /**
  * Conversion of a Link to an IAFlowGraph

@@ -1,14 +1,14 @@
 package org.malai.model.generator
 
-import org.malai.action.Action
 import java.util.List
-import org.malai.instrument.Instrument
-import org.malai.instrument.Link
 import java.util.Hashtable
 import java.util.ArrayList
 import org.malai.model.generator.graph.GraphNode
 
 import static extension org.malai.model.aspect.LinkAspect.*
+import fr.inria.diverse.malai.Link
+import fr.inria.diverse.malai.Instrument
+import fr.inria.diverse.malai.Action
 
 /**
  * Represents the runtime state

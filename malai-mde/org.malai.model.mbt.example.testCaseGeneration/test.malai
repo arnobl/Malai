@@ -1,42 +1,124 @@
 interactiveSystem{
 	instruments{
-		initiallyActivated Instrument{
-			subscribedWidgets (aButton)	
+		Instrument "OutputSelector" {
+			links {
+				executeOnUpdate Link "SliderLink"{
+					interaction "Slider_setValue"
+					action "setOutput"
+				}
+			}
+		},
+		initiallyActivated Instrument "Activator" {
 			links{
-				executeOnUpdate Link{
-					interaction DoubleClic
-					action OpenAction
+				executeOnUpdate Link "ActivatorLink"{
+					interaction "Button_press"
+					action "Activate_OutputSelector_Deactivator"
+				}
+			}
+		},
+		Instrument "Deactivator" {
+			links{
+				executeOnUpdate Link "DeactivatorLink"{
+					interaction "Button_press"
+					action "Deactivate_OutputSelector_Activator"
+				}
+			}
+		},
+		initiallyActivated Instrument "CustomInstrument" {
+			links{
+				executeOnUpdate Link "CustomLink"{
+					interaction "DragNDrop"
+					action "customWidgetAction"
 				}
 			}
 		}
 	}
+	
 	interactions{
-		activated Interaction "DoubleClic"{
-			initState State0
+		activated Interaction "DragNDrop"{
+			initState "DnD_Init"
 			states{
-				InitState "State0"
-					["Zero clic"]
-					"first clic" (ClicEventClass) : State0 => State1
-				StandardState "State1"
-					["One clic"]
-					"second clic" (ClicEventClass) : State1 => State2
-				TerminalState "State2"
-					["Two clics"]
+				InitState "DnD_Init"
+					["Initial state"]
+					"press" ("MousePressed") : "DnD_Init" => "DnD_Pressed"
+				StandardState "DnD_Pressed"
+					["Pressed state"]
+					"firstmove" ("MouseMoved") : "DnD_Pressed" => "DnD_PressedAndMoved",
+					"releaseAbort" ("MouseReleased") : "DnD_Pressed" => "DnD_Cancel"
+				StandardState "DnD_PressedAndMoved"
+					["Moved state"]
+					"releaseAccept" ("MouseReleased") : "DnD_PressedAndMoved" => "DnD_Done",
+					"nextmove" ("MouseMoved") : "DnD_PressedAndMoved" => "DnD_PressedAndMoved",
+					"key" ("KeyPressed") : "DnD_PressedAndMoved" => "DnD_Cancel" {condition "key=ESC || key=DEL"}
+				AbortingState "DnD_Cancel"
+					["Aborting state"]
+				TerminalState "DnD_Done"
+					["Final state"]
 			}
-			clazz EClass "noname" {}
+//			clazz EClass "DnDInteraction" {}
+		},
+		activated Interaction "Button_press"{
+			initState "Button_Init"
+			states{
+				InitState "Button_Init"
+					"pressButton" ("ButtonPressed") : "Button_Init" => "Button_Done"
+				TerminalState "Button_Done"
+			}
+//			clazz EClass "ButtonInteraction" {}
+		},
+		activated Interaction "Slider_setValue"{
+			initState "Slider_Init"
+			states{
+				InitState "Slider_Init"
+					"setValue" ("SliderValueSetted") : "Slider_Init" => "Slider_Done"
+				TerminalState "Slider_Done"
+			}
+//			clazz EClass "SliderInteraction" {}
 		}
 	}
+	
 	actions{
-		undoable Action "OpenAction"{
-			clazz EClass "ActionClass" {}
+		Action "setOutput"{
+//			clazz EClass "SetOutputClass" {}
+		},
+		modifyInstrument Action "Activate_OutputSelector_Deactivator"{
+//			clazz EClass "OpenOutput" {}
+		},
+		modifyInstrument Action "Deactivate_OutputSelector_Activator"{
+//			clazz EClass "CloseOutput" {}
+		},
+		Action "customWidgetAction" {
+//			clazz EClass "CustomWidgetAction" {}
 		}
 	}
+	
 	events{
-		Event {
-			clazz EClass "ClicEventClass" {}
-		}
+		Event "MousePressed",
+		Event "MouseReleased",
+		Event "MouseMoved",
+		Event "KeyPressed",
+		Event "SliderValueSetted",
+		Event "ButtonPressed"
 	}
+	
 	widgets{
-		Button "aButton"
+		Button "activatorButton",
+		Slider "outputSlider"
 	}
+	
+	mapping{
+		"CustomLink" :
+			"press" ["CustomWidget_ID"],
+			"firstmove" ["CustomWidget_ID"],
+			"releaseAbort" ["CustomWidget_ID"],
+			"nextmove" ["CustomWidget_ID"],
+			"releaseAccept" ["CustomWidget_ID"],
+			"key" ["CustomWidget_ID"]
+		"SliderLink" :
+			"setValue" ["SliderWidget_ID"]
+		"ActivatorLink" :
+			"pressButton" ["ButtonWidget_ID"]
+		"DeactivatorLink" :
+			"pressButton" ["ButtonWidget_ID"]
+	}	
 }

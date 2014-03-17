@@ -1,7 +1,7 @@
 package org.malai.model.mbt.api;
 
 import java.util.List;
-import org.malai.event.Event;
+import fr.inria.diverse.malai.*;
 
 /**
  * This interface defines necessaries methods to get concretes values

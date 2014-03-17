@@ -1,5 +1,5 @@
 import java.util.List
-import org.malai.event.Event
+import fr.inria.diverse.malai.*;
 import java.util.ArrayList
 import javax.swing.JButton
 import javax.swing.JSlider
