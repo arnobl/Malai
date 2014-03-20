@@ -56,8 +56,6 @@ class LinkAspect{
 	 * Visits the link. Do Action for each Terminal state
 	 */
 	def void visit(Context context, Generator generator) {
-	
-		_self.incrVisitCounter(context)
 		
 		_self.interaction.states.forEach[state|
 			

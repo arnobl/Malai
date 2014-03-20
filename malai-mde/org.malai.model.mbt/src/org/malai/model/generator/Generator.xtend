@@ -80,6 +80,8 @@ class Generator
 			currentNode = currentContext.attachNode
 	
 			while(!currentContext.visitableLink.empty){
+				var nodeContexts = new ArrayList<Context>();
+				var currentContextCopy = currentContext.copy()
 				//Visit all links, the first one will become the new current node
 				var int i = currentContext.visitableLink.size - 1
 				while(i >= 0){
@@ -93,16 +95,28 @@ class Generator
 					if(i == 0){ //Stay in the current context
 						currentLink.visit(currentContext, this)
 						currentNode = nextNode
+						nodeContexts.add(currentContext)
 					}
 					else{ //Create a new context
 						var newContext = currentContext.copy()
 						newContext.attachNode = nextNode
 						addContext(newContext)
+						nodeContexts.add(newContext)
 						
 						currentLink.visit(newContext, this)
 					}
 					i = i - 1
-				}				
+				}	
+				//Update Links counters in new contexts
+				i = currentContextCopy.visitableLink.size - 1
+				while(i >= 0){
+					val Link currentLink = currentContextCopy.visitableLink.get(i)
+					
+//					nodeContexts.forEach[context | currentLink.incrVisitCounter(context)] // "Breadth First Search"
+					currentLink.incrVisitCounter(nodeContexts.get(nodeContexts.size - i - 1)) // "Depth First Search"
+					
+					i = i - 1
+				}
 			}
 			contexts.remove(currentContext)
 		}
