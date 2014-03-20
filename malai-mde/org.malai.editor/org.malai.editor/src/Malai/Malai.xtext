@@ -67,6 +67,8 @@ Action returns malai::Action:
 		('cancelledBy' '(' cancelledBy+=[malai::Action|STRING] ( "," cancelledBy+=[malai::Action|STRING])* ')' )?
 //		'clazz' clazz=EClass
 		('dependencies' '{' dependencies+=ActionDependency ( "," dependencies+=ActionDependency)* '}' )?
+		('activated' '{' activatedInstruments+=[malai::Instrument|STRING] ( "," activatedInstruments+=[malai::Instrument|STRING])* '}')?
+		('deactivated' '{' activatedInstruments+=[malai::Instrument|STRING] ( "," activatedInstruments+=[malai::Instrument|STRING])* '}')?
 	'}';
 	
 //ActionInstrument returns action::ActionInstrument:

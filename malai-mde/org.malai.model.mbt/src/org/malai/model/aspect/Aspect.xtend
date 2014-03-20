@@ -237,17 +237,12 @@ class ActionAspect{
 		]
 		toRemove.forEach[cancelled | context.resolvedActions.remove(cancelled)]
 		
-		//This action may unactivate instrument
-		if(_self.name.startsWith("Deactivate_")){
-			val tgtInstrList = _self.name.replaceFirst("Deactivate_","").split("_");
-			val List<Instrument> instrToRemove = tgtInstrList.map[tgtInstr | context.activatedInstr.findFirst[i | i.name.equals(tgtInstr)]]
-			context.activatedInstr.removeAll(instrToRemove)
-		}
-		else if(_self.name.startsWith("Activate_")){ //Or activate
-			val tgtInstrList = _self.name.replaceFirst("Activate_","").split("_");
-			val List<Instrument> instrToAdd = tgtInstrList.map[tgtInstr | generator.allInstruments.findFirst[i | i.name.equals(tgtInstr)]]
-			context.activatedInstr.addAll(instrToAdd.filter[i|!context.activatedInstr.contains(i)])
-		}
+		//This action may deactivate instrument
+		context.activatedInstr.removeAll(_self.deactivatedInstruments)
+		
+		//Or activate
+		context.activatedInstr.addAll(_self.activatedInstruments)
+		
 		
 		context.addSolvedAvtion(_self)
 	}
