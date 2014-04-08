@@ -82,7 +82,7 @@ class Graph{
 		paths.forEach[path  | 
 			println(path.join(" > ")[nodeLink | 
 				if(nodeLink.relatedLink == null) "RootNode"
-				else nodeLink.relatedLink.interaction.name
+				else nodeLink.relatedLink.name
 			])
 		]
 	}

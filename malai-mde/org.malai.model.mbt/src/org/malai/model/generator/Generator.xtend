@@ -112,8 +112,8 @@ class Generator
 				while(i >= 0){
 					val Link currentLink = currentContextCopy.visitableLink.get(i)
 					
-//					nodeContexts.forEach[context | currentLink.incrVisitCounter(context)] // "Breadth First Search"
-					currentLink.incrVisitCounter(nodeContexts.get(nodeContexts.size - i - 1)) // "Depth First Search"
+					nodeContexts.forEach[context | currentLink.incrVisitCounter(context)] // "Breadth First Search"
+//					currentLink.incrVisitCounter(nodeContexts.get(nodeContexts.size - i - 1)) // "Depth First Search"
 					
 					i = i - 1
 				}
@@ -121,13 +121,13 @@ class Generator
 			contexts.remove(currentContext)
 		}
 		
-		saveActionInteractions("demo/dot/interactions")
-		writeFile("demo/dot/","level1.dot",result.toString)
-		writeFile("demo/dot/","level2.dot",this.toString(result))
-		writeFile("demo/","script.sh","for i in `find \\`pwd\\` -type f | grep .dot$`\ndo\n	dot $i -Tsvg -O\ndone")
+//		saveActionInteractions("demo/dot/interactions")
+//		writeFile("demo/dot/","level1.dot",result.toString)
+//		writeFile("demo/dot/","level2.dot",this.toString(result))
+//		writeFile("demo/","script.sh","for i in `find \\`pwd\\` -type f | grep .dot$`\ndo\n	dot $i -Tsvg -O\ndone")
 		
-		//Graph.printPaths(result.rootNode)
-		printPaths(result.rootNode)
+		Graph.printPaths(result.rootNode)
+//		printPaths(result.rootNode)
 		
 		println("DONE (Tree with "+ result.numberOfLeafs + " leafs)")
 		return getAllPaths(result)
@@ -214,6 +214,10 @@ class Generator
 					]
 				}
 				else{
+					val List<List<InteractionTransition>> toDel = new ArrayList
+					if(allPaths.size != 0){
+						toDel.addAll(processingPaths);
+					}
 					allPaths.forEach[tail | 
 						processingPaths.forEach[before | 
 							var newPath = new ArrayList
@@ -228,6 +232,7 @@ class Generator
 						]
 					]
 					processingPaths.addAll(toAdd)
+					processingPaths.removeAll(toDel);
 				}
 			}
 		]
