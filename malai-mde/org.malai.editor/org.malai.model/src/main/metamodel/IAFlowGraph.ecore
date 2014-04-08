@@ -18,7 +18,7 @@
   <eClassifiers xsi:type="ecore:EDataType" name="String" instanceClassName="java.lang.String"/>
   <eClassifiers xsi:type="ecore:EClass" name="ResultingAction">
     <eStructuralFeatures xsi:type="ecore:EReference" name="concreteAction" lowerBound="1"
-        eType="ecore:EClass Malai.ecore#//Action" containment="true"/>
+        eType="ecore:EClass Malai.ecore#//Action"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="actionProduced" lowerBound="1"
         eType="#//Boolean"/>
   </eClassifiers>
