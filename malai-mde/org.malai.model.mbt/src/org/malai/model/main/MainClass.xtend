@@ -8,8 +8,9 @@ import fr.inria.diverse.IAFlowGraph.InteractionTransition
 class MainClass
 {
 	def List<List<InteractionTransition>> visitModel(interactiveSystem is) {
-		println("Echo")
+		println("Generating...")
 		var Generator gen  = new Generator(is)
-		return gen.run()		
+		var graph = gen.run()
+		return gen.getAllPaths(graph)		
 	}
 }

@@ -22,7 +22,7 @@ class Generator
 	/**
 	 * The interactive system model
 	 */
-	var interactiveSystem interactiveSystem
+	protected var interactiveSystem interactiveSystem
 	
 	/**
 	 * Instruments from the system
@@ -35,7 +35,7 @@ class Generator
 	 * Each interaction adds solved action/ activated instrument
 	 * and then creates a new Context
 	 */
-	var List<Context> contexts
+	protected var List<Context> contexts
 	
 	/**
 	 * Hashtable to store computed Graph from a Link
@@ -67,7 +67,7 @@ class Generator
 	 * 
 	 * (exponential)
 	 */
-	def List<List<InteractionTransition>> run(){
+	def Graph run(){
 		val result = new Graph
 		//Init root node
 		contexts.head.attachNode = result.createNode()
@@ -130,7 +130,8 @@ class Generator
 //		printPaths(result.rootNode)
 		
 		println("DONE (Tree with "+ result.numberOfLeafs + " leafs)")
-		return getAllPaths(result)
+		
+		return result
 	}
 	
 	/**

@@ -92,13 +92,19 @@ class GraphNode
 {
 	public Link relatedLink
 	public List<GraphNode> childrenNode
+	GraphNode parent
 	
 	package new() {
 		childrenNode = new ArrayList
 	}
 	
 	def void addChildren(GraphNode child){
+		child.parent = this
 		childrenNode.add(child)
+	}
+	
+	def getParent(){
+		return parent
 	}
 	
 	def boolean isLeaf(){
