@@ -33,7 +33,7 @@ class AllPairGenerator extends Generator{
 		]
 	}
 	
-	def Graph run(interactiveSystem is){
+	override Graph run(){
 		
 		val pairs = all_pairs()
 		
