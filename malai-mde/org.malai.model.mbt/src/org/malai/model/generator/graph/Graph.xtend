@@ -81,8 +81,8 @@ class Graph{
 		var paths = getAllPath(node)
 		paths.forEach[path  | 
 			println(path.join(" > ")[nodeLink | 
-				if(nodeLink.relatedLink == null) "RootNode"
-				else nodeLink.relatedLink.name
+				if(nodeLink.relatedInteractor == null) "RootNode"
+				else nodeLink.relatedInteractor.name
 			])
 		]
 	}
@@ -90,7 +90,7 @@ class Graph{
 
 class GraphNode
 {
-	public Link relatedLink
+	public Interactor relatedInteractor
 	public List<GraphNode> childrenNode
 	GraphNode parent
 	
@@ -113,8 +113,8 @@ class GraphNode
 	
 	override String toString(){
 		val StringBuffer res = new StringBuffer
-		if(relatedLink == null) res.append(this.hashCode+"[label=\"RootNode\"]\n")
-		else res.append(this.hashCode+"[label=\""+relatedLink.interaction.name+"\\n"+relatedLink.action.name+"\"]\n")
+		if(relatedInteractor == null) res.append(this.hashCode+"[label=\"RootNode\"]\n")
+		else res.append(this.hashCode+"[label=\""+relatedInteractor.interaction.name+"\\n"+relatedInteractor.action.name+"\"]\n")
 		childrenNode.forEach[child | res.append(this.hashCode+"->"+child.hashCode+"\n")]
 		return res.toString
 	}

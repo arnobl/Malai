@@ -15,9 +15,9 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference interactiveSystem.ecore#//interactiveSystem/widgets"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference interactiveSystem.ecore#//interactiveSystem/mapping"/>
     </genClasses>
-    <genClasses ecoreClass="interactiveSystem.ecore#//LinkWidgetMapping">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference interactiveSystem.ecore#//LinkWidgetMapping/link"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference interactiveSystem.ecore#//LinkWidgetMapping/binds"/>
+    <genClasses ecoreClass="interactiveSystem.ecore#//InteractorWidgetMapping">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference interactiveSystem.ecore#//InteractorWidgetMapping/interactor"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference interactiveSystem.ecore#//InteractorWidgetMapping/binds"/>
     </genClasses>
     <genClasses ecoreClass="interactiveSystem.ecore#//TransitionWidgetBinding">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference interactiveSystem.ecore#//TransitionWidgetBinding/transition"/>

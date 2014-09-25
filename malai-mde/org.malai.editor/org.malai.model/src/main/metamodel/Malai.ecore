@@ -2,8 +2,8 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="malai" nsURI="fr.inria.diverse.malai" nsPrefix="malai">
   <eClassifiers xsi:type="ecore:EClass" name="Instrument">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="links" upperBound="-1"
-        eType="#//Link" containment="true" eOpposite="#//Link/instrument"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="interactors" upperBound="-1"
+        eType="#//Interactor" containment="true" eOpposite="#//Interactor/instrument"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="clazz" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EClass"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="helpers" upperBound="-1"
@@ -20,7 +20,7 @@
         eType="#//Widget"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Link">
+  <eClassifiers xsi:type="ecore:EClass" name="Interactor">
     <eStructuralFeatures xsi:type="ecore:EReference" name="interaction" lowerBound="1"
         eType="#//Interaction"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="action" lowerBound="1"
@@ -35,7 +35,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="clazz" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EClass"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="instrument" eType="#//Instrument"
-        eOpposite="#//Instrument/links"/>
+        eOpposite="#//Instrument/interactors"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Interaction">
@@ -114,11 +114,11 @@
         upperBound="-1" eType="#//Instrument"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ActionDependency">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="srcAction" lowerBound="1"
         eType="#//Action"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="tgtActions" lowerBound="1"
         upperBound="-1" eType="#//Action"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Event">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

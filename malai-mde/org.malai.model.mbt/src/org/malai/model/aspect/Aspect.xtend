@@ -9,7 +9,7 @@ import org.malai.model.generator.Context
 import org.malai.model.generator.Generator
 
 import static extension org.malai.model.aspect.ActionAspect.*
-import static extension org.malai.model.aspect.LinkAspect.*
+import static extension org.malai.model.aspect.InteractorAspect.*
 import static extension org.malai.model.aspect.StateAspect.*
 import static extension org.malai.model.aspect.TransitionAspect.*
 import fr.inria.diverse.malai.Instrument
@@ -20,24 +20,24 @@ import fr.inria.diverse.malai.AbortingState
 import fr.inria.diverse.malai.MalaiFactory
 import fr.inria.diverse.malai.Action
 import fr.inria.diverse.malai.Interaction
-import fr.inria.diverse.malai.Link
+import fr.inria.diverse.malai.Interactor
 
 @Aspect(className=typeof(Instrument))
 class InstrumentAspect {
 
 	def void visit(Context context, Generator generator) {
-		_self.links.forEach[elem | elem.visit(context, generator)]
+		_self.interactors.forEach[elem | elem.visit(context, generator)]
 	}
 }
 
-@Aspect(className=typeof(Link))
-class LinkAspect{
+@Aspect(className=typeof(Interactor))
+class InteractorAspect{
 	
 	/**
 	 * Retrieve the number of visits in this Context
 	 */
 	def int getVisitCounter(Context context) {
-		var Integer visitCounter = context.linksCounters.get(_self)
+		var Integer visitCounter = context.interactorsCounters.get(_self)
 		if(visitCounter == null){
 			return 0
 		}
@@ -49,7 +49,7 @@ class LinkAspect{
 	 */
 	def void incrVisitCounter(Context context ) {
 		var int visitCounter = _self.getVisitCounter(context)
-		context.linksCounters.put(_self, visitCounter+1)
+		context.interactorsCounters.put(_self, visitCounter+1)
 	}
 
 	/**

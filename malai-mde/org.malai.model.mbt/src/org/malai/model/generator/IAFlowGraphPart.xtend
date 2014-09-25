@@ -13,7 +13,7 @@ import fr.inria.diverse.IAFlowGraph.InteractionTransition
 import fr.inria.diverse.IAFlowGraph.IAFlowGraphFactory
 
 /**
- * Conversion of a Link to an IAFlowGraph
+ * Conversion of a Interactor to an IAFlowGraph
  * 
  * Contains an Interaction-Action flow graph
  * and paths from root to final/aborting states
@@ -33,14 +33,14 @@ class IAFlowGraphPart{
 		allPaths = new ArrayList<List<InteractionTransition>>()
 	}
 	
-	new(Link link){
+	new(Interactor interactor){
 		allTransitions = new ArrayList<InteractionTransition>()
 		terminalTransitions = new HashSet<InteractionTransition>()
 		abortingTransitions = new HashSet<InteractionTransition>()
 		allPaths = new ArrayList<List<InteractionTransition>>()
 		
-		var List<List<Transition>> paths = link.interaction.visit(new Context(new ArrayList<Instrument>, new ArrayList<Action> )) //need context parameter, but useless here
-		paths.forEach[ p | addPathInGraph(p,link)]
+		var List<List<Transition>> paths = interactor.interaction.visit(new Context(new ArrayList<Instrument>, new ArrayList<Action> )) //need context parameter, but useless here
+		paths.forEach[ p | addPathInGraph(p,interactor)]
 	}
 	
 	/**
@@ -49,7 +49,7 @@ class IAFlowGraphPart{
 	 * 
 	 * @path Ordered transitions to be added in the graph
 	 */
-	private def void addPathInGraph(List<Transition> path, Link link){
+	private def void addPathInGraph(List<Transition> path, Interactor interactor){
 		//Add path elements in the graph
 		convertPath(path)
 		
@@ -64,12 +64,12 @@ class IAFlowGraphPart{
 		//Bind Action on ending transitions
 		terminalTransitions.forEach[elem | 
 			elem.action = IAFlowGraphFactory.eINSTANCE.createResultingAction()
-			elem.action.concreteAction = link.action
+			elem.action.concreteAction = interactor.action
 			elem.action.actionProduced = true
 		]
 		abortingTransitions.forEach[elem | 
 			elem.action = IAFlowGraphFactory.eINSTANCE.createResultingAction()
-			elem.action.concreteAction = link.action
+			elem.action.concreteAction = interactor.action
 			elem.action.actionProduced = false
 		]
 	}

@@ -14,10 +14,11 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="widgets" upperBound="-1"
         eType="ecore:EClass Malai.ecore#//Widget" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="mapping" upperBound="-1"
-        eType="#//LinkWidgetMapping" containment="true"/>
+        eType="#//InteractorWidgetMapping" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="LinkWidgetMapping">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="link" lowerBound="1" eType="ecore:EClass Malai.ecore#//Link"/>
+  <eClassifiers xsi:type="ecore:EClass" name="InteractorWidgetMapping">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="interactor" lowerBound="1"
+        eType="ecore:EClass Malai.ecore#//Interactor"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="binds" upperBound="-1"
         eType="#//TransitionWidgetBinding" containment="true"/>
   </eClassifiers>

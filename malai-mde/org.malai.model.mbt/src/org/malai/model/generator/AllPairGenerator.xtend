@@ -2,20 +2,20 @@ package org.malai.model.generator
 
 import fr.inria.diverse.interactiveSystem.interactiveSystem
 import java.util.List
-import fr.inria.diverse.malai.Link
+import fr.inria.diverse.malai.Interactor
 import java.util.ArrayList
 import fr.inria.diverse.malai.Action
 import org.malai.model.generator.graph.Graph
 import org.malai.model.generator.graph.GraphNode
-import static extension org.malai.model.aspect.LinkAspect.*
+import static extension org.malai.model.aspect.InteractorAspect.*
 import java.util.HashMap
 import java.util.HashSet
 
 class AllPairGenerator extends Generator{
 	
 	val HashSet<List> visited //store visited pairs
-	val HashMap<Link,HashMap<Link,List<Link>>> rapidAccess //rapid access to pairs
-	val List<List<Link>> pairs //Probable pairs of Links
+	val HashMap<Interactor,HashMap<Interactor,List<Interactor>>> rapidAccess //rapid access to pairs
+	val List<List<Interactor>> pairs //Probable pairs of Interactors
 	
 	new(interactiveSystem systemModel) {
 		super(systemModel)
@@ -24,7 +24,7 @@ class AllPairGenerator extends Generator{
 		rapidAccess = new HashMap
 		pairs = all_pairs()
 		pairs.forEach[pair | 
-			var HashMap<Link,List<Link>> map = rapidAccess.get(pair.get(0))
+			var HashMap<Interactor,List<Interactor>> map = rapidAccess.get(pair.get(0))
 			if(map == null){
 				map = new HashMap
 				rapidAccess.put(pair.get(0),map)
@@ -43,41 +43,41 @@ class AllPairGenerator extends Generator{
 		result.rootNode = contexts.head.attachNode
 		currentNode = result.rootNode
 		
-		//Then visit links
+		//Then visit interactors
 		while (!contexts.isEmpty){
 			val currentContext = contexts.head
 			currentNode = currentContext.attachNode
-			var Link currentLink = currentNode.relatedLink
+			var Interactor currentInteractor = currentNode.relatedInteractor
 
-			//Visit all links
-			var int i = currentContext.visitableLink.size - 1
+			//Visit all interactors
+			var int i = currentContext.visitableInteractor.size - 1
 			while(i >= 0){
-				var Link nextLink = currentContext.visitableLink.get(i)
+				var Interactor nextInteractor = currentContext.visitableInteractor.get(i)
 				
-				var pair = getPair(currentLink,nextLink)
-				if(currentLink == null){ //Is the root node
+				var pair = getPair(currentInteractor,nextInteractor)
+				if(currentInteractor == null){ //Is the root node
 					//Update graph
 					var GraphNode nextNode = result.createNode()
-					nextNode.relatedLink = nextLink
+					nextNode.relatedInteractor = nextInteractor
 					currentNode.addChildren(nextNode)
 						
 					var newContext = currentContext.copy()
 					newContext.attachNode = nextNode
 					addContext(newContext)
 					
-					nextLink.visit(newContext, this)
+					nextInteractor.visit(newContext, this)
 				}
 				else if(!visited.contains(pair)){ //Pair not yet visited
 					//Update graph
 					var GraphNode nextNode = result.createNode()
-					nextNode.relatedLink = nextLink
+					nextNode.relatedInteractor = nextInteractor
 					currentNode.addChildren(nextNode)
 						
 					var newContext = currentContext.copy()
 					newContext.attachNode = nextNode
 					addContext(newContext)
 					
-					nextLink.visit(newContext, this)
+					nextInteractor.visit(newContext, this)
 
 					visited.add(pair)
 
@@ -95,10 +95,10 @@ class AllPairGenerator extends Generator{
 	}
 	
 	/**
-	 * Find the pair of these two Links
+	 * Find the pair of these two Interactors
 	 * Return null if not found
 	 */
-	def getPair(Link one, Link two){
+	def getPair(Interactor one, Interactor two){
 		var levelOne = rapidAccess.get(one)
 		if(levelOne == null){
 			return null
@@ -130,21 +130,21 @@ class AllPairGenerator extends Generator{
 //	}
 	
 	/**
-	 * Compute all pairs of Links
-	 * Pairs where the first Link deactivate the Instrument of the second Link are not included 
+	 * Compute all pairs of Interactors
+	 * Pairs where the first Interactor deactivate the Instrument of the second Interactor are not included 
 	 */
-	def List<List<Link>> all_pairs(){
-		val List<List<Link>> res = new ArrayList
+	def List<List<Interactor>> all_pairs(){
+		val List<List<Interactor>> res = new ArrayList
 		
-		val List<Link> range = new ArrayList
-		range.addAll(this.interactiveSystem.instruments.map[links].flatten)
+		val List<Interactor> range = new ArrayList
+		range.addAll(this.interactiveSystem.instruments.map[interactors].flatten)
 		
-		range.forEach[link1 |
-			range.forEach[link2 | 
-				if(!link1.action.deactivatedInstruments.contains(link2.instrument)){
+		range.forEach[interactor1 |
+			range.forEach[interactor2 | 
+				if(!interactor1.action.deactivatedInstruments.contains(interactor2.instrument)){
 					var pair = new ArrayList
-					pair.add(link1)
-					pair.add(link2)
+					pair.add(interactor1)
+					pair.add(interactor2)
 					res.add(pair)
 //					println(link1.name+","+link2.name)
 				}
@@ -155,12 +155,12 @@ class AllPairGenerator extends Generator{
 	}
 	
 	/**
-	 * Find the first pair that pair(0) == lastLink and pair(1) is in visitables
+	 * Find the first pair that pair(0) == lastInteractor and pair(1) is in visitables
 	 * Return null if none
 	 */
-	def List<Link> select(Link lastLink, List<Link> visitables, List<List<Link>> visitablePairs){
+	def List<Interactor> select(Interactor lastInteractor, List<Interactor> visitables, List<List<Interactor>> visitablePairs){
 		var pair = visitablePairs.findFirst[p |
-			visitables.exists[nextLink | isEqual(lastLink, nextLink, p)]
+			visitables.exists[nextInteractor | isEqual(lastInteractor, nextInteractor, p)]
 		]
 		return pair
 	}
@@ -168,7 +168,7 @@ class AllPairGenerator extends Generator{
 	/**
 	 * Return true if one == pair(0) and two == pair(1)
 	 */
-	def boolean isEqual(Link one, Link two, List<Link> pair){
+	def boolean isEqual(Interactor one, Interactor two, List<Interactor> pair){
 		return (pair.size == 2 && pair.get(0) == one && pair.get(1) == two)
 	}
 }

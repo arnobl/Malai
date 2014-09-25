@@ -10,12 +10,12 @@ import fr.inria.diverse.malai.*
 import org.malai.model.generator.graph.Graph
 import org.malai.model.generator.graph.GraphNode
 
-import static extension org.malai.model.aspect.LinkAspect.*
+import static extension org.malai.model.aspect.InteractorAspect.*
 import fr.inria.diverse.interactiveSystem.interactiveSystem
 import fr.inria.diverse.IAFlowGraph.InteractionTransition
 
 /*
- * Store all created context and for each select the next link to be visited
+ * Store all created context and for each select the next interactor to be visited
  */
 class Generator
 {
@@ -30,7 +30,7 @@ class Generator
 	public var List<Instrument> allInstruments
 	
 	/** 
-	 * Contexts created by visited Links
+	 * Contexts created by visited Interactors
 	 *
 	 * Each interaction adds solved action/ activated instrument
 	 * and then creates a new Context
@@ -38,10 +38,10 @@ class Generator
 	protected var List<Context> contexts
 	
 	/**
-	 * Hashtable to store computed Graph from a Link
-	 * Avoid to generate Graph each time of Link.visit()
+	 * Hashtable to store computed Graph from a Interactor
+	 * Avoid to generate Graph each time of Interactor.visit()
 	 */
-	var Hashtable<Link,IAFlowGraphPart> graphTable
+	var Hashtable<Interactor,IAFlowGraphPart> graphTable
 	
 	//Help to "attach" context to each other
 	public var GraphNode currentNode
@@ -54,7 +54,7 @@ class Generator
 		contexts = new ArrayList
 		graphTable = new Hashtable
 		
-		cache4Links()
+		cache4Interactors()
 		
 		var Context newContext = new Context(interactiveSystem.instruments.filter[e | e.initiallyActivated].toList , new ArrayList<Action>())
 		addContext(newContext)	
@@ -74,26 +74,26 @@ class Generator
 		result.rootNode = contexts.head.attachNode
 		currentNode = result.rootNode
 		
-		//Then visit links
+		//Then visit interactors
 		while (!contexts.isEmpty){
 			val currentContext = contexts.head
 			currentNode = currentContext.attachNode
 	
-			while(!currentContext.visitableLink.empty){
+			while(!currentContext.visitableInteractor.empty){
 				var nodeContexts = new ArrayList<Context>();
 				var currentContextCopy = currentContext.copy()
-				//Visit all links, the first one will become the new current node
-				var int i = currentContext.visitableLink.size - 1
+				//Visit all interactors, the first one will become the new current node
+				var int i = currentContext.visitableInteractor.size - 1
 				while(i >= 0){
-					var Link currentLink = currentContext.visitableLink.get(i)
+					var Interactor currentInteractor = currentContext.visitableInteractor.get(i)
 					
 					//Update graph
 					var GraphNode nextNode = result.createNode()
-					nextNode.relatedLink = currentLink
+					nextNode.relatedInteractor = currentInteractor
 					currentNode.addChildren(nextNode)
 						
 					if(i == 0){ //Stay in the current context
-						currentLink.visit(currentContext, this)
+						currentInteractor.visit(currentContext, this)
 						currentNode = nextNode
 						nodeContexts.add(currentContext)
 					}
@@ -103,16 +103,16 @@ class Generator
 						addContext(newContext)
 						nodeContexts.add(newContext)
 						
-						currentLink.visit(newContext, this)
+						currentInteractor.visit(newContext, this)
 					}
 					i = i - 1
 				}	
-				//Update Links counters in new contexts
-				i = currentContextCopy.visitableLink.size - 1
+				//Update Interactors counters in new contexts
+				i = currentContextCopy.visitableInteractor.size - 1
 				while(i >= 0){
-					val Link currentLink = currentContextCopy.visitableLink.get(i)
+					val Interactor currentInteractor = currentContextCopy.visitableInteractor.get(i)
 					
-					nodeContexts.forEach[context | currentLink.incrVisitCounter(context)] // "Breadth First Search"
+					nodeContexts.forEach[context | currentInteractor.incrVisitCounter(context)] // "Breadth First Search"
 //					currentLink.incrVisitCounter(nodeContexts.get(nodeContexts.size - i - 1)) // "Depth First Search"
 					
 					i = i - 1
@@ -135,21 +135,22 @@ class Generator
 	}
 	
 	/**
-	 * Convert all Links of all Instruments to graph and store them 
+	 * Convert all Interactors of all Instruments to graph and store them 
 	 * into a cache
 	 */
-	def void cache4Links() {
+	def void cache4Interactors() {
 		
 		interactiveSystem.instruments.forEach[i |
-			i.links.forEach[l |
+			i.interactors.forEach[l |
 				if(!graphTable.containsKey(l)){
 					var graphPart = new IAFlowGraphPart(l)
 					graphPart.reduce
 					
-					val mapping = interactiveSystem.mapping.findFirst[map | map.link == l]
+					val mapping = interactiveSystem.mapping.findFirst[map | map.interactor == l]
 					if(mapping != null){
 						graphPart.allTransitions.forEach[tr |
 							var bind = mapping.binds.findFirst[bind | bind.transition.name == tr.concreteTransition.name]
+							println(bind)
 							tr.getRelatedWidgetIDs.addAll(bind.widgetIDs)
 						]
 					}
@@ -188,7 +189,7 @@ class Generator
 	}
 	
 	/**
-	 * Convert a path from the graph of Links to paths of Transitions
+	 * Convert a path from the graph of Interactors to paths of Transitions
 	 */
 	def List<List<InteractionTransition>> convert(List<GraphNode> path){
 		var List<List<InteractionTransition>> result = new ArrayList
@@ -197,8 +198,8 @@ class Generator
 		val List<List<InteractionTransition>> abortingPaths = new ArrayList
 		
 		path.forEach[node |
-			if(node.relatedLink != null){
-				var graph = graphTable.get(node.relatedLink)
+			if(node.relatedInteractor != null){
+				var graph = graphTable.get(node.relatedInteractor)
 				var allPaths = graph.allPaths
 				
 				val List<List<InteractionTransition>> toAdd = new ArrayList
@@ -268,11 +269,11 @@ class Generator
 		res.append("digraph OutputGraph {\n")
 		
 		graph.nodes.forEach[node |
-			if(node.relatedLink == null){
+			if(node.relatedInteractor == null){
 				res.append(node.hashCode+"[label=\"RootNode\"]\n")
 				//Connect root to init states of childs graphs
 				node.childrenNode.forEach[child |
-					val childSubGraph = graphTable.get(child.relatedLink)
+					val childSubGraph = graphTable.get(child.relatedInteractor)
 					var List<InteractionTransition> initList = childSubGraph.allPaths.map[path | path.get(0)]
 					val initStates = initList.toSet
 					
@@ -282,13 +283,13 @@ class Generator
 				}
 			else{
 				//Print the interaction graph
-				val subGraph = graphTable.get(node.relatedLink)
+				val subGraph = graphTable.get(node.relatedInteractor)
 				res.append(subGraph.node2Graph(node.hashCode))
 				
 				//Connect to other graph
-				//link all init states of childs nodes with all terminal states of the current node
+				//interactor all init states of childs nodes with all terminal states of the current node
 				node.childrenNode.forEach[child |
-					val childSubGraph = graphTable.get(child.relatedLink)
+					val childSubGraph = graphTable.get(child.relatedInteractor)
 					var List<InteractionTransition> initList = childSubGraph.allPaths.map[path | path.get(0)]
 					val initStates = initList.toSet
 					

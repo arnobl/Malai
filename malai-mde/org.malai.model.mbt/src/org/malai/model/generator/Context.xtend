@@ -5,8 +5,8 @@ import java.util.Hashtable
 import java.util.ArrayList
 import org.malai.model.generator.graph.GraphNode
 
-import static extension org.malai.model.aspect.LinkAspect.*
-import fr.inria.diverse.malai.Link
+import static extension org.malai.model.aspect.InteractorAspect.*
+import fr.inria.diverse.malai.Interactor
 import fr.inria.diverse.malai.Instrument
 import fr.inria.diverse.malai.Action
 
@@ -16,14 +16,14 @@ import fr.inria.diverse.malai.Action
 class Context
 {		
 
-	//Actions created by visited Links
+	//Actions created by visited Interactors
 	public List<Action> resolvedActions
 	
 	//Instruments activated by visited Actions
 	public List<Instrument> activatedInstr
 	
-	//Visits counter for each Link 
-	public Hashtable<Link,Integer> linksCounters
+	//Visits counter for each Interactor 
+	public Hashtable<Interactor,Integer> interactorsCounters
 	
 	//PARAMETER
 	private int MAXVISITS
@@ -37,32 +37,32 @@ class Context
 		resolvedActions.addAll(resAction)
 		activatedInstr = new ArrayList<Instrument>()
 		activatedInstr.addAll(activInstr)
-		linksCounters = new Hashtable<Link,Integer>
+		interactorsCounters = new Hashtable<Interactor,Integer>
 	}
 	
 	/**
-	 * Select the next Link to be visited from 
+	 * Select the next Interactor to be visited from 
 	 * all instruments activated
 	 * 
 	 * Strategy :
-	 * Get the less visited link (and visitable)
+	 * Get the less visited interactor (and visitable)
 	 * If none return null
 	 */
-	def Link nextLink() {	
+	def Interactor nextInteractor() {	
 
-		val findMinLink = [Link l1, Link l2 | if(l1.getVisitCounter(this) < l2.getVisitCounter(this)){ l1 } else { l2 }]
-		val visitableMask = [Link link | isVisitable(link) && link.getVisitCounter(this) < MAXVISITS]
+		val findMinInteractor = [Interactor l1, Interactor l2 | if(l1.getVisitCounter(this) < l2.getVisitCounter(this)){ l1 } else { l2 }]
+		val visitableMask = [Interactor interactor | isVisitable(interactor) && interactor.getVisitCounter(this) < MAXVISITS]
 		
-		//Get all links, keep just visitables and select the less visited
-		return activatedInstr.map[instr| instr.links].flatten.filter(visitableMask).reduce(findMinLink)
+		//Get all interactors, keep just visitables and select the less visited
+		return activatedInstr.map[instr| instr.interactors].flatten.filter(visitableMask).reduce(findMinInteractor)
 	}
 	
 	/**
-	 * Get all visitable links from all activated instruments
+	 * Get all visitable interactors from all activated instruments
 	 */
-	def List<Link> getVisitableLink(){
-		val visitableMask = [Link link | isVisitable(link) && link.getVisitCounter(this) < MAXVISITS]
-		return activatedInstr.map[instr| instr.links].flatten.filter(visitableMask).toList
+	def List<Interactor> getVisitableInteractor(){
+		val visitableMask = [Interactor interactor | isVisitable(interactor) && interactor.getVisitCounter(this) < MAXVISITS]
+		return activatedInstr.map[instr| instr.interactors].flatten.filter(visitableMask).toList
 	}
 	
 	/**
@@ -87,10 +87,10 @@ class Context
 	}
 	
 	/**
-	 * Return true if all dependencies of the link are resolved in this context
+	 * Return true if all dependencies of the interactor are resolved in this context
 	 */
-	def boolean isVisitable(Link link) {
-		return link.action.dependencies.forall[dep | resolvedActions.contains(dep.srcAction)]
+	def boolean isVisitable(Interactor interactor) {
+		return interactor.action.dependencies.forall[dep | resolvedActions.contains(dep.srcAction)]
 	}
 	
 	/**
@@ -98,7 +98,7 @@ class Context
 	 */
 	def Context copy(){
 		val result = new Context(this.activatedInstr, this.resolvedActions)
-		linksCounters.keySet.forEach[key | result.linksCounters.put(key,linksCounters.get(key))]
+		interactorsCounters.keySet.forEach[key | result.interactorsCounters.put(key,interactorsCounters.get(key))]
 		return result
 	}
 	

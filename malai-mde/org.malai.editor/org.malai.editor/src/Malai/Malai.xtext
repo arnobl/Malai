@@ -14,12 +14,12 @@ interactiveSystem returns interactiveSystem:
 		('actions' '{' actions+=Action ( "," actions+=Action)* '}' )?
 		('events' '{' events+=Event ( "," events+=Event)* '}' )?
 		('widgets' '{' widgets+=Widget ( "," widgets+=Widget)* '}' )?
-		('mapping' '{'(mapping+=LinkWidgetMapping)* '}')?
+		('mapping' '{'(mapping+=InteractorWidgetMapping)* '}')?
 	'}';
 
-LinkWidgetMapping returns LinkWidgetMapping:
-	{LinkWidgetMapping}
-	link=[malai::Link|STRING] ':'
+InteractorWidgetMapping returns InteractorWidgetMapping:
+	{InteractorWidgetMapping}
+	interactor=[malai::Interactor|STRING] ':'
 	binds+=TransitionWidgetBinding (',' binds+=TransitionWidgetBinding)*
 ;
 
@@ -48,7 +48,7 @@ Instrument returns malai::Instrument:
 		('dateCreation' dateCreation=STRING)?
 		('interimFeedback' interimFeedback=STRING)?
 		('subscribedWidgets' '(' subscribedWidgets+=[malai::Widget|STRING] ( "," subscribedWidgets+=[malai::Widget|STRING])* ')' )?
-		('links' '{' links+=Link ( "," links+=Link)* '}' )?
+		('interactors' '{' interactors+=Interactor ( "," interactors+=Interactor)* '}' )?
 //		('clazz' clazz=EClass)?
 //		('helpers' '{' helpers+=EClassifier ( "," helpers+=EClassifier)* '}' )?
 		('providedWidgets' '{' providedWidgets+=Widget ( "," providedWidgets+=Widget)* '}' )?
@@ -94,9 +94,9 @@ Event returns malai::Event:
 //	'}';
 
 
-Link returns malai::Link:
+Interactor returns malai::Interactor:
 	executeOnUpdate?='executeOnUpdate'
-	'Link' name=STRING
+	'Interactor' name=STRING
 	'{'
 		('description' description=STRING)?
 		('interimFeedback' interimFeedback=STRING)?
