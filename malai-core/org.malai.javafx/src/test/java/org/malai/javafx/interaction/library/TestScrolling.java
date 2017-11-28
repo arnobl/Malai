@@ -94,7 +94,6 @@ public class TestScrolling extends BaseJfXInteractionTest<Scrolling> {
 
 	@Test
 	void testScrollingNoActionWhenContainsNullRegistered() throws MustAbortStateMachineException {
-
 		ColorPicker dummyWidget = new ColorPicker();
 		interaction.registerToNodes(Collections.singletonList(null));
 		dummyWidget.fireEvent(createScrollEvent(1, 2, 5, 0));
@@ -166,7 +165,6 @@ public class TestScrolling extends BaseJfXInteractionTest<Scrolling> {
 
 	@Test
 	void testScrollingNoActionWhenContainsNullRegisteredWindow() throws MustAbortStateMachineException {
-
 		Scene dummyScene = new Scene(new Button());
 		Platform.runLater(() -> {
 			Stage stage = new Stage();
@@ -178,9 +176,5 @@ public class TestScrolling extends BaseJfXInteractionTest<Scrolling> {
 		dummyScene.getWindow().fireEvent(createScrollEvent(1, 2, 5, 0));
 		Mockito.verify(handler, Mockito.never()).interactionStops(interaction);
 		Mockito.verify(handler, Mockito.never()).interactionStarts(interaction);
-
 	}
-
-
-
 }
