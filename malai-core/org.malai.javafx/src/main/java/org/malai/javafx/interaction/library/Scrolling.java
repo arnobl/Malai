@@ -127,13 +127,33 @@ public class Scrolling extends JfxInteractionImpl {
 	@Override
 	public void registerToNodes(Collection<Node> widgets) {
 		super.registerToNodes(widgets);
-		widgets.forEach(w -> w.addEventHandler(ScrollEvent.SCROLL, evt -> onScroll(evt, 0)));
+		if (widgets != null) {
+
+			for(Node w : widgets)
+			{
+				if (w!=null)
+				{
+					w.addEventHandler(ScrollEvent.SCROLL, evt -> onScroll(evt, 0));
+				}
+			}
+			//widgets.forEach(w -> w.addEventHandler(ScrollEvent.SCROLL, evt -> onScroll(evt, 0)));
+		}
 	}
 
 	@Override
 	public void registerToWindows(Collection<Window> windows) {
 		super.registerToWindows(windows);
-		windows.forEach(w -> w.addEventHandler(ScrollEvent.SCROLL, evt -> onScroll(evt, 0)));
+		if(windows != null)
+		{
+			for(Window w : windows)
+			{
+				if(w!=null)
+				{
+					w.addEventHandler(ScrollEvent.SCROLL, evt -> onScroll(evt, 0));
+				}
+			}
+			//windows.forEach(w -> w.addEventHandler(ScrollEvent.SCROLL, evt -> onScroll(evt, 0)));
+		}
 	}
 
 

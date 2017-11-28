@@ -2,11 +2,7 @@ package org.malai.javafx.interaction.library;
 
 import javafx.geometry.Point2D;
 import javafx.geometry.Point3D;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.PickResult;
+import javafx.scene.input.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.malai.interaction.Interaction;
 import org.malai.interaction.InteractionHandler;
@@ -47,6 +43,12 @@ public abstract class BaseJfXInteractionTest<T extends JfxInteraction> extends A
 			false, false, false, false, false, false,
 			true,false, false, new PickResult(null, new Point3D(x, y, 0d),
 			0d, 0, new Point2D(0d, 0d)));
+	}
+
+	protected ScrollEvent createScrollEvent(final double x, final double y, final double dx, final double dy) {
+		return new ScrollEvent(ScrollEvent.SCROLL, x, y, x, y, false, false, false, false, false, false, dx, dy, dx, dy,
+				null, 0d, null, 0d, 0, new PickResult(null, new Point3D(x, y, 0d),
+				0d, 0, new Point2D(0d, 0d)));
 	}
 
 	protected KeyEvent createKeyPressEvent(final String str, final KeyCode code) {
