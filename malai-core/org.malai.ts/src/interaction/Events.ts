@@ -58,6 +58,10 @@ export function isTextInput(target: EventTarget): target is Element {
         && (<Element>target).getAttribute("type") === "text");
 }
 
+export function isWindowClose(event: Event): boolean {
+    return event.target === window && event.type === "unload";
+}
+
 export function isKeyDownEvent(event: Event): event is KeyboardEvent {
     return event instanceof KeyboardEvent && event.type === "keydown";
 }
