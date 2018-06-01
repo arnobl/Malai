@@ -11,11 +11,11 @@
 
 import {FSMHandler} from "../../src-core/fsm/FSMHandler";
 import {StubFSMHandler} from "../fsm/StubFSMHandler";
-import {WindowClose} from "../../src/interaction/library/WindowClose";
+import {WindowClosed} from "../../src/interaction/library/WindowClosed";
 
 jest.mock("../fsm/StubFSMHandler");
 
-let interaction: WindowClose;
+let interaction: WindowClosed;
 let close: HTMLElement;
 let handler: FSMHandler;
 const element = document.defaultView;
@@ -23,7 +23,7 @@ const element = document.defaultView;
 beforeEach(() => {
     jest.clearAllMocks();
     handler = new StubFSMHandler();
-    interaction = new WindowClose();
+    interaction = new WindowClosed();
     interaction.log(true);
     interaction.getFsm().log(true);
     interaction.getFsm().addHandler(handler);

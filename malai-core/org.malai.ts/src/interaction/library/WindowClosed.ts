@@ -12,19 +12,19 @@
 import {TSFSM} from "../TSFSM";
 import {FSMDataHandler} from "../FSMDataHandler";
 import {TerminalState} from "../../../src-core/fsm/TerminalState";
-import {isWindowClose} from "../Events";
+import {isWindowClosed} from "../Events";
 import {TSInteraction} from "../TSInteraction";
 import {InteractionData} from "../../../src-core/interaction/InteractionData";
 import {WindowCloseTransition} from "../WindowCloseTransition";
 
-export class WindowCloseFSM extends TSFSM<WindowCloseFSMHandler> {
+export class WindowClosedFSM extends TSFSM<WindowClosedFSMHandler> {
     private checkButton: number | undefined;
 
     public constructor() {
         super();
     }
 
-    public buildFSM(dataHandler?: WindowCloseFSMHandler): void {
+    public buildFSM(dataHandler?: WindowClosedFSMHandler): void {
         if (this.states.length > 1) {
             return;
         }
@@ -34,7 +34,7 @@ export class WindowCloseFSM extends TSFSM<WindowCloseFSMHandler> {
 
         new class extends WindowCloseTransition {
             public action(event: Event): void {
-                if (event.target !== null && isWindowClose(event) && dataHandler !== undefined) {
+                if (event.target !== null && isWindowClosed(event) && dataHandler !== undefined) {
                     dataHandler.initToCloseHandler(event);
                 }
             }
@@ -52,7 +52,7 @@ export class WindowCloseFSM extends TSFSM<WindowCloseFSMHandler> {
     }
 }
 
-interface WindowCloseFSMHandler extends FSMDataHandler {
+interface WindowClosedFSMHandler extends FSMDataHandler {
     initToCloseHandler(event: Event): void;
 }
 
@@ -60,19 +60,19 @@ interface WindowCloseFSMHandler extends FSMDataHandler {
  * A user interaction for pressing down the mouse button.
  * @author Gwendal DIDOT
  */
-export class WindowClose extends TSInteraction<InteractionData, WindowCloseFSM, Node> {
+export class WindowClosed extends TSInteraction<InteractionData, WindowClosedFSM, Node> {
     /**
      * Creates the interaction.
      */
-    private readonly handler : WindowCloseFSMHandler;
+    private readonly handler : WindowClosedFSMHandler;
 
-    public constructor(fsm?: WindowCloseFSM) {
-        super(fsm === undefined ? new WindowCloseFSM() : fsm);
+    public constructor(fsm?: WindowClosedFSM) {
+        super(fsm === undefined ? new WindowClosedFSM() : fsm);
 
-        this.handler = new class implements WindowCloseFSMHandler {
-            private readonly _parent: WindowClose;
+        this.handler = new class implements WindowClosedFSMHandler {
+            private readonly _parent: WindowClosed;
 
-            constructor(parent: WindowClose) {
+            constructor(parent: WindowClosed) {
                 this._parent = parent;
             }
 

@@ -11,7 +11,7 @@
 
 import {OutputState} from "../../src-core/fsm/OutputState";
 import {InputState} from "../../src-core/fsm/InputState";
-import {EventRegistrationToken, isWindowClose} from "./Events";
+import {EventRegistrationToken, isWindowClosed} from "./Events";
 import {TSTransition} from "./TSTransition";
 
 /**
@@ -28,7 +28,7 @@ export class WindowCloseTransition extends TSTransition {
     }
 
     public accept(event: Event): boolean {
-        return event.target !== null && isWindowClose(event);
+        return event.target !== null && isWindowClosed(event);
     }
 
     public isGuardOK(event: Event): boolean {
@@ -36,6 +36,6 @@ export class WindowCloseTransition extends TSTransition {
     }
 
     public getAcceptedEvents(): Set<string> {
-        return new Set([EventRegistrationToken.Beforunload]);
+        return new Set([EventRegistrationToken.BeforeUnload]);
     }
 }
