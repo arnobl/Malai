@@ -59,3 +59,11 @@ test("Only press the key cancel the interaction after a timeout.", () => {
     expect(handler.fsmStarts).toHaveBeenCalledTimes(1);
     expect(handler.fsmCancels).toHaveBeenCalledTimes(1);
 });
+
+test("If you release a key different that the one you press, the interaction don't stop", () => {
+    interaction.registerToNodes([text]);
+    text.dispatchEvent(createKeyEvent(EventRegistrationToken.KeyDown, "a"));
+    text.dispatchEvent(createKeyEvent(EventRegistrationToken.KeyUp, "b"));
+    expect(handler.fsmStarts).toHaveBeenCalledTimes(1);
+    expect(handler.fsmStops).not.toHaveBeenCalled();
+});
