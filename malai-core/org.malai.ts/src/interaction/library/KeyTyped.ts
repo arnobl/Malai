@@ -19,8 +19,12 @@ import {StdState} from "../../../src-core/fsm/StdState";
 import {KeyReleaseTransition} from "../KeyReleaseTransition";
 import {CancellingState} from "../../../src-core/fsm/CancellingState";
 import {TimeoutTransition} from "../../../src-core/fsm/TimeoutTransition";
+import {OutputState} from "../../../src-core/fsm/OutputState";
+import {InputState} from "../../../src-core/fsm/InputState";
 
 export class KeyTypedFSM extends TSFSM<KeyTypedFSMHandler> {
+    private checkKey: string | undefined;
+
     /** The time gap between the two spinner events. */
     private static readonly timeGap = 1000;
     /** The supplier that provides the time gap. */
@@ -44,15 +48,52 @@ export class KeyTypedFSM extends TSFSM<KeyTypedFSMHandler> {
         this.addState(typed);
         this.addState(cancel);
 
-        new  KeyPressureTransition(this.initState, pressed);
+        new  class extends KeyPressureTransition {
+            private readonly _parent: KeyTypedFSM;
+
+            public constructor(parent: KeyTypedFSM, srcState: OutputState<Event>, tgtState: InputState<Event>) {
+                super(srcState, tgtState);
+                this._parent = parent;
+            }
+
+            public action(event: Event) {
+                if (event instanceof KeyboardEvent) {
+                    this._parent.setCheckKey(event.code);
+                }
+            }
+
+        }(this, this.initState, pressed);
+
         new class extends KeyReleaseTransition {
+            private readonly _parent: KeyTypedFSM;
+
+            public constructor(parent: KeyTypedFSM, srcState: OutputState<Event>, tgtState: InputState<Event>) {
+                super(srcState, tgtState);
+                this._parent = parent;
+            }
+
+            public isGuardOK(event: Event) {
+                return super.isGuardOK(event) && this._parent.checkKey === undefined ||
+                    (event instanceof KeyboardEvent && event.code === this._parent.checkKey);
+            }
+
             public action(event: Event) {
                 if (dataHandler !== undefined && event instanceof KeyboardEvent) {
                     dataHandler.onKeyTyped(event);
                 }
             }
-        }(pressed, typed);
+        }(this, pressed, typed);
         new TimeoutTransition(pressed, cancel, KeyTypedFSM.SUPPLY_TIME_GAP);
+    }
+
+    public getCheckKey() {
+        return this.checkKey === undefined ? "" : this.checkKey;
+    }
+
+    public setCheckKey(keyToCheck: string) {
+        if (this.checkKey === undefined) {
+            this.checkKey = keyToCheck;
+        }
     }
 
     public reinit(): void {
