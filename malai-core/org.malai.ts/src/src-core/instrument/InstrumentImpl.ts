@@ -13,7 +13,7 @@ import {WidgetBinding} from "../binding/WidgetBinding";
 import {Instrument} from "./Instrument";
 import {ErrorCatcher} from "../error/ErrorCatcher";
 import {Undoable} from "../undo/Undoable";
-import {MArray} from "../../src/util/ArrayUtil";
+import {MArray} from "../../util/ArrayUtil";
 import {Command} from "../command/Command";
 
 /**

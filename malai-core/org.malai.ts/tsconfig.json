@@ -12,6 +12,7 @@
     "noUnusedLocals": true,
     "removeComments": true,
     "noImplicitReturns": true,
+    "declaration": true,
     "types": [
       "jest"
     ]

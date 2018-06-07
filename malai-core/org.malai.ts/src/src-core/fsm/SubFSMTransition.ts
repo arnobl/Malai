@@ -14,7 +14,7 @@ import {FSM} from "./FSM";
 import {FSMHandler} from "./FSMHandler";
 import {isOutputStateType, OutputState} from "./OutputState";
 import {InputState} from "./InputState";
-import {Optional} from "../../src/util/Optional";
+import {Optional} from "../../util/Optional";
 import {TerminalState} from "./TerminalState";
 import {CancellingState} from "./CancellingState";
 

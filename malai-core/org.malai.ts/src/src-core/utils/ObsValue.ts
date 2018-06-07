@@ -9,7 +9,7 @@
  * General Public License for more details.
  */
 
-import {MArray} from "../../src/util/ArrayUtil";
+import {MArray} from "../../util/ArrayUtil";
 
 /**
  * A simple value property. We do not use the JFX one (SimpleObjectProperty) since

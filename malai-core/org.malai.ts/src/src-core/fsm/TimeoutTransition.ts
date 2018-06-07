@@ -12,7 +12,7 @@
 import {Transition} from "./Transition";
 import {OutputState} from "./OutputState";
 import {InputState} from "./InputState";
-import {Optional} from "../../src/util/Optional";
+import {Optional} from "../../util/Optional";
 
 export class TimeoutTransition<E> extends Transition<E> {
     /**

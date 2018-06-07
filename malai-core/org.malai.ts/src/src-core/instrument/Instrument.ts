@@ -12,7 +12,7 @@
 import {WidgetBinding} from "../binding/WidgetBinding";
 import {Modifiable} from "../properties/Modifiable";
 import {Reinitialisable} from "../properties/Reinitialisable";
-import {MArray} from "../../src/util/ArrayUtil";
+import {MArray} from "../../util/ArrayUtil";
 import {CommandHandler} from "../command/CommandHandler";
 
 /**

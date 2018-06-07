@@ -11,7 +11,7 @@
 
 import {isUndoableType} from "../undo/Undoable";
 import {UndoCollector} from "../undo/UndoCollector";
-import {MArray} from "../../src/util/ArrayUtil";
+import {MArray} from "../../util/ArrayUtil";
 import {Command, RegistrationPolicy} from "./Command";
 import {CommandHandler} from "./CommandHandler";
 

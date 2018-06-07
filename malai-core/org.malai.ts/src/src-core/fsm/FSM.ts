@@ -19,7 +19,7 @@ import {StdState} from "./StdState";
 import {InputState} from "./InputState";
 import {Logger} from "typescript-logging";
 import {factory} from "../logging/ConfigLog";
-import {MArray} from "../../src/util/ArrayUtil";
+import {MArray} from "../../util/ArrayUtil";
 import {OutputStateImpl} from "./OutputStateImpl";
 
 export class FSM<E> {

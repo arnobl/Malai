@@ -11,7 +11,7 @@
 
 import {OutputState} from "./OutputState";
 import {InputState} from "./InputState";
-import {Optional} from "../../src/util/Optional";
+import {Optional} from "../../util/Optional";
 
 export abstract class Transition<E> {
     public readonly src: OutputState<E>;

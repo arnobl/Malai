@@ -13,7 +13,7 @@ import {StateImpl} from "./StateImpl";
 import {OutputState} from "./OutputState";
 import {Transition} from "./Transition";
 import {FSM} from "./FSM";
-import {MArray} from "../../src/util/ArrayUtil";
+import {MArray} from "../../util/ArrayUtil";
 
 export abstract class OutputStateImpl<E> extends StateImpl<E> implements OutputState<E> {
     protected readonly transitions: MArray<Transition<E>>;

@@ -18,9 +18,9 @@
  */
 import {UndoHandler} from "./UndoHandler";
 import {Undoable} from "./Undoable";
-import {Optional} from "../../src/util/Optional";
+import {Optional} from "../../util/Optional";
 import {EmptyUndoHandler} from "./EmptyUndoHandler";
-import {MArray} from "../../src/util/ArrayUtil";
+import {MArray} from "../../util/ArrayUtil";
 
 export class UndoCollector {
     /**
