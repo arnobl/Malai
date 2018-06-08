@@ -3,7 +3,7 @@
     "target": "esnext",
     "experimentalDecorators": true,
     "moduleResolution": "node",
-    "module": "commonjs",
+    "module": "ESnext",
     "outDir": "target",
     "pretty": true,
     "noImplicitAny": true,

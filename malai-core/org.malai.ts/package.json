@@ -26,7 +26,7 @@
     "dev": "rollup -c -w",
     "generates-barrels": "barrelsby -c ./barrelsby-config.json --delete",
     "compile": "tsc",
-    "all": "npm run clean && npm run compile && npm run coverage && npm run lint",
+    "all": "npm run clean && npm run compile && npm run coverage && npm run lint && npm rum build",
     "clean": "rm -rf target/* coverage/*",
     "test": "jest",
     "lint": "tslint --project tsconfig.json --config tslint.json",

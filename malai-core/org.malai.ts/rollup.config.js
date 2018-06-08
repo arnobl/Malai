@@ -15,7 +15,7 @@ export default {
     input: pkg.main,
     output: {
         name: 'WidgetBinder',
-        file : 'lib/WidgetBinder.js',
+        file : 'dist/widgetbinder.js',
         format: 'umd'
     },
     plugins: [
