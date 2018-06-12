@@ -12,16 +12,23 @@ canvas {
   border: solid black 1px;
 }
 
-#MenuBar {
-  position: absolute;bottom: 20px;
-  width: 99%;
-  height: 100px;
-  border: solid black 2px;
-}
-
 #FSMselector {
   width: 29%;
   height: 900px;
   float: right;
   border: solid black 2px;
+}
+
+a {
+  float: top;
+}
+
+app-root {
+  display: table;
+}
+
+app-menu-button {
+  display: inline-block;
+  margin-top : 20px;
+  width: 100%;
 }
