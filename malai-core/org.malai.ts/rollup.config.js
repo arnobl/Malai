@@ -2,7 +2,6 @@ import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import typescript from 'rollup-plugin-typescript2';
 import includePaths from 'rollup-plugin-includepaths';
-import pkg from './package.json'
 
 let includePathOptions = {
   include: {},
@@ -12,7 +11,7 @@ let includePathOptions = {
 };
 
 export default {
-    input: pkg.main,
+    input: './src/index.ts',
     output: {
         name: 'WidgetBinder',
         file : 'dist/widgetbinder.js',
