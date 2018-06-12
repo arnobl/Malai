@@ -10,11 +10,11 @@
  */
 
 import {TSInteraction} from "../interaction/TSInteraction";
-import {WidgetBindingImpl} from "../../src-core/binding/WidgetBindingImpl";
-import {FSM} from "../../src-core/fsm/FSM";
-import {CommandImpl} from "../../src-core/command/CommandImpl";
-import {Command} from "../../src-core/command/Command";
-import {InteractionData} from "../../src-core/interaction/InteractionData";
+import {WidgetBindingImpl} from "../src-core/binding/WidgetBindingImpl";
+import {FSM} from "../src-core/fsm/FSM";
+import {CommandImpl} from "../src-core/command/CommandImpl";
+import {Command} from "../src-core/command/Command";
+import {InteractionData} from "../src-core/interaction/InteractionData";
 
 export abstract class TSWidgetBinding<C extends CommandImpl, I extends TSInteraction<D, FSM<Event>, {}>, D extends InteractionData>
         extends WidgetBindingImpl<C, I, D> {
@@ -28,7 +28,7 @@ export abstract class TSWidgetBinding<C extends CommandImpl, I extends TSInterac
      * @param widgets The widgets concerned by the binding. Cannot be null.
      * @throws IllegalArgumentException If the given interaction or instrument is null.
      */
-    protected constructor(exec: boolean, interaction: I, cmdProducer: () => C, widgets: Array<EventTarget>) {
+    protected constructor(exec: boolean, interaction: I, cmdProducer: (d: D) => C, widgets: Array<EventTarget>) {
         super(exec, interaction, cmdProducer);
         interaction.registerToNodes(widgets);
     }

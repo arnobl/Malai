@@ -10,12 +10,12 @@
  */
 
 import {TSInteraction} from "../interaction/TSInteraction";
-import {FSM} from "../../src-core/fsm/FSM";
+import {FSM} from "../src-core/fsm/FSM";
 import {Binder} from "./Binder";
 import {TSWidgetBinding} from "./TSWidgetBinding";
 import {AnonNodeBinding} from "./AnonNodeBinding";
-import {CommandImpl} from "../../src-core/command/CommandImpl";
-import {InteractionData} from "../../src-core/interaction/InteractionData";
+import {CommandImpl} from "../src-core/command/CommandImpl";
+import {InteractionData} from "../src-core/interaction/InteractionData";
 
 /**
  * The base binding builder for bindings where actions can be updated while the user interaction is running.
@@ -105,7 +105,7 @@ export abstract class UpdateBinder<C extends CommandImpl, I extends TSInteractio
     }
 
     public bind(): TSWidgetBinding<C, I, D> {
-        return new AnonNodeBinding(this.execOnChanges, this.interaction, this.cmdClass, this.initCmd, this.updateFct,
+        return new AnonNodeBinding(this.execOnChanges, this.interaction, this.cmdProducer, this.initCmd, this.updateFct,
             this.checkConditions, this.onEnd, this.cancelFct, this.endOrCancelFct, this.feedbackFct, this.widgets, this._async,
             this._strictStart, new Array(...this.logLevels));
     }
