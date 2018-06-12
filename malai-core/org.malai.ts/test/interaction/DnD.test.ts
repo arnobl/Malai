@@ -9,7 +9,7 @@
  * General Public License for more details.
  */
 
-import {FSMHandler} from "../../src-core/fsm/FSMHandler";
+import {FSMHandler} from "../../src/src-core/fsm/FSMHandler";
 import {StubFSMHandler} from "../fsm/StubFSMHandler";
 import {EventRegistrationToken} from "../../src/interaction/Events";
 import {createMouseEvent} from "./StubEvents";
@@ -23,7 +23,6 @@ let handler: FSMHandler;
 
 beforeEach(() => {
     jest.clearAllMocks();
-    jest.useFakeTimers();
     handler = new StubFSMHandler();
     interaction = new DnD(false, false);
     interaction.log(true);
@@ -34,5 +33,14 @@ beforeEach(() => {
     if (elt !== null) {
         canvas = elt;
     }
+});
+
+test("Click and move start and stop the interaction", () => {
+   interaction.registerToNodes([canvas]);
+   canvas.dispatchEvent(createMouseEvent(EventRegistrationToken.MouseDown, canvas));
+   canvas.dispatchEvent(createMouseEvent(EventRegistrationToken.MouseMove, canvas));
+   canvas.dispatchEvent(createMouseEvent(EventRegistrationToken.MouseUp, canvas));
+   expect(handler.fsmStarts).toHaveBeenCalledTimes(1);
+   expect(handler.fsmStops).toHaveBeenCalledTimes(1);
 });
 

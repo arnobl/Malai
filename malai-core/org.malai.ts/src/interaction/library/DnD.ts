@@ -11,12 +11,12 @@
 
 import {TSFSM} from "../TSFSM";
 import {FSMDataHandler} from "../FSMDataHandler";
-import {StdState} from "../../../src-core/fsm/StdState";
-import {TerminalState} from "../../../src-core/fsm/TerminalState";
-import {CancellingState} from "../../../src-core/fsm/CancellingState";
+import {StdState} from "../../../src/src-core/fsm/StdState";
+import {TerminalState} from "../../../src/src-core/fsm/TerminalState";
+import {CancellingState} from "../../../src/src-core/fsm/CancellingState";
 import {PressureTransition} from "../PressureTransition";
-import {OutputState} from "../../../src-core/fsm/OutputState";
-import {InputState} from "../../../src-core/fsm/InputState";
+import {OutputState} from "../../../src/src-core/fsm/OutputState";
+import {InputState} from "../../../src/src-core/fsm/InputState";
 import {ReleaseTransition} from "../ReleaseTransition";
 import {MoveTransition} from "../MoveTransition";
 import {EscapeKeyPressureTransition} from "../EscapeKeyPressureTransition";
@@ -153,7 +153,7 @@ export class DnDFSM extends TSFSM<DnDFSMHandler> {
     }
 }
 
-interface DnDFSMHandler extends FSMDataHandler {
+export interface DnDFSMHandler extends FSMDataHandler {
     onPress(event: Event): void;
     onDrag(event: Event): void;
     onRelease(event: Event): void;
