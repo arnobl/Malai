@@ -35,7 +35,7 @@ beforeEach(() => {
     }
 });
 
-test("Click on a canvas starts and stops the interaction", () => {
+test("Click on a element starts and stops the interaction", () => {
     interaction.registerToNodes([canvas]);
     canvas.click();
     expect(handler.fsmStarts).toHaveBeenCalledTimes(1);
