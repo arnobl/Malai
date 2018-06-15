@@ -26,7 +26,7 @@
     "generates-barrels": "barrelsby -c ./barrelsby-config.json --delete",
     "compile": "tsc",
     "all": "npm run clean && npm run compile && npm run coverage && npm run lint",
-    "lib-build": "npm run all && npm run build",
+    "lib-buid": "npm run all && npm run build",
     "clean": "rm -rf target/* coverage/*",
     "test": "jest",
     "lint": "tslint --project tsconfig.json --config tslint.json",
