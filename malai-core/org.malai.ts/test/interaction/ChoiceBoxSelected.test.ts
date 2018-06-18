@@ -34,14 +34,20 @@ beforeEach(() => {
     }
 });
 
-test("Click on choiceBox starts and stops the interaction", () => {
+test("Input event starts and stops the interaction ChoiceBoxSelected", () => {
     interaction.registerToNodes([choiceBox]);
     choiceBox.dispatchEvent(new Event("input"));
     expect(handler.fsmStops).toHaveBeenCalledTimes(1);
     expect(handler.fsmStarts).toHaveBeenCalledTimes(1);
 });
 
-test("Click multiple time on choiceBox start and stop the interaction each time.", () => {
+test("Other event don't start the interaction ChoiceBoxSelected", () => {
+    interaction.registerToNodes([choiceBox]);
+    choiceBox.click();
+    expect(handler.fsmStarts).toHaveBeenCalledTimes(0);
+});
+
+test("Multiple input event on choiceBox start and stop the interaction each time.", () => {
    interaction.registerToNodes([choiceBox]);
    choiceBox.dispatchEvent(new Event("input"));
    choiceBox.dispatchEvent(new Event("input"));
