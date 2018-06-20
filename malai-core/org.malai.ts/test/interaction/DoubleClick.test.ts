@@ -44,6 +44,25 @@ test("Double click on a canvas starts and stops the interaction", () => {
     expect(handler.fsmStops).toHaveBeenCalledTimes(1);
 });
 
+test("Check data of the interaction.", () => {
+    interaction.registerToNodes([canvas]);
+    interaction.getFsm().addHandler(new class extends StubFSMHandler {
+        public constructor() {
+            super();
+        }
+
+        public fsmStops() {
+            expect(interaction.getData().getSrcClientX()).toBe(11);
+            expect(interaction.getData().getSrcClientY()).toBe(23);
+            expect(interaction.getData().getButton()).toBe(0);
+        }
+    }());
+    canvas.dispatchEvent(createMouseEvent(EventRegistrationToken.Click, canvas,  undefined, undefined, 11,
+        23));
+    canvas.dispatchEvent(createMouseEvent(EventRegistrationToken.Click, canvas, undefined, undefined, 11,
+        23));
+});
+
 test("Move between clicks cancels the double click", () => {
     interaction.registerToNodes([canvas]);
     canvas.click();

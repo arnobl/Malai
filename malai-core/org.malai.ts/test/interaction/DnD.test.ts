@@ -191,3 +191,22 @@ test("Click, multiple move and release start and stop the interaction", () => {
     expect(handler.fsmStops).toHaveBeenCalledTimes(1);
     expect(handler.fsmCancels).not.toHaveBeenCalled();
 });
+
+test("Check data with one move.", () => {
+    interaction.registerToNodes([canvas]);
+    interaction.getFsm().addHandler(new class extends StubFSMHandler {
+        public constructor() {
+            super();
+        }
+
+        public fsmStops() {
+            expect(interaction.getData().getSrcClientX()).toBe(11);
+            expect(interaction.getData().getSrcClientY()).toBe(23);
+            expect(interaction.getData().getTgtClientX()).toBe(15);
+            expect(interaction.getData().getTgtClientY()).toBe(25);
+        }
+    }());
+    canvas.dispatchEvent(createMouseEvent(EventRegistrationToken.MouseDown, canvas, undefined, undefined, 11, 23));
+    canvas.dispatchEvent(createMouseEvent(EventRegistrationToken.MouseMove, canvas, undefined, undefined, 15, 25));
+    canvas.dispatchEvent(createMouseEvent(EventRegistrationToken.MouseUp, canvas, undefined, undefined, 15, 25));
+});
