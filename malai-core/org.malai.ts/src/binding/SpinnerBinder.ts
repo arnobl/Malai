@@ -15,3 +15,4 @@
  * @author Gwendal Didot
  */
 
+export default function () : void {}

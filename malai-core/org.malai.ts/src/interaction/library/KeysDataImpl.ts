@@ -9,8 +9,8 @@
  * General Public License for more details.
  */
 
+import {Optional} from "../../util/Optional";
 import {KeysData} from "./KeysData";
-import {Optional} from "../..";
 
 export class KeysDataImpl implements KeysData {
 

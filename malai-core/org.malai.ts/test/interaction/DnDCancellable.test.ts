@@ -9,9 +9,10 @@
  * General Public License for more details.
  */
 
+import {EventRegistrationToken} from "../../src/interaction/Events";
+import {DnD} from "../../src/interaction/library/DnD";
 import {FSMHandler} from "../../src/src-core/fsm/FSMHandler";
 import {StubFSMHandler} from "../fsm/StubFSMHandler";
-import {DnD, EventRegistrationToken} from "../../src";
 import {createKeyEvent, createMouseEvent} from "./StubEvents";
 
 jest.mock("../fsm/StubFSMHandler");

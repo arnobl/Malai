@@ -9,9 +9,10 @@
  * General Public License for more details.
  */
 
-import {Binder, CommandImpl, KeyData, KeyPressed} from "..";
-// import {LinkedList} from "typescript-logging";
-
+import {KeysPressed} from "../interaction/library/KeysPressed";
+import {KeysData} from "../interaction/library/KeysData";
+import {CommandImpl} from "../src-core/command/CommandImpl";
+import {Binder} from "./Binder";
 
 /**
  * The binding builder to create bindings between a combobox interaction and a given command.
@@ -19,17 +20,23 @@ import {Binder, CommandImpl, KeyData, KeyPressed} from "..";
  * @author Gwendal Didot
  */
 
-export class KeyBinder<C extends CommandImpl, B extends KeyBinder<C, B>> extends Binder<C, KeyPressed, KeyData, B> {
-    // private readonly codes: LinkedList<number>;
-    // private readonly checkCode: boolean;
+export class KeyBinder<C extends CommandImpl, B extends KeyBinder<C, B>> extends Binder<C, KeysPressed, KeysData, B> {
+    private readonly codes: Array<String>;
+    public readonly checkCode: boolean;
 
-    public constructor(modifierAccepted: boolean, cmdProducer: (i ?: KeyData) => C) {
-        super(new KeyPressed(modifierAccepted), cmdProducer);
-        // this.codes = new LinkedList<number>();
-        // const keys: LinkedList<String> = new LinkedList<String>();
-        // keys.addTail(this.interaction.getKey());
-        // this.checkCode = (this.codes.getSize() === 0) || this.codes.getSize() === keys.getSize() && keys && this.checkConditions;
-        // }
+    public constructor(cmdProducer: (i ?: KeysData) => C) {
+        super(new KeysPressed(), cmdProducer);
+        this.checkCode =  this.isPresent(this.codes, this.interaction.getData());
+    }
+
+    private isPresent(codes: Array<String>, data: KeysData): boolean {
+        let keys: Array<String>;
+        keys = data.getKeys();
+        return (codes.length === 0 || codes.length === keys.length && keys.every( value => codes.indexOf(value) >= 0));
+    }
+
+    public with(codes: Array<String>): B  {
+        codes.forEach(value => this.codes.push(value));
+        return this as {} as B;
     }
 }
-

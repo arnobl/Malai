@@ -12,6 +12,7 @@
 import {ButtonBinder} from "./ButtonBinder";
 import {TSInteraction} from "../interaction/TSInteraction";
 import {FSM} from "../src-core/fsm/FSM";
+import {KeysPressedBinder} from "./KeysPressedBinder";
 import {NodeBinder} from "./NodeBinder";
 import {CommandImpl} from "../src-core/command/CommandImpl";
 import {AnonCmdBinder} from "./AnonCmdBinder";
@@ -20,6 +21,8 @@ import {WidgetData} from "../src-core/interaction/WidgetData";
 import {CheckBoxBinder} from "./CheckBoxBinder";
 import {ColorPickerBinder} from "./ColorPickerBinder";
 import {ComboBoxBinder} from "./ComboBoxBinder";
+import {KeysData} from "../interaction/library/KeysData";
+import {KeyNodeBinder} from "./KeyNodeBinder";
 
 /**
  * Creates binding builder to build a binding between a given interaction and the given command type.
@@ -89,4 +92,12 @@ export function colorPickedBinder<C extends CommandImpl>(cmdProducer: (i ?: Widg
  */
 export function comboBoxBinder<C extends CommandImpl>(cmdProducer: (i ?: WidgetData<Element>) => C): ComboBoxBinder<C> {
     return new ComboBoxBinder<C>(cmdProducer);
+}
+
+export function keyNodeBinder<C extends CommandImpl>(cmdProducer: (i ?: KeysData) => C): KeyNodeBinder<C> {
+    return new KeyNodeBinder<C>(cmdProducer);
+}
+
+export function keysPressedBinder<C extends CommandImpl>(cmdProducer: (i ?: KeysData) => C): KeysPressedBinder<C> {
+    return new KeysPressedBinder<C>(cmdProducer);
 }

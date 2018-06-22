@@ -9,7 +9,11 @@
  * General Public License for more details.
  */
 
-import {Binder, ColorPicked, CommandImpl, WidgetData} from "..";
+
+import {ColorPicked} from "../interaction/library/ColorPicked";
+import {CommandImpl} from "../src-core/command/CommandImpl";
+import {WidgetData} from "../src-core/interaction/WidgetData";
+import {Binder} from "./Binder";
 
 /**
  * The binding builder to create bindings between a colorpicker interaction and a given command.

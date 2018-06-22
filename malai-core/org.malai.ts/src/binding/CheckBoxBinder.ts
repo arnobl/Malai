@@ -9,7 +9,10 @@
  * General Public License for more details.
  */
 
-import {Binder, BoxChecked, CommandImpl, WidgetData} from "..";
+import {BoxChecked} from "../interaction/library/BoxChecked";
+import {CommandImpl} from "../src-core/command/CommandImpl";
+import {WidgetData} from "../src-core/interaction/WidgetData";
+import {Binder} from "./Binder";
 
 /**
  * The binding builder to create bindings between a checkbox interaction and a given command.

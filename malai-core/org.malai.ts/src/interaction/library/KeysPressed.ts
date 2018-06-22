@@ -9,9 +9,14 @@
  * General Public License for more details.
  */
 
+import {InputState} from "../../src-core/fsm/InputState";
+import {OutputState} from "../../src-core/fsm/OutputState";
+import {StdState} from "../../src-core/fsm/StdState";
+import {TerminalState} from "../../src-core/fsm/TerminalState";
+import {KeyPressureTransition} from "../KeyPressureTransition";
+import {KeyReleaseTransition} from "../KeyReleaseTransition";
 import {TSFSM} from "../TSFSM";
 import {FSMDataHandler} from "../FSMDataHandler";
-import {InputState, KeyPressureTransition, KeyReleaseTransition, OutputState, StdState, TerminalState} from "../..";
 import {MultiKeyInteraction} from "./MultiKeyInteraction";
 import {KeysData} from "./KeysData";
 

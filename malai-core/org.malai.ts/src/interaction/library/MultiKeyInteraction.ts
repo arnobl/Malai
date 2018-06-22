@@ -9,8 +9,10 @@
  * General Public License for more details.
  */
 
+import {FSM} from "../../src-core/fsm/FSM";
+import {Optional} from "../../util/Optional";
+import {TSInteraction} from "../TSInteraction";
 import {KeysData} from "./KeysData";
-import {FSM, Optional, TSInteraction} from "../..";
 import {KeysDataImpl} from "./KeysDataImpl";
 
 export abstract class MultiKeyInteraction<D extends KeysData, F extends FSM<Event>> extends TSInteraction<D, F, Event> implements KeysData {

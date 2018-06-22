@@ -23,7 +23,7 @@ import {InputState} from "../../src-core/fsm/InputState";
 
 export class TextInputChangedFSM extends TSFSM<TextInputChangedHandler> {
     /** The time gap between the two spinner events. */
-    private _timeGap = 1000;
+    private readonly _timeGap: number = 1000;
     /** The supplier that provides the time gap. */
     private readonly SUPPLY_TIME_GAP = () => this.getTimeGap();
 
@@ -36,7 +36,7 @@ export class TextInputChangedFSM extends TSFSM<TextInputChangedHandler> {
 
     public constructor(timeSet?: number) {
         super();
-        if (timeSet) {
+        if (timeSet !== undefined) {
             this._timeGap = timeSet;
         }
     }

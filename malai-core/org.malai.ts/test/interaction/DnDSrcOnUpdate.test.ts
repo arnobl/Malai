@@ -9,9 +9,9 @@
  * General Public License for more details.
  */
 
+import {DnD} from "../../src/interaction/library/DnD";
 import {FSMHandler} from "../../src/src-core/fsm/FSMHandler";
 import {StubFSMHandler} from "../fsm/StubFSMHandler";
-import {DnD} from "../../src";
 import {createMouseEvent} from "./StubEvents";
 import {EventRegistrationToken} from "../../src/interaction/Events";
 

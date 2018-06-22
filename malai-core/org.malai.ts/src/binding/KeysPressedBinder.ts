@@ -9,20 +9,12 @@
  * General Public License for more details.
  */
 
-
-import {ComboBoxSelected} from "../interaction/library/ComboBoxSelected";
+import {KeysData} from "../interaction/library/KeysData";
 import {CommandImpl} from "../src-core/command/CommandImpl";
-import {WidgetData} from "../src-core/interaction/WidgetData";
-import {Binder} from "./Binder";
+import {KeyBinder} from "./KeyBinder";
 
-/**
- * The binding builder to create bindings between a combobox interaction and a given command.
- * @param <C> The type of the command to produce.
- * @author Gwendal Didot
- */
-
-export class ComboBoxBinder<C extends CommandImpl> extends Binder<C, ComboBoxSelected, WidgetData<Element>, ComboBoxBinder<C>> {
-    public constructor(cmd: (i ?: WidgetData<Element>) => C) {
-        super(new ComboBoxSelected(), cmd);
+export class KeysPressedBinder<C extends CommandImpl> extends KeyBinder<C, KeysPressedBinder<C>> {
+    public constructor(cmd: (i ?: KeysData) => C) {
+        super(cmd);
     }
 }
