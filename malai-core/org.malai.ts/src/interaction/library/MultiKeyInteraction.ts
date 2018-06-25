@@ -20,6 +20,7 @@ export abstract class MultiKeyInteraction<D extends KeysData, F extends FSM<Even
 
     protected constructor(fsm: F) {
         super(fsm);
+        this.keysData = new KeysDataImpl();
     }
 
     public reinitData(): void {

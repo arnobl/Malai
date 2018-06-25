@@ -26,6 +26,7 @@ export class KeyBinder<C extends CommandImpl, B extends KeyBinder<C, B>> extends
 
     public constructor(cmdProducer: (i ?: KeysData) => C) {
         super(new KeysPressed(), cmdProducer);
+        this.codes = [];
         this.checkCode =  this.isPresent(this.codes, this.interaction.getData());
     }
 
