@@ -80,3 +80,45 @@ test("Timout cancels the double click", () => {
     expect(handler.fsmStarts).not.toHaveBeenCalled();
     expect(handler.fsmStops).not.toHaveBeenCalled();
 });
+
+test("Double click with two different mouse button for each click don't start the interaction", () => {
+    interaction.registerToNodes([canvas]);
+    canvas.dispatchEvent(createMouseEvent(EventRegistrationToken.Click, canvas, undefined, undefined,
+        undefined, undefined, 0));
+    canvas.dispatchEvent(createMouseEvent(EventRegistrationToken.Click, canvas, undefined, undefined,
+        undefined, undefined, 2));
+    expect(handler.fsmStarts).not.toHaveBeenCalled();
+});
+
+// test("Check the reinitData of the DoubleClicked interaction", () => {
+//     interaction.registerToNodes([canvas]);
+//     canvas.dispatchEvent(createMouseEvent(EventRegistrationToken.Click, canvas, undefined, undefined,
+//         11, 23, 0));
+//     canvas.dispatchEvent(createMouseEvent(EventRegistrationToken.Click, canvas, undefined, undefined,
+//         11, 23, 0));
+//     jest.runOnlyPendingTimers();
+//     expect(interaction.getData().getSrcClientX()).toBe(undefined);
+//     expect(interaction.getData().getSrcClientY()).toBe(undefined);
+//     expect(interaction.getData().getButton()).toBe(0);
+// });
+
+test("Check if the interaction is recycled after a cancel", () => {
+    interaction.registerToNodes([canvas]);
+    canvas.click();
+    canvas.dispatchEvent(createMouseEvent(EventRegistrationToken.MouseMove, canvas));
+    canvas.click();
+    canvas.click();
+    expect(handler.fsmStarts).toHaveBeenCalledTimes(1);
+    expect(handler.fsmStops).toHaveBeenCalledTimes(1);
+});
+
+test("Check if the interaction work fine with bad move", () => {
+    interaction.registerToNodes([canvas]);
+    canvas.click();
+    canvas.dispatchEvent(createMouseEvent(EventRegistrationToken.MouseMove, canvas, undefined, undefined, undefined,
+        undefined, 1));
+    canvas.click();
+    expect(handler.fsmStarts).toHaveBeenCalledTimes(1);
+    expect(handler.fsmStops).toHaveBeenCalledTimes(1);
+    expect(handler.fsmCancels).not.toHaveBeenCalled();
+});

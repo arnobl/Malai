@@ -155,6 +155,10 @@ test("Check data with multiple drag", () => {
     }());
     canvas.dispatchEvent(createMouseEvent(EventRegistrationToken.MouseMove, canvas, undefined, undefined, 12,
         24, 0));
+    expect(handler.fsmStarts).toHaveBeenCalledTimes(1);
+    expect(handler.fsmUpdates).toHaveBeenCalledTimes(2);
+    expect(handler.fsmStops).not.toHaveBeenCalled();
+    expect(handler.fsmCancels).not.toHaveBeenCalled();
 });
 
 test("Click and move and release start and stop the interaction", () => {

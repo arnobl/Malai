@@ -73,7 +73,7 @@ test("Click and move and release start and stop the interaction", () => {
     expect(handler.fsmCancels).not.toHaveBeenCalled();
 });
 
-test("Test data of the  press and drag part of the interaction", () => {
+test("Test data of the press and drag part of the interaction", () => {
     interaction.registerToNodes([canvas]);
     canvas.dispatchEvent(createMouseEvent(EventRegistrationToken.MouseDown, canvas, undefined, undefined, 15, 20,
         0));
