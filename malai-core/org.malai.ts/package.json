@@ -1,7 +1,7 @@
 {
   "name": "org.malai.ts-dev",
   "description": "The typescript implementation of Malai (WIP)",
-  "version": "3.1.0-alpha.1",
+  "version": "3.1.0-alpha.1.0.0",
   "author": "Arnaud Blouin",
   "contributors": [
     "Gwendal Didot <didotgwendal@gmail.com>"
@@ -24,10 +24,12 @@
     "typescript": "^2.8.1"
   },
   "scripts": {
+    "lib-build": "npm run prepare && npm run build",
+    "build": "rollup -c",
     "generates-barrels": "barrelsby -c ./barrelsby-config.json --delete",
-    "build": "tsc",
-    "all": "npm run clean && npm run build && npm run coverage && npm run lint",
-    "clean": "rm -rf coverage/*",
+    "compile": "tsc",
+    "prepare": "npm run clean && npm run compile && npm run coverage && npm run lint",
+    "clean": "rm -rf coverage/* lib/*",
     "test": "jest",
     "lint": "tslint --project tsconfig.json --config tslint.json",
     "coverage": "jest --coverage --collectCoverageFrom=target/src*/**/*.js"

@@ -4,3 +4,5 @@ node_modules/
 /.tscache
 /target
 /coverage
+./rpt2_cache
+lib
