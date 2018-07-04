@@ -4,7 +4,7 @@ The TypeScript implementation of [Malai](https://github.com/arnobl/Malai).
 
 # How to use
 
-As a npm package, just add org.malai.ts to your dependences.
+As an npm package, just add org.malai.ts to your dependencies.
 
 ```
 {
