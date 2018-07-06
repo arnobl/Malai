@@ -1,5 +1,6 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {FSMpartComponent} from './fsmpart/fsmpart.component';
+import {MArray} from 'org.malai.ts-dev';
 
 @Component({
   selector: 'app-fsmpart-selector',
@@ -8,17 +9,19 @@ import {FSMpartComponent} from './fsmpart/fsmpart.component';
 })
 export class FSMpartSelectorComponent implements OnInit {
 
-  @ViewChild ('Init') init_part: FSMpartComponent;
-  @ViewChild ('Stnd') stnd_part: FSMpartComponent;
-  @ViewChild ('Term') term_part: FSMpartComponent;
-  @ViewChild ('Canc') canc_part: FSMpartComponent;
+  @ViewChild ('InitState') init_part: SVGCircleElement;
+  @ViewChild ('StndState') stnd_part: FSMpartComponent;
 
+  part: MArray<EventTarget>;
 
   @Input () name: string;
 
-  constructor() { }
+  constructor() {
+    this.part = new MArray<EventTarget>();
+  }
 
   ngOnInit() {
+    this.part.push(this.init_part);
   }
 
 }

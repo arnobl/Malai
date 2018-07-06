@@ -13,7 +13,8 @@ export class FSMpartComponent implements OnInit {
 
   @ViewChild ('Img') img: ElementRef;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

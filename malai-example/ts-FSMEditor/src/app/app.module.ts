@@ -12,6 +12,7 @@ import { XmlViewComponent } from './View/xml-view/xml-view.component';
 import { EditorViewComponent } from './View/editor-view/editor-view.component';
 import {TabsComponent} from './Component/tabs/tabs.component';
 import {TabComponent} from './Component/tabs/tab/tab.component';
+import { DrawboxComponent } from './View/editor-view/DrawBox/drawbox/drawbox.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import {TabComponent} from './Component/tabs/tab/tab.component';
     XmlViewComponent,
     EditorViewComponent,
     TabsComponent,
-    TabComponent
+    TabComponent,
+    DrawboxComponent
   ],
   imports: [
     BrowserModule
