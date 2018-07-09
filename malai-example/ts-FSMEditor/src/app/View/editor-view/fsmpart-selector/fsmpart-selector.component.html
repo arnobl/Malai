@@ -1,7 +1,15 @@
-<div id="FSMselector">
+<div id="FSMselector" xmlns="http://www.w3.org/1999/html">
   <app-title name="FSM part selector"></app-title>
   <svg>
-    <circle cx="250" cy="250" r="40" stroke="black" stroke-width="3" fill="black" #InitState></circle>
-    <circle cx="250" cy="250" r="40" stroke="black" stroke-width="3" fill="white" #StdState></circle>
+    <circle cx="250" cy="150" r="40" stroke="black" stroke-width="3" fill="black" #InitState></circle>
+    <circle cx="250" cy="300" r="40" stroke="black" stroke-width="3" fill="white" #StdState></circle>
+    <g #TerminalState>
+      <circle cx="250" cy="450" r="40" stroke="black" stroke-width="3" fill="white"></circle>
+      <text x="250" y="455" text-anchor="middle" alignment-baseline="middle">0</text>
+    </g>
+    <g #CancelState>
+      <circle cx="250" cy="600" r="40" stroke="black" stroke-width="3" fill="white"></circle>
+      <text x="250" y="605" text-anchor="middle" alignment-baseline="middle">1</text>
+    </g>
   </svg>
 </div>

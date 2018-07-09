@@ -1,5 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {FSMpartComponent} from './fsmpart/fsmpart.component';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {MArray} from 'org.malai.ts-dev';
 
 @Component({
@@ -9,19 +8,19 @@ import {MArray} from 'org.malai.ts-dev';
 })
 export class FSMpartSelectorComponent implements OnInit {
 
-  @ViewChild ('InitState') init_part: SVGCircleElement;
-  @ViewChild ('StndState') stnd_part: FSMpartComponent;
+  @ViewChild ('InitState') init_part: ElementRef;
+  @ViewChild ('StdState') stnd_part: ElementRef;
+  @ViewChild ('TerminalState') term_part: ElementRef;
 
-  part: MArray<EventTarget>;
+  part: MArray<EventTarget> = new MArray<EventTarget>();
 
   @Input () name: string;
 
   constructor() {
-    this.part = new MArray<EventTarget>();
   }
 
   ngOnInit() {
-    this.part.push(this.init_part);
+    this.part.push(this.init_part.nativeElement, this.stnd_part.nativeElement, this.term_part.nativeElement);
   }
 
 }
