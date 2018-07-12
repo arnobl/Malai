@@ -28,6 +28,7 @@ export abstract class TSInteraction<D extends InteractionData, F extends FSM<Eve
     private keyHandler: ((e: KeyboardEvent) => void) | undefined;
     private uiHandler: ((e: UIEvent) => void) | undefined;
     private actionHandler: EventListener | undefined;
+
     protected constructor(fsm: F) {
         super(fsm);
         this._registeredNodes = new Set<EventTarget>();
