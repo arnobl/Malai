@@ -17,10 +17,18 @@ export class DrawPartGroup extends CommandImpl {
 
   protected doCmdBody(): void {
     this.tgtElem = <SVGSVGElement>this.tgtData.getTgtObject().get();
-    const src: SVGGElement = <SVGGElement> this.tgtData.getSrcObject().get();
+    const src: SVGGElement = <SVGGElement> this.tgtData.getCurrentTarget().get();
     const clone = <typeof src>src.cloneNode(true);
-    clone.setAttribute('cx', this.tgtData.getTgtClientX().toString());
-    clone.setAttribute('cy', this.tgtData.getTgtClientY().toString());
+    const child = <typeof clone>clone.childNodes.item(0);
+    child.setAttribute('cx', this.tgtData.getTgtClientX().toString());
+    child.setAttribute('cy', this.tgtData.getTgtClientY().toString());
+    child.setAttribute('transform', 'translate(-10 -10)');
+    if (clone.childNodes.item(1) !== null) {
+      const child_text = <typeof clone>clone.childNodes.item(1);
+      child_text.setAttribute('x', this.tgtData.getTgtClientX().toString());
+      child_text.setAttribute('y', this.tgtData.getTgtClientY().toString());
+      child_text.setAttribute('transform', 'translate(-10 -10)');
+    }
     this.tgtElem.appendChild(clone);
   }
 }

@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Directive, ElementRef, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {MArray} from 'org.malai.ts-dev';
 
 @Component({
@@ -6,21 +6,20 @@ import {MArray} from 'org.malai.ts-dev';
   templateUrl: './fsmpart-selector.component.html',
   styleUrls: ['./fsmpart-selector.component.css']
 })
-export class FSMpartSelectorComponent implements OnInit {
+export class FSMpartSelectorComponent implements AfterViewInit {
 
-  @ViewChild ('InitState') init_part: ElementRef;
-  @ViewChild ('StdState') stnd_part: ElementRef;
-  @ViewChild ('TerminalState') term_part: ElementRef;
+  @ViewChildren ('State') part: QueryList<ElementRef>;
 
-  part: MArray<EventTarget> = new MArray<EventTarget>();
+  parts: MArray<EventTarget>;
 
   @Input () name: string;
 
   constructor() {
   }
 
-  ngOnInit() {
-    this.part.push(this.init_part.nativeElement, this.stnd_part.nativeElement, this.term_part.nativeElement);
+  ngAfterViewInit(): void {
+    this.parts = new MArray<EventTarget>();
+    this.part.forEach(item => this.parts.push(item.nativeElement));
   }
 
 }

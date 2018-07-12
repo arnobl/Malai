@@ -7,9 +7,11 @@ import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 })
 export class FSMpartComponent implements OnInit {
 
-  @Input () src: string;
+  @Input () classType: string;
 
-  @Input () name: string;
+  @Input () styleFill: string;
+
+  @Input () isText: boolean;
 
   @ViewChild ('Img') img: ElementRef;
 
