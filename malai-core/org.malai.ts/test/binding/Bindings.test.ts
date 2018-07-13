@@ -62,7 +62,7 @@ test("node binder on multiple target", () => {
     button.click();
 });
 
-test("dndBinder", () => {
+test("dndBinder with to() routine", () => {
     dndBinder(() => new StubCmd(), false, false).on(button).to(canvas).bind();
     button.dispatchEvent(createMouseEvent(EventRegistrationToken.MouseDown, button));
     button.dispatchEvent(createMouseEvent(EventRegistrationToken.MouseMove, button));
@@ -73,7 +73,7 @@ test("dndBinder", () => {
     expect(StubCmd.prototype.doIt).toHaveBeenCalledTimes(1);
 });
 
-test("nodeBinder with to() routine and DnD interaction", () => {
+test("Check if interaction successfully update on 'to' widget unless the interaction is in this InitState", () => {
     dndBinder(() => new StubCmd(), false, false).on(button).to(canvas).bind();
     button.dispatchEvent(createMouseEvent(EventRegistrationToken.MouseDown, button));
     canvas.dispatchEvent(createMouseEvent(EventRegistrationToken.MouseMove, canvas));
