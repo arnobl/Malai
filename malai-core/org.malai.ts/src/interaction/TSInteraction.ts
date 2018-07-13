@@ -63,9 +63,11 @@ export abstract class TSInteraction<D extends InteractionData, F extends FSM<Eve
             eventsToRemove.forEach(type => this.unregisterEventToNode(type, n));
             eventsToAdd.forEach(type => this.registerEventToNode(type, n));
         });
+        this._registeredTargetNode.forEach(n => {
+            eventsToRemove.forEach(type => this.unregisterEventToNode(type, n));
+        });
         if (newState !== this.fsm.initState) {
             this._registeredTargetNode.forEach(n => {
-                eventsToRemove.forEach(type => this.unregisterEventToNode(type, n));
                 eventsToAdd.forEach(type => this.registerEventToNode(type, n));
             });
         }
@@ -245,6 +247,7 @@ export abstract class TSInteraction<D extends InteractionData, F extends FSM<Eve
         this._widget = undefined;
         this._registeredNodes.clear();
         this._additionalNodes.clear();
+        this._registeredTargetNode.clear();
         super.uninstall();
     }
 }
