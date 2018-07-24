@@ -109,10 +109,10 @@ export class AnonNodeBinding<C extends CommandImpl, I extends TSInteraction<D, F
     }
 
     public fsmCancels(): void {
-        if (this.endOrCancelFct && this.cmd !== undefined) {
+        if (this.endOrCancelFct !== undefined && this.cmd !== undefined) {
             this.endOrCancelFct(this.interaction.getData(), this.cmd);
         }
-        if (this.cancelFct && this.cmd !== undefined) {
+        if (this.cancelFct !== undefined && this.cmd !== undefined) {
             this.cancelFct(this.interaction.getData(), this.cmd);
         }
         super.fsmCancels();
