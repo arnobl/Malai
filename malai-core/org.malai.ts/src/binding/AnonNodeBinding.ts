@@ -101,15 +101,11 @@ export class AnonNodeBinding<C extends CommandImpl, I extends TSInteraction<D, F
     }
 
     public first(): void {
-        if (this.currentCmd !== undefined) {
-            this.execInitCmd(this.getInteraction().getData(), this.getCommand());
-        }
+        this.execInitCmd(this.getInteraction().getData(), this.getCommand());
     }
 
     public then(): void {
-        if (this.currentCmd !== undefined) {
-            this.execUpdateCmd(this.getInteraction().getData(), this.getCommand());
-        }
+        this.execUpdateCmd(this.getInteraction().getData(), this.getCommand());
     }
 
     public when(): boolean {
