@@ -29,6 +29,8 @@ export class AnonNodeBinding<C extends CommandImpl, I extends TSInteraction<D, F
     private readonly onEnd: (i: D, c: C | undefined) => void;
     private readonly strictStart: boolean;
 
+    private currentCmd: C | undefined;
+
 
     /**
      * Creates a widget binding. This constructor must initialise the interaction. The binding is (de-)activated if the given
@@ -71,6 +73,8 @@ export class AnonNodeBinding<C extends CommandImpl, I extends TSInteraction<D, F
         this.strictStart = strict;
         this.configureLoggers(loggers);
 
+        this.currentCmd = undefined;
+
         if (additionalWidgets !== undefined) {
             const noUndefinedWidget = additionalWidgets.filter(value => value !== undefined);
             noUndefinedWidget.forEach(node => interaction.registerToObservableList(node));
@@ -79,6 +83,11 @@ export class AnonNodeBinding<C extends CommandImpl, I extends TSInteraction<D, F
         if (targetWidgets !== undefined) {
             interaction.registerToTargetNodes(targetWidgets);
         }
+    }
+
+    public map(): C {
+        this.cmdProducer === undefined ? this.currentCmd = super.map() : this.currentCmd = this.cmdProducer(this.interaction.getData());
+        return this.currentCmd;
     }
 
     private configureLoggers(loggers: Array<LogLevel>): void {
@@ -92,13 +101,15 @@ export class AnonNodeBinding<C extends CommandImpl, I extends TSInteraction<D, F
     }
 
     public first(): void {
-        if (this.cmd !== undefined) {
+        if (this.currentCmd !== undefined) {
             this.execInitCmd(this.getInteraction().getData(), this.getCommand());
         }
     }
 
     public then(): void {
-        this.execUpdateCmd(this.getInteraction().getData(), this.getCommand());
+        if (this.currentCmd !== undefined) {
+            this.execUpdateCmd(this.getInteraction().getData(), this.getCommand());
+        }
     }
 
     public when(): boolean {
@@ -109,13 +120,14 @@ export class AnonNodeBinding<C extends CommandImpl, I extends TSInteraction<D, F
     }
 
     public fsmCancels(): void {
-        if (this.endOrCancelFct !== undefined && this.cmd !== undefined) {
-            this.endOrCancelFct(this.interaction.getData(), this.cmd);
+        if (this.endOrCancelFct !== undefined && this.currentCmd !== undefined) {
+            this.endOrCancelFct(this.interaction.getData(), this.currentCmd);
         }
-        if (this.cancelFct !== undefined && this.cmd !== undefined) {
-            this.cancelFct(this.interaction.getData(), this.cmd);
+        if (this.cancelFct !== undefined && this.currentCmd !== undefined) {
+            this.cancelFct(this.interaction.getData(), this.currentCmd);
         }
         super.fsmCancels();
+        this.currentCmd = undefined;
     }
 
     public feedback(): void {
@@ -127,11 +139,12 @@ export class AnonNodeBinding<C extends CommandImpl, I extends TSInteraction<D, F
 
     public fsmStops(): void {
         super.fsmStops();
-        if (this.endOrCancelFct !== undefined) {
-            this.endOrCancelFct(this.getInteraction().getData(), this.cmd);
+        if (this.endOrCancelFct !== undefined && this.currentCmd !== undefined) {
+            this.endOrCancelFct(this.getInteraction().getData(), this.currentCmd);
         }
-        if (this.onEnd !== undefined) {
-            this.onEnd(this.getInteraction().getData(), this.cmd);
+        if (this.onEnd !== undefined && this.currentCmd !== undefined) {
+            this.onEnd(this.getInteraction().getData(), this.currentCmd);
         }
+        this.currentCmd = undefined;
     }
 }
