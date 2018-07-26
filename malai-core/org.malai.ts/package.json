@@ -1,7 +1,7 @@
 {
-  "name": "org.malai.ts",
+  "name": "org.malai.ts-dev",
   "description": "The typescript implementation of Malai (WIP)",
-  "version": "3.1.0-alpha.1.2.8",
+  "version": "3.1.0-alpha.1.2.33",
   "author": "Arnaud Blouin",
   "contributors": [
     "Gwendal Didot <didotgwendal@gmail.com>"
@@ -41,7 +41,7 @@
   ],
   "dependencies": {
     "npm": "^6.1.0",
-    "typescript-logging": "^0.5.0"
+    "typescript-logging": "0.6.2"
   },
   "jest": {
     "transform": {
