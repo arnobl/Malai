@@ -138,7 +138,7 @@ export class FSM<E> {
             if (event !== undefined) {
                 this.eventsToProcess.removeAt(0);
                 if (this.asLogFSM) {
-                    catFSM.info("Recycling event: " + String(event));
+                    catFSM.info(`Recycling event: ${event.constructor.name}`);
                 }
                 this.process(event);
             }
