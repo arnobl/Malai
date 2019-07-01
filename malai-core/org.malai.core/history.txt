@@ -1,3 +1,4 @@
+*******************************************************************
 Version 3.0
 - port to JavaFX
 - Registration policy for commands
